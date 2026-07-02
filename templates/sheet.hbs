@@ -1,0 +1,191 @@
+<form class="hf-root {{state.classes}}" autocomplete="off">
+
+  {{!-- Cinematic layers --}}
+  <div class="hf-backdrop" style="--hf-backdrop-op: calc({{backdrop.opacity}} / 100);">
+    {{#if backdrop.img}}
+      {{#if backdrop.isVideo}}
+        <video src="{{backdrop.img}}" autoplay loop muted playsinline></video>
+      {{else}}
+        <img src="{{backdrop.img}}" alt="">
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="hf-grain" aria-hidden="true"></div>
+  <div class="hf-vignette" aria-hidden="true"></div>
+  <div class="hf-flash" aria-hidden="true"></div>
+
+  {{!-- ══════════ LEFT RAIL ══════════ --}}
+  <aside class="hf-rail">
+    <div class="hf-portrait-frame" data-action="portrait" title="{{localize 'HOPEFINDER.Header.ChangePortrait'}}">
+      <span class="hf-corner tl"></span><span class="hf-corner tr"></span>
+      <span class="hf-corner bl"></span><span class="hf-corner br"></span>
+      {{#if header.portraitIsVideo}}
+        <video class="hf-portrait" src="{{header.img}}" autoplay loop muted playsinline></video>
+      {{else}}
+        <img class="hf-portrait" src="{{header.img}}" alt="{{header.name}}">
+      {{/if}}
+      <div class="hf-portrait-blood" aria-hidden="true"></div>
+      <div class="hf-portrait-scan" aria-hidden="true"></div>
+      <div class="hf-id-strip">
+        <span class="hf-id-level">LV {{header.level}}</span>
+        <span class="hf-id-state hf-lamp--{{state.id}}">{{state.label}}</span>
+      </div>
+    </div>
+
+    <div class="hf-identity">
+      <h1 class="hf-name">{{header.name}}</h1>
+      {{#if editable}}
+        <input type="text" class="hf-callsign" data-change="callsign" value="{{header.callsign}}"
+               placeholder="{{localize 'HOPEFINDER.Header.Callsign'}}" maxlength="24">
+      {{else if header.callsign}}
+        <div class="hf-callsign-static">“{{header.callsign}}”</div>
+      {{/if}}
+      <div class="hf-role-line">
+        {{#if header.className}}<span class="hf-role-pill" data-action="open-item-doc" data-doc="class">{{header.className}}</span>{{/if}}
+        {{#if header.backgroundName}}<span class="hf-role-pill" data-action="open-item-doc" data-doc="background">{{header.backgroundName}}</span>{{/if}}
+      </div>
+    </div>
+
+    <div class="hf-hope" title="{{localize 'HOPEFINDER.Header.HopeHint'}}">
+      <label>{{localize 'HOPEFINDER.Header.Hope'}}</label>
+      <div class="hf-pip-row">
+        {{#each header.hope.pips}}
+          <button type="button" class="hf-pip {{#if this.filled}}filled{{/if}}"
+                  data-action="pip-hope" data-index="{{this.index}}">
+            <i class="fas fa-fire"></i>
+          </button>
+        {{/each}}
+      </div>
+    </div>
+
+    <nav class="hf-nav" role="tablist">
+      {{#each tabs}}
+        <button type="button" class="hf-nav-item {{#if this.active}}active{{/if}}" role="tab"
+                data-action="tab" data-tab="{{this.id}}" aria-selected="{{this.active}}">
+          <i class="fas {{this.icon}}"></i><span>{{this.label}}</span>
+        </button>
+      {{/each}}
+    </nav>
+
+    <div class="hf-rail-actions">
+      <button type="button" data-action="roll-initiative" title="{{localize 'HOPEFINDER.Actions.Initiative'}}">
+        <i class="fas fa-bolt"></i>
+      </button>
+      <button type="button" data-action="rest" title="{{localize 'HOPEFINDER.Actions.Rest'}}">
+        <i class="fas fa-campground"></i>
+      </button>
+      <button type="button" data-action="backdrop-config" title="{{localize 'HOPEFINDER.Backdrop.Title'}}">
+        <i class="fas fa-panorama"></i>
+      </button>
+    </div>
+  </aside>
+
+  {{!-- ══════════ MAIN STAGE ══════════ --}}
+  <main class="hf-stage">
+
+    <header class="hf-statusbar">
+      <div class="hf-hp-module" data-low="{{combat.hp.low}}">
+        <div class="hf-hp-readout">
+          <i class="fas fa-heart-pulse"></i>
+          <span class="hf-hp-num">{{combat.hp.value}}</span>
+          <span class="hf-hp-sep">/</span>
+          <span class="hf-hp-max">{{combat.hp.max}}</span>
+          {{#if combat.hp.temp}}<span class="hf-hp-temp">+{{combat.hp.temp}}</span>{{/if}}
+        </div>
+        <div class="hf-hp-track">
+          <div class="hf-hp-fill" style="width: {{combat.hp.pct}}%;"></div>
+          <div class="hf-hp-ticks" aria-hidden="true"></div>
+        </div>
+        {{#if editable}}
+          <div class="hf-hp-controls">
+            <button type="button" data-action="hp-adjust" data-delta="-1" title="-1"><i class="fas fa-minus"></i></button>
+            <input type="text" class="hf-hp-input" data-change="hp-input"
+                   placeholder="±" title="{{localize 'HOPEFINDER.Header.HpInputHint'}}">
+            <button type="button" data-action="hp-adjust" data-delta="1" title="+1"><i class="fas fa-plus"></i></button>
+            <input type="number" class="hf-temp-input" name="system.attributes.hp.temp"
+                   value="{{combat.hp.temp}}" min="0" title="{{localize 'HOPEFINDER.Header.TempHp'}}">
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="hf-status-block" title="{{localize 'HOPEFINDER.Combat.AC'}}">
+        <i class="fas fa-shield-halved"></i>
+        <span class="hf-status-value">{{combat.ac}}</span>
+        <label>{{localize 'HOPEFINDER.Combat.AC'}}</label>
+      </div>
+
+      {{#if combat.shield}}
+        <div class="hf-status-block hf-shield-block {{#if combat.shield.broken}}broken{{/if}}"
+             data-item-id="{{combat.shield.id}}" data-hf-tip="{{combat.shield.id}}">
+          <i class="fas fa-shield"></i>
+          <span class="hf-status-value">{{combat.shield.hp}}/{{combat.shield.maxHp}}</span>
+          <label>{{combat.shield.name}}</label>
+        </div>
+      {{/if}}
+
+      <div class="hf-status-block hf-clickable" data-action="roll-perception"
+           title="{{localize 'HOPEFINDER.Combat.RollPerception'}}">
+        <i class="fas fa-eye"></i>
+        <span class="hf-status-value">{{combat.perception.modStr}}</span>
+        <label>{{localize 'HOPEFINDER.Combat.Perception'}}</label>
+      </div>
+
+      <div class="hf-status-block" title="{{localize 'HOPEFINDER.Combat.Speed'}}">
+        <i class="fas fa-person-running"></i>
+        <span class="hf-status-value">{{combat.speed.land}}</span>
+        <label>{{localize 'HOPEFINDER.Combat.Speed'}}</label>
+      </div>
+
+      <div class="hf-statusbar-conditions">
+        {{#each conditions}}
+          <span class="hf-cond-chip" data-action="condition-badge" data-slug="{{this.slug}}"
+                title="{{this.name}} — {{localize 'HOPEFINDER.Conditions.BadgeHint'}}">
+            <img src="{{this.img}}" alt="{{this.name}}">
+            {{#if this.value}}<b>{{this.value}}</b>{{/if}}
+          </span>
+        {{/each}}
+        {{#if editable}}
+          <details class="hf-cond-menu">
+            <summary title="{{localize 'HOPEFINDER.Conditions.Add'}}"><i class="fas fa-plus"></i></summary>
+            <div class="hf-cond-list">
+              {{#each quickConditions}}
+                <button type="button" data-action="condition-add" data-slug="{{this.slug}}"
+                        data-name="{{this.name}}">{{this.name}}</button>
+              {{/each}}
+            </div>
+          </details>
+        {{/if}}
+      </div>
+    </header>
+
+    <section class="hf-tabs">
+      <div class="hf-tab active" data-tab="survivor">
+        {{> "modules/hopefinder-sheet/templates/tabs/survivor.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="vitals">
+        {{> "modules/hopefinder-sheet/templates/tabs/vitals.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="gear">
+        {{> "modules/hopefinder-sheet/templates/tabs/gear.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="arsenal">
+        {{> "modules/hopefinder-sheet/templates/tabs/arsenal.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="medical">
+        {{> "modules/hopefinder-sheet/templates/tabs/medical.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="skills">
+        {{> "modules/hopefinder-sheet/templates/tabs/skills.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="journal">
+        {{> "modules/hopefinder-sheet/templates/tabs/journal.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="factions">
+        {{> "modules/hopefinder-sheet/templates/tabs/factions.hbs"}}
+      </div>
+      <div class="hf-tab" data-tab="timeline">
+        {{> "modules/hopefinder-sheet/templates/tabs/timeline.hbs"}}
+      </div>
+    </section>
+  </main>
+</form>

@@ -1,0 +1,53 @@
+{{!-- ══════════ FACTIONS — standing board ══════════ --}}
+<div class="hf-factions-layout">
+
+  <div class="hf-factions-toolbar">
+    <h2 class="hf-panel-title"><i class="fas fa-handshake"></i>{{localize 'HOPEFINDER.Factions.Title'}}</h2>
+    {{#if editable}}
+      <button type="button" class="hf-btn" data-action="faction-add">
+        <i class="fas fa-plus"></i>{{localize 'HOPEFINDER.Factions.Add'}}
+      </button>
+    {{/if}}
+  </div>
+
+  {{#if factions.length}}
+    <div class="hf-faction-grid">
+      {{#each factions}}
+        <article class="hf-panel hf-faction hf-faction--{{this.standingId}}">
+          <header class="hf-faction-head">
+            <i class="fas fa-flag"></i>
+            <input type="text" class="hf-faction-name" data-change="faction-field" data-id="{{this.id}}"
+                   data-field="name" value="{{this.name}}"
+                   placeholder="{{localize 'HOPEFINDER.Factions.NamePlaceholder'}}"
+                   {{#unless ../editable}}disabled{{/unless}}>
+            {{#if ../editable}}
+              <button type="button" class="hf-icon-btn hf-danger" data-action="faction-remove" data-id="{{this.id}}"
+                      title="{{localize 'HOPEFINDER.Common.Remove'}}"><i class="fas fa-xmark"></i></button>
+            {{/if}}
+          </header>
+
+          <div class="hf-standing">
+            <div class="hf-standing-meter">
+              {{#each this.cells}}
+                <button type="button"
+                        class="hf-standing-cell {{#if this.active}}active{{/if}} {{#if this.negative}}neg{{/if}} {{#if this.positive}}pos{{/if}}"
+                        data-action="faction-standing" data-id="{{../id}}" data-value="{{this.value}}"
+                        {{#unless ../../editable}}disabled{{/unless}}></button>
+              {{/each}}
+            </div>
+            <span class="hf-standing-label">{{this.standingLabel}}</span>
+          </div>
+
+          <textarea class="hf-faction-notes" data-change="faction-field" data-id="{{this.id}}" data-field="notes"
+                    placeholder="{{localize 'HOPEFINDER.Factions.NotesPlaceholder'}}" rows="2"
+                    {{#unless ../editable}}disabled{{/unless}}>{{this.notes}}</textarea>
+        </article>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="hf-empty">
+      <i class="fas fa-handshake-slash"></i>
+      <p>{{localize 'HOPEFINDER.Factions.Empty'}}</p>
+    </div>
+  {{/if}}
+</div>

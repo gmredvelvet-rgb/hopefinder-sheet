@@ -1,0 +1,1156 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOPEFINDER SURVIVOR SHEET — TAB LAYOUTS
+   Survivor · Vitals · Gear · Arsenal · Medical · Skills ·
+   Journal · Factions · Timeline
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── SURVIVOR ──────────────────────────────────────────────── */
+.hopefinder-sheet .hf-survivor-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.4fr);
+  gap: var(--hf-gap);
+  align-items: start;
+}
+@container hf (max-width: 900px) {
+  .hopefinder-sheet .hf-survivor-grid { grid-template-columns: 1fr; }
+}
+
+.hopefinder-sheet .hf-field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.hopefinder-sheet .hf-field { display: flex; flex-direction: column; gap: 3px; }
+.hopefinder-sheet .hf-field label {
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-field input { height: 26px; }
+.hopefinder-sheet .hf-field-static {
+  padding: 4px 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  color: var(--hf-text-hi);
+  border-bottom: 1px solid var(--hf-line);
+}
+
+.hopefinder-sheet .hf-xp { margin-top: 12px; }
+.hopefinder-sheet .hf-xp-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.hopefinder-sheet .hf-xp-head label {
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-xp-nums {
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-xp-nums input { width: 60px; height: 20px; }
+.hopefinder-sheet .hf-xp-track {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--hf-amber) 0%, var(--hf-amber-hi) 100%);
+  box-shadow: 0 0 8px var(--hf-amber-dim);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hopefinder-sheet .hf-threat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-red);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-threat label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-threat label i { color: var(--hf-red-hi); }
+
+.hopefinder-sheet .hf-recovery {
+  display: flex;
+  gap: var(--hf-gap);
+  margin-top: 12px;
+}
+.hopefinder-sheet .hf-recovery-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-recovery-block label {
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+
+/* Abilities */
+.hopefinder-sheet .hf-ability-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.hopefinder-sheet .hf-ability {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 2px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-ability:hover {
+  border-color: var(--hf-accent);
+  background: var(--hf-accent-dim);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+.hopefinder-sheet .hf-ability-key {
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-ability:hover .hf-ability-key { color: var(--hf-accent-hi); }
+.hopefinder-sheet .hf-ability-mod {
+  font-family: var(--hf-font-mono);
+  font-size: 17px;
+  color: var(--hf-text-hi);
+}
+
+/* Saves */
+.hopefinder-sheet .hf-saves-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 8px;
+}
+.hopefinder-sheet .hf-save {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 7px 2px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-save:hover {
+  border-color: var(--hf-cyan);
+  background: var(--hf-cyan-dim);
+  transform: translateY(-2px);
+}
+.hopefinder-sheet .hf-save-label {
+  font-family: var(--hf-font-display);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-save-mod {
+  font-family: var(--hf-font-mono);
+  font-size: 16px;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-save-rank {
+  font-family: var(--hf-font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-rank--1 .hf-save-rank { color: var(--hf-olive-hi); }
+.hopefinder-sheet .hf-rank--2 .hf-save-rank { color: var(--hf-cyan); }
+.hopefinder-sheet .hf-rank--3 .hf-save-rank { color: var(--hf-amber); }
+.hopefinder-sheet .hf-rank--4 .hf-save-rank { color: var(--hf-amber-hi); }
+
+/* Sitrep */
+.hopefinder-sheet .hf-sitrep-grid { display: flex; flex-direction: column; gap: 8px; }
+.hopefinder-sheet .hf-sitrep-row { display: flex; flex-direction: column; gap: 4px; }
+.hopefinder-sheet .hf-sitrep-row > label {
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+
+/* Quick strikes */
+.hopefinder-sheet .hf-quickstrike-list { display: flex; flex-direction: column; gap: 6px; }
+.hopefinder-sheet .hf-quickstrike {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  transition: border-color 0.16s ease;
+}
+.hopefinder-sheet .hf-quickstrike:hover { border-color: var(--hf-line-strong); }
+.hopefinder-sheet .hf-quickstrike img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  background: var(--hf-void);
+}
+.hopefinder-sheet .hf-quickstrike-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.hopefinder-sheet .hf-quickstrike-name {
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--hf-text-hi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hopefinder-sheet .hf-quickstrike-dmg {
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  color: var(--hf-amber);
+}
+.hopefinder-sheet .hf-quickstrike-buttons { display: flex; gap: 3px; flex-wrap: wrap; justify-content: flex-end; }
+.hopefinder-sheet .hf-quickstrike-buttons .hf-btn { padding: 3px 8px; font-size: 11px; }
+
+/* ── VITALS ────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-vitals-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--hf-gap);
+  align-items: start;
+}
+.hopefinder-sheet .hf-biomonitor { grid-column: 1 / -1; }
+.hopefinder-sheet .hf-bio-readout {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.hopefinder-sheet .hf-ecg {
+  flex: 1;
+  height: 44px;
+  min-width: 140px;
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  background:
+    linear-gradient(rgba(125, 143, 99, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(125, 143, 99, 0.05) 1px, transparent 1px),
+    rgba(0, 0, 0, 0.4);
+  background-size: 8px 8px;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-ecg svg { width: 100%; height: 100%; }
+.hopefinder-sheet .hf-ecg-path {
+  fill: none;
+  stroke: var(--hf-accent-hi);
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 3px var(--hf-accent));
+  stroke-dasharray: 460;
+  stroke-dashoffset: 460;
+  animation: hf-ecg-run 3.2s linear infinite;
+}
+.hopefinder-sheet .hf-bio-hp { display: flex; align-items: baseline; gap: 8px; }
+.hopefinder-sheet .hf-bio-hp-value {
+  font-family: var(--hf-font-mono);
+  font-size: 38px;
+  line-height: 1;
+  color: var(--hf-text-hi);
+  text-shadow: 0 0 16px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-bio-hp-label {
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-bio-state { margin-left: 10px; font-size: 11px; }
+.hopefinder-sheet .hf-bio-bruises {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 10px;
+  padding: 3px 8px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  font-size: 11px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-bio-bruises i.fa-hand-fist { font-size: 11px; color: var(--hf-text-faint); }
+.hopefinder-sheet .hf-bio-bruises-value {
+  font-family: var(--hf-font-mono);
+  font-size: 13px;
+  color: var(--hf-text-hi);
+  min-width: 12px;
+  text-align: center;
+}
+.hopefinder-sheet .hf-bio-bruises-label {
+  font-family: var(--hf-font-display);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hopefinder-sheet .hf-vital-list { display: flex; flex-direction: column; gap: 8px; }
+.hopefinder-sheet .hf-vital {
+  padding: 8px 10px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-text-faint);
+  border-radius: var(--hf-radius);
+  transition: border-color 0.3s ease;
+}
+.hopefinder-sheet .hf-vital-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.hopefinder-sheet .hf-vital-head i {
+  width: 15px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-vital-label {
+  font-family: var(--hf-font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text);
+}
+.hopefinder-sheet .hf-vital-status {
+  margin-left: auto;
+  font-family: var(--hf-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-vital-body { display: flex; align-items: center; gap: 6px; }
+.hopefinder-sheet .hf-vital-meter {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+}
+.hopefinder-sheet .hf-vital-seg {
+  flex: 1;
+  height: 12px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+.hopefinder-sheet .hf-vital-seg:disabled { cursor: default; }
+.hopefinder-sheet .hf-vital-seg:not(:disabled):hover { background: rgba(255, 255, 255, 0.16); }
+.hopefinder-sheet .hf-vital-step {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-size: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.hopefinder-sheet .hf-vital-step:hover { color: var(--hf-text-hi); border-color: var(--hf-line-strong); box-shadow: none; }
+.hopefinder-sheet .hf-vital-num {
+  min-width: 34px;
+  text-align: right;
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-vital-num em {
+  font-style: normal;
+  font-size: 9px;
+  color: var(--hf-text-faint);
+}
+
+/* Severity theming */
+.hopefinder-sheet .hf-vital--clear,
+.hopefinder-sheet .hf-vital--low { border-left-color: var(--hf-olive); }
+.hopefinder-sheet .hf-vital--low .hf-vital-seg.filled,
+.hopefinder-sheet .hf-vital--clear .hf-vital-seg.filled {
+  background: var(--hf-olive);
+  border-color: var(--hf-olive-hi);
+  box-shadow: 0 0 5px rgba(125, 143, 99, 0.4);
+}
+.hopefinder-sheet .hf-vital--elevated { border-left-color: var(--hf-amber); }
+.hopefinder-sheet .hf-vital--elevated .hf-vital-seg.filled {
+  background: var(--hf-amber);
+  border-color: var(--hf-amber-hi);
+  box-shadow: 0 0 5px rgba(217, 164, 65, 0.4);
+}
+.hopefinder-sheet .hf-vital--elevated .hf-vital-status { color: var(--hf-amber); }
+.hopefinder-sheet .hf-vital--high { border-left-color: var(--hf-red); }
+.hopefinder-sheet .hf-vital--high .hf-vital-seg.filled {
+  background: color-mix(in srgb, var(--hf-red) 80%, var(--hf-amber));
+  border-color: var(--hf-red-hi);
+  box-shadow: 0 0 5px rgba(194, 59, 46, 0.4);
+}
+.hopefinder-sheet .hf-vital--high .hf-vital-status { color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-vital--critical { border-left-color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-vital--critical .hf-vital-seg.filled {
+  background: var(--hf-red);
+  border-color: var(--hf-red-hi);
+  box-shadow: 0 0 7px rgba(232, 94, 77, 0.55);
+  animation: hf-seg-throb 1.1s ease-in-out infinite;
+}
+.hopefinder-sheet .hf-vital--critical .hf-vital-status {
+  color: var(--hf-red-hi);
+  animation: hf-lamp-blink 1s steps(2) infinite;
+}
+/* "good" vitals (morale) render green when full */
+.hopefinder-sheet .hf-vital-kind--good.hf-vital--clear .hf-vital-seg.filled {
+  background: var(--hf-green);
+  border-color: var(--hf-green);
+}
+
+/* ── GEAR ──────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-gear-layout {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: var(--hf-gap);
+  align-items: start;
+}
+@container hf (max-width: 900px) {
+  .hopefinder-sheet .hf-gear-layout { grid-template-columns: 1fr; }
+}
+.hopefinder-sheet .hf-loadout-section { margin-bottom: 12px; }
+.hopefinder-sheet .hf-loadout-section > label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-loadout-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 7px;
+  margin-bottom: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  cursor: grab;
+  transition: border-color 0.15s ease;
+}
+.hopefinder-sheet .hf-loadout-item:hover { border-color: var(--hf-accent); }
+.hopefinder-sheet .hf-loadout-item img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  border: none;
+  background: var(--hf-void);
+  border-radius: 2px;
+}
+.hopefinder-sheet .hf-loadout-item .hf-integrity { width: 34px; flex: 0 0 34px; }
+.hopefinder-sheet .hf-loadout-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--hf-text-hi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hopefinder-sheet .hf-loadout-empty {
+  padding: 8px;
+  border: 1px dashed var(--hf-line);
+  border-radius: 2px;
+  text-align: center;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+
+.hopefinder-sheet .hf-bulk { margin-top: 4px; }
+.hopefinder-sheet .hf-bulk-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-bulk-head label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-bulk-track {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-bulk-fill {
+  height: 100%;
+  background: var(--hf-olive);
+  transition: width 0.4s ease;
+}
+.hopefinder-sheet .hf-bulk-fill.over {
+  background: var(--hf-red);
+  animation: hf-lamp-blink 1.2s steps(2) infinite;
+}
+.hopefinder-sheet .hf-bulk-warning {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 5px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hf-red-hi);
+}
+.hopefinder-sheet .hf-coins {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--hf-line);
+}
+.hopefinder-sheet .hf-coin {
+  padding: 2px 7px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-coin--gp { color: var(--hf-amber); border-color: rgba(217, 164, 65, 0.3); }
+.hopefinder-sheet .hf-coin--pp { color: #b8c4d8; }
+.hopefinder-sheet .hf-coin--sp { color: #9aa3ac; }
+.hopefinder-sheet .hf-coin--cp { color: #a8825e; }
+
+.hopefinder-sheet .hf-gear-main { min-width: 0; }
+
+.hopefinder-sheet .hf-gear-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--hf-gap);
+}
+.hopefinder-sheet .hf-gear-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+  gap: 8px;
+}
+
+/* ── ARSENAL ───────────────────────────────────────────────── */
+.hopefinder-sheet .hf-arsenal-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-gap);
+}
+.hopefinder-sheet .hf-weapon {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 12px;
+}
+@container hf (max-width: 760px) {
+  .hopefinder-sheet .hf-weapon { grid-template-columns: 90px 1fr; }
+}
+.hopefinder-sheet .hf-weapon--stowed { opacity: 0.6; }
+.hopefinder-sheet .hf-weapon-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.05) 0%, transparent 70%),
+    var(--hf-void);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  min-height: 110px;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-weapon-visual img {
+  max-width: 88%;
+  max-height: 120px;
+  object-fit: contain;
+  border: none;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.7));
+  transition: transform 0.3s ease;
+}
+.hopefinder-sheet .hf-weapon:hover .hf-weapon-visual img { transform: scale(1.06) rotate(-1.5deg); }
+.hopefinder-sheet .hf-weapon-integrity {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 5px;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-weapon-integrity div { height: 100%; background: var(--hf-olive); }
+
+.hopefinder-sheet .hf-weapon-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+.hopefinder-sheet .hf-weapon-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.hopefinder-sheet .hf-weapon-head h3 {
+  margin: 0;
+  border: none;
+  font-family: var(--hf-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-weapon-badge {
+  padding: 2px 7px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-weapon-badge--range { color: var(--hf-cyan); border-color: rgba(111, 168, 184, 0.35); }
+.hopefinder-sheet .hf-weapon-fire {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.hopefinder-sheet .hf-weapon-foot {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 7px;
+  border-top: 1px solid var(--hf-line);
+}
+.hopefinder-sheet .hf-weapon-dmg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  color: var(--hf-amber);
+}
+.hopefinder-sheet .hf-ammo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--hf-text-dim);
+  font-size: 11px;
+}
+.hopefinder-sheet .hf-ammo select { max-width: 170px; height: 24px; }
+.hopefinder-sheet .hf-ammo-count {
+  min-width: 30px;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  text-align: center;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-ammo-count.empty { color: var(--hf-red-hi); border-color: var(--hf-red); }
+.hopefinder-sheet .hf-weapon-aux,
+.hopefinder-sheet .hf-weapon-manage {
+  display: inline-flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.hopefinder-sheet .hf-weapon-manage { margin-left: auto; }
+
+/* ── MEDICAL ───────────────────────────────────────────────── */
+.hopefinder-sheet .hf-medical-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-gap);
+}
+.hopefinder-sheet .hf-triage-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+}
+.hopefinder-sheet .hf-triage-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(111, 168, 184, 0.35);
+  border-radius: var(--hf-radius);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-triage-stat:hover {
+  border-color: var(--hf-cyan);
+  background: var(--hf-cyan-dim);
+  box-shadow: 0 0 10px var(--hf-cyan-dim);
+}
+.hopefinder-sheet .hf-triage-stat i { color: var(--hf-cyan); font-size: 13px; }
+.hopefinder-sheet .hf-triage-mod {
+  font-family: var(--hf-font-mono);
+  font-size: 18px;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-triage-stat label {
+  font-family: var(--hf-font-display);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+  cursor: pointer;
+}
+.hopefinder-sheet .hf-med-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 8px;
+}
+.hopefinder-sheet .hf-card--med .hf-card-visual { aspect-ratio: 16 / 8; }
+.hopefinder-sheet .hf-med-use {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin: 0 7px 8px;
+  padding: 5px 0;
+  background: var(--hf-cyan-dim);
+  border: 1px solid rgba(111, 168, 184, 0.45);
+  border-radius: 2px;
+  color: var(--hf-cyan);
+  font-family: var(--hf-font-display);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-med-use:hover {
+  background: rgba(111, 168, 184, 0.28);
+  color: #cfe7ee;
+  box-shadow: 0 0 12px var(--hf-cyan-dim);
+}
+
+/* ── SKILLS ────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+.hopefinder-sheet .hf-skill-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 12px;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-skill-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--hf-text-faint);
+  transition: background 0.2s ease;
+}
+.hopefinder-sheet .hf-skill-card.hf-rank--1::before { background: var(--hf-olive); }
+.hopefinder-sheet .hf-skill-card.hf-rank--2::before { background: var(--hf-cyan); }
+.hopefinder-sheet .hf-skill-card.hf-rank--3::before { background: var(--hf-amber); }
+.hopefinder-sheet .hf-skill-card.hf-rank--4::before { background: var(--hf-amber-hi); }
+.hopefinder-sheet .hf-skill-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--hf-accent);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5), 0 0 10px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-skill-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+.hopefinder-sheet .hf-skill-name {
+  font-family: var(--hf-font-display);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hopefinder-sheet .hf-skill-attr {
+  font-family: var(--hf-font-mono);
+  font-size: 9px;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-skill-mod {
+  font-family: var(--hf-font-mono);
+  font-size: 22px;
+  line-height: 1;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-skill-rank {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+.hopefinder-sheet .hf-rank-pips { display: flex; gap: 3px; }
+.hopefinder-sheet .hf-rank-pips span {
+  width: 12px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+}
+.hopefinder-sheet .hf-rank-pips span.filled {
+  background: var(--hf-accent);
+  box-shadow: 0 0 4px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-skill-ranklabel {
+  font-family: var(--hf-font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-skill--lore { border-style: dashed; }
+.hopefinder-sheet .hf-skill-lorebadge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  padding: 1px 5px;
+  background: var(--hf-amber-dim);
+  border: 1px solid rgba(217, 164, 65, 0.4);
+  border-radius: 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-amber);
+}
+
+/* ── JOURNAL ───────────────────────────────────────────────── */
+.hopefinder-sheet .hf-journal-layout { display: flex; flex-direction: column; }
+.hopefinder-sheet .hf-journal-panel .editor {
+  min-height: 180px;
+  font-size: 13px;
+  color: var(--hf-text);
+}
+.hopefinder-sheet .hf-journal-panel .editor-content { min-height: 160px; }
+.hopefinder-sheet .hf-obj-count {
+  margin-left: 8px;
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  color: var(--hf-text-dim);
+  text-transform: none;
+  letter-spacing: 0.05em;
+}
+.hopefinder-sheet .hf-contact-list,
+.hopefinder-sheet .hf-objective-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.hopefinder-sheet .hf-contact {
+  display: grid;
+  grid-template-columns: 16px 1.2fr 1fr 1fr 24px;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+}
+.hopefinder-sheet .hf-contact i { color: var(--hf-text-faint); font-size: 11px; }
+.hopefinder-sheet .hf-contact input { height: 24px; }
+.hopefinder-sheet .hf-objective {
+  display: grid;
+  grid-template-columns: 26px 1fr 24px;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  transition: opacity 0.25s ease;
+}
+.hopefinder-sheet .hf-objective.done { opacity: 0.55; }
+.hopefinder-sheet .hf-objective.done input { text-decoration: line-through; }
+.hopefinder-sheet .hf-obj-check {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--hf-text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+.hopefinder-sheet .hf-obj-check:hover { color: var(--hf-accent-hi); box-shadow: none; }
+.hopefinder-sheet .hf-objective.done .hf-obj-check { color: var(--hf-green); }
+.hopefinder-sheet .hf-objective input { height: 24px; border-color: transparent; background: transparent; }
+.hopefinder-sheet .hf-objective input:hover,
+.hopefinder-sheet .hf-objective input:focus { border-color: var(--hf-line); background: rgba(0, 0, 0, 0.35); }
+
+/* ── FACTIONS ──────────────────────────────────────────────── */
+.hopefinder-sheet .hf-factions-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--hf-gap);
+}
+.hopefinder-sheet .hf-factions-toolbar .hf-panel-title {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.hopefinder-sheet .hf-faction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: var(--hf-gap);
+}
+.hopefinder-sheet .hf-faction-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.hopefinder-sheet .hf-faction-head > i { color: var(--hf-text-faint); }
+.hopefinder-sheet .hf-faction-name {
+  flex: 1;
+  height: 26px;
+  font-family: var(--hf-font-display) !important;
+  font-size: 14px !important;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hopefinder-sheet .hf-standing {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.hopefinder-sheet .hf-standing-meter {
+  display: flex;
+  gap: 3px;
+  flex: 1;
+}
+.hopefinder-sheet .hf-standing-cell {
+  flex: 1;
+  height: 14px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-standing-cell:nth-child(4) { border-color: var(--hf-line-strong); }
+.hopefinder-sheet .hf-standing-cell:not(:disabled):hover { background: rgba(255, 255, 255, 0.18); }
+.hopefinder-sheet .hf-standing-cell.active.neg { background: var(--hf-red); box-shadow: 0 0 7px var(--hf-red-dim); }
+.hopefinder-sheet .hf-standing-cell.active.pos { background: var(--hf-green); box-shadow: 0 0 7px rgba(95, 158, 107, 0.4); }
+.hopefinder-sheet .hf-standing-cell.active:not(.neg):not(.pos) { background: var(--hf-text-dim); }
+.hopefinder-sheet .hf-standing-label {
+  min-width: 74px;
+  text-align: right;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-faction--hostile .hf-standing-label,
+.hopefinder-sheet .hf-faction--unfriendly .hf-standing-label { color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-faction--friendly .hf-standing-label,
+.hopefinder-sheet .hf-faction--trusted .hf-standing-label,
+.hopefinder-sheet .hf-faction--allied .hf-standing-label { color: var(--hf-green); }
+.hopefinder-sheet .hf-faction--hostile { border-left: 2px solid var(--hf-red); }
+.hopefinder-sheet .hf-faction--allied { border-left: 2px solid var(--hf-green); }
+.hopefinder-sheet .hf-faction-notes {
+  width: 100%;
+  resize: vertical;
+  min-height: 40px;
+  font-family: var(--hf-font-body);
+  font-size: 12px;
+}
+
+/* ── TIMELINE ──────────────────────────────────────────────── */
+.hopefinder-sheet .hf-timeline-layout { display: flex; flex-direction: column; height: 100%; }
+.hopefinder-sheet .hf-tl-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--hf-gap);
+  flex-wrap: wrap;
+}
+.hopefinder-sheet .hf-tl-toolbar .hf-panel-title {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.hopefinder-sheet .hf-tl-composer {
+  display: flex;
+  gap: 6px;
+  flex: 1;
+  min-width: 220px;
+}
+.hopefinder-sheet .hf-tl-composer input { flex: 1; height: 28px; }
+.hopefinder-sheet .hf-tl-scroll { flex: 1; }
+.hopefinder-sheet .hf-tl-day { margin-bottom: 14px; }
+.hopefinder-sheet .hf-tl-daymark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-tl-daymark::before,
+.hopefinder-sheet .hf-tl-daymark::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--hf-line);
+}
+.hopefinder-sheet .hf-tl-entry {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 8px;
+  margin: 0 0 4px 10px;
+  background: rgba(0, 0, 0, 0.26);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-text-faint);
+  border-radius: 2px;
+}
+.hopefinder-sheet .hf-tl-node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 50%;
+  font-size: 9px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-tl-time {
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  color: var(--hf-text-faint);
+  flex: 0 0 auto;
+}
+.hopefinder-sheet .hf-tl-text { flex: 1; font-size: 12.5px; color: var(--hf-text); }
+.hopefinder-sheet .hf-tl-remove { opacity: 0; }
+.hopefinder-sheet .hf-tl-entry:hover .hf-tl-remove { opacity: 1; }
+.hopefinder-sheet .hf-tl-entry--damage { border-left-color: var(--hf-red); }
+.hopefinder-sheet .hf-tl-entry--damage .hf-tl-node { color: var(--hf-red-hi); border-color: var(--hf-red); }
+.hopefinder-sheet .hf-tl-entry--death { border-left-color: var(--hf-red-hi); background: var(--hf-red-dim); }
+.hopefinder-sheet .hf-tl-entry--death .hf-tl-node { color: var(--hf-red-hi); border-color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-tl-entry--heal { border-left-color: var(--hf-green); }
+.hopefinder-sheet .hf-tl-entry--heal .hf-tl-node { color: var(--hf-green); border-color: var(--hf-green); }
+.hopefinder-sheet .hf-tl-entry--levelup { border-left-color: var(--hf-amber); }
+.hopefinder-sheet .hf-tl-entry--levelup .hf-tl-node { color: var(--hf-amber); border-color: var(--hf-amber); }
+.hopefinder-sheet .hf-tl-entry--loot,
+.hopefinder-sheet .hf-tl-entry--equip { border-left-color: var(--hf-olive); }
+.hopefinder-sheet .hf-tl-entry--note { border-left-color: var(--hf-cyan); }
+.hopefinder-sheet .hf-tl-entry--note .hf-tl-node { color: var(--hf-cyan); }

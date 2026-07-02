@@ -1,0 +1,374 @@
+{
+  "HOPEFINDER": {
+    "License": {
+      "Title": "Hopefinder Survivor Sheet",
+      "Body": "Se requiere una suscripción de Patreon para usar esta ficha de personaje. Conecta tu cuenta para desbloquearla.",
+      "Connect": "Conectar Patreon",
+      "Connecting": "Abriendo Patreon...",
+      "HaveCode": "Tengo un código de autenticación"
+    },
+    "Tabs": {
+      "survivor": "Superviviente",
+      "vitals": "Constantes",
+      "gear": "Equipo",
+      "arsenal": "Arsenal",
+      "medical": "Médico",
+      "skills": "Habilidades",
+      "journal": "Diario",
+      "factions": "Facciones",
+      "timeline": "Cronología"
+    },
+    "Header": {
+      "ChangePortrait": "Cambiar retrato",
+      "Callsign": "apodo / alias",
+      "Hope": "Esperanza",
+      "HopeHint": "Puntos de esperanza. Clic para fijar, clic derecho para gastar.",
+      "HpInputHint": "Escribe una cantidad (12) o un cambio (+5 / -3) y pulsa Enter",
+      "TempHp": "PV temporales"
+    },
+    "Actions": {
+      "Initiative": "Tirar iniciativa",
+      "Rest": "Descansar por la noche"
+    },
+    "State": {
+      "stable": "Estable",
+      "wounded": "Herido",
+      "critical": "Crítico",
+      "down": "Derribado"
+    },
+    "Combat": {
+      "AC": "Defensa",
+      "Perception": "Percep.",
+      "RollPerception": "Tirar Percepción",
+      "Speed": "Velocidad",
+      "OtherSpeeds": "Otros movimientos",
+      "Dying": "Moribundo",
+      "DyingHint": "Condición moribundo. Clic para fijar, clic derecho para reducir.",
+      "Wounded": "Herido",
+      "WoundedHint": "Condición herido. Clic para fijar, clic derecho para reducir."
+    },
+    "Saves": {
+      "fortitude": "Fortaleza",
+      "reflex": "Reflejos",
+      "will": "Voluntad"
+    },
+    "Abilities": {
+      "str": "FUE",
+      "dex": "DES",
+      "con": "CON",
+      "int": "INT",
+      "wis": "SAB",
+      "cha": "CAR"
+    },
+    "Rank": {
+      "untrained": "Sin entrenar",
+      "trained": "Entrenado",
+      "expert": "Experto",
+      "master": "Maestro",
+      "legendary": "Legendario"
+    },
+    "Rarity": {
+      "common": "Común",
+      "uncommon": "Infrecuente",
+      "rare": "Raro",
+      "unique": "Único"
+    },
+    "Conditions": {
+      "Add": "Añadir condición",
+      "BadgeHint": "clic +1 · clic derecho −1"
+    },
+    "Survivor": {
+      "Dossier": "Expediente",
+      "Level": "Nivel",
+      "Archetype": "Arquetipo",
+      "Ancestry": "Origen",
+      "Background": "Trasfondo",
+      "XP": "Experiencia",
+      "Threat": "Nivel de Amenaza",
+      "ThreatHint": "Presión de amenaza actual sobre este superviviente. Clic para fijar.",
+      "Attributes": "Atributos",
+      "RollAbility": "Tirar prueba de característica",
+      "Sitrep": "Informe de Situación",
+      "Senses": "Sentidos",
+      "Languages": "Idiomas",
+      "Resistances": "Resistencias",
+      "Immunities": "Inmunidades",
+      "Weaknesses": "Debilidades",
+      "ActiveEffects": "Efectos activos",
+      "QuickStrikes": "Ataques Rápidos",
+      "NoStrikes": "Sin ataques preparados"
+    },
+    "VitalGroups": {
+      "condition": "Condición Física",
+      "needs": "Necesidades",
+      "mind": "Estado Mental"
+    },
+    "Vitals": {
+      "bleeding": "Sangrado",
+      "infection": "Infección",
+      "trauma": "Trauma",
+      "hunger": "Hambre",
+      "thirst": "Sed",
+      "fatigue": "Fatiga",
+      "sleep": "Falta de Sueño",
+      "temperature": "Temperatura",
+      "stress": "Estrés",
+      "addiction": "Adicción",
+      "morale": "Moral"
+    },
+    "VitalsHint": {
+      "bleeding": "Heridas abiertas y pérdida de sangre",
+      "infection": "Contaminación y avance de la enfermedad",
+      "trauma": "Trauma físico sin tratar",
+      "hunger": "Tiempo sin comida adecuada",
+      "thirst": "Tiempo sin agua potable",
+      "fatigue": "Agotamiento físico",
+      "sleep": "Falta de sueño acumulada",
+      "temperature": "Temperatura corporal — el centro de la escala es seguro",
+      "stress": "Presión psicológica aguda",
+      "addiction": "Dependencia de sustancias",
+      "morale": "Voluntad de seguir adelante — cuanto más alta, mejor"
+    },
+    "Severity": {
+      "clear": "Despejado",
+      "low": "Estable",
+      "elevated": "Elevado",
+      "high": "Grave",
+      "critical": "Crítico"
+    },
+    "Temp": {
+      "Hypothermia": "Hipotermia",
+      "Cold": "Frío",
+      "Normal": "Normal",
+      "Hot": "Sobrecalentado",
+      "Heatstroke": "Golpe de calor"
+    },
+    "VitalsTab": {
+      "Biomonitor": "Biomonitor",
+      "HP": "PV",
+      "Bruises": "Moretones",
+      "BruisesHint": "Moretones sufridos por fallos críticos a mano desnuda o golpes absorbidos por completo"
+    },
+    "Gear": {
+      "Loadout": "Equipamiento",
+      "ArmorSlot": "Armadura",
+      "NoArmor": "Sin armadura puesta",
+      "Hands": "En las manos",
+      "EmptyHands": "Manos libres",
+      "Worn": "Puesto",
+      "Load": "Carga",
+      "Encumbered": "Sobrecargado",
+      "Currency": "Divisas",
+      "Search": "Buscar equipo…",
+      "Favorite": "Favorito",
+      "Integrity": "Integridad",
+      "Use": "Usar",
+      "Equip": "Equipar / guardar",
+      "ToChat": "Mostrar en el chat",
+      "Empty": "Sin coincidencias — la mochila está vacía",
+      "Broken": "Dañado",
+      "Destroyed": "Destruido",
+      "Resistance": "Resistencia"
+    },
+    "GearFilters": {
+      "all": "Todo",
+      "weapon": "Armas",
+      "armor": "Armadura",
+      "consumable": "Consumibles",
+      "ammo": "Munición",
+      "equipment": "Equipo",
+      "container": "Contenedores",
+      "favorites": "★ Favoritos"
+    },
+    "ItemType": {
+      "weapon": "Arma",
+      "armor": "Armadura",
+      "shield": "Escudo",
+      "equipment": "Equipo",
+      "consumable": "Consumible",
+      "ammo": "Munición",
+      "treasure": "Objetos de valor",
+      "backpack": "Contenedor",
+      "kit": "Kit",
+      "book": "Libro"
+    },
+    "Arsenal": {
+      "Stowed": "Guardada",
+      "Damage": "Daño",
+      "Critical": "Crítico",
+      "BaseDamage": "Daño base",
+      "NoAmmo": "— sin munición —",
+      "Repair": "Reparar",
+      "Empty": "No hay armas disponibles. Añade armas desde el compendio o la pestaña Equipo."
+    },
+    "ActionFx": {
+      "ConfigTitle": "FX de Arma",
+      "ConfigHint": "Asigna un sonido e imagen a las tiradas de esta arma",
+      "Attack1": "1er Ataque",
+      "Attack2": "2º Ataque (PAM -5)",
+      "Attack3": "3er Ataque (PAM -10)",
+      "Damage": "Daño",
+      "Critical": "Crítico",
+      "Playlist": "Lista de reproducción",
+      "Track": "Pista",
+      "NonePlaylist": "— Ninguna —",
+      "RandomTrack": "🎲 Pista aleatoria",
+      "Volume": "Volumen",
+      "Preview": "Escuchar",
+      "Clear": "Borrar",
+      "ClearAll": "Borrar todo",
+      "Save": "Guardar",
+      "PickFirst": "Selecciona primero una lista de reproducción y una pista.",
+      "Saved": "FX de arma guardado para {item}",
+      "Image": "Imagen de acción",
+      "ImageHint": "Se muestra como overlay a pantalla completa mediante vnd-enhanced (si está instalado) cuando esta arma tira dados",
+      "PickImage": "Elegir imagen",
+      "ClearImage": "Quitar imagen"
+    },
+    "Medical": {
+      "Triage": "Triaje de Campo",
+      "Medicine": "Medicina",
+      "RollMedicine": "Tirar Medicina",
+      "TreatWounds": "Tratar Heridas",
+      "FirstAid": "Primeros Auxilios",
+      "Supplies": "Suministros Médicos",
+      "Apply": "Aplicar",
+      "NoSupplies": "No hay suministros médicos en la mochila",
+      "Provisions": "Provisiones",
+      "Consume": "Consumir",
+      "NoProvisions": "No se ha localizado comida ni agua"
+    },
+    "Skills": {
+      "RollHint": "Clic para tirar",
+      "Lore": "Saber"
+    },
+    "Journal": {
+      "Notes": "Notas",
+      "Story": "Historia",
+      "People": "Personas",
+      "Objectives": "Objetivos",
+      "FieldNotes": "Notas de Campo",
+      "SurvivorStory": "Historia del Superviviente",
+      "Appearance": "Descripción",
+      "Contacts": "Contactos",
+      "ContactName": "Nombre",
+      "ContactWhere": "Visto por última vez",
+      "ContactStatus": "Estado",
+      "NoContacts": "Sin contactos registrados",
+      "Allies": "Aliados",
+      "Enemies": "Enemigos",
+      "ObjectivePlaceholder": "Describe el objetivo…",
+      "NoObjectives": "Sin objetivos activos"
+    },
+    "Factions": {
+      "Title": "Relación con Facciones",
+      "Add": "Nueva facción",
+      "NamePlaceholder": "Nombre de la facción…",
+      "NotesPlaceholder": "Acuerdos, deudas, incidentes…",
+      "Empty": "No hay facciones conocidas. Registra los grupos que este superviviente ha encontrado."
+    },
+    "Standing": {
+      "hostile": "Hostil",
+      "unfriendly": "Adversa",
+      "wary": "Recelosa",
+      "neutral": "Neutral",
+      "friendly": "Amistosa",
+      "trusted": "De confianza",
+      "allied": "Aliada"
+    },
+    "TimelineTab": {
+      "Title": "Registro de Operaciones",
+      "NotePlaceholder": "Registrar una entrada manual…",
+      "Log": "Registrar",
+      "Clear": "Borrar todo el registro",
+      "Empty": "Aún no hay eventos. El daño, la curación, el botín y las subidas de nivel se registran automáticamente."
+    },
+    "Timeline": {
+      "TookDamage": "Recibió {amount} de daño",
+      "Healed": "Recuperó {amount} PV",
+      "WentDown": "CAYÓ DERRIBADO — recibió {amount} de daño",
+      "LevelUp": "Alcanzó el nivel {level}",
+      "Acquired": "Consiguió: {item}",
+      "Discarded": "Descartó: {item}",
+      "Used": "Usó: {item}",
+      "Equipped": "Cambió el equipamiento: {item}",
+      "ConditionGained": "Condición adquirida: {condition}",
+      "FactionShift": "Cambió la relación con {faction}"
+    },
+    "Tip": {
+      "Damage": "Daño",
+      "Range": "Alcance",
+      "Reload": "Recarga",
+      "DexCap": "Lím. DES",
+      "Uses": "Usos",
+      "Qty": "Cant.",
+      "Integrity": "Integridad",
+      "Value": "Valor"
+    },
+    "Common": {
+      "Add": "Añadir",
+      "Edit": "Editar",
+      "Delete": "Eliminar",
+      "Remove": "Quitar"
+    },
+    "Dialog": {
+      "DeleteTitle": "Descartar objeto",
+      "DeleteBody": "¿Descartar {item} permanentemente?",
+      "ClearLogTitle": "Borrar registro de operaciones",
+      "ClearLogBody": "Esto elimina todas las entradas de la cronología de este superviviente. ¿Continuar?",
+      "ResolveHitTitle": "Resolver Impacto en la Armadura",
+      "Damage": "Daño infligido",
+      "Resistance": "Resistencia de la Armadura",
+      "TypeCovered": "El tipo de daño está cubierto por la armadura",
+      "CriticalHit": "Golpe crítico",
+      "Helmet": "La armadura tiene el rasgo Casco",
+      "Apply": "Aplicar",
+      "SetResistanceTitle": "Resistencia de la Armadura",
+      "ResistanceValue": "Valor de resistencia",
+      "ResistanceTypes": "Tipos de daño cubiertos (vacío = todos)"
+    },
+    "Warn": {
+      "ActionUnavailable": "La acción de PF2e \"{action}\" no está disponible en esta versión del sistema.",
+      "CannotRepairDestroyed": "{item} está destruido y no puede repararse — debe reconstruirse a partir de piezas.",
+      "CannotEquipDestroyed": "{item} está destruido y no puede equiparse.",
+      "NothingToRepair": "{item} no tiene Integridad registrada.",
+      "NoTarget": "No hay ningún objetivo seleccionado."
+    },
+    "Chat": {
+      "Ding": "{item} recibe un Golpe — Integridad {dings}/{max}",
+      "Broken": "{item} ahora está DAÑADO",
+      "Destroyed": "{item} está DESTRUIDO y fue desequipado",
+      "Repaired": "{item} reparado: +{amount} de Integridad ({dings}/{max})",
+      "RepairCriticalFailure": "El intento de reparación sale mal y daña aún más a {item}",
+      "CriticalMissBruise": "{actor} falla a mano desnuda y sufre un moretón",
+      "CombatEndTitle": "Fin del Combate — Revisión de Equipo",
+      "CombatEndPass": "El equipo de {actor} resistió (tirada plana {total} vs CD {dc})",
+      "CombatEndFail": "El equipo de {actor} sufrió daños: {item} recibe un Golpe (tirada plana {total} vs CD {dc})",
+      "CombatEndCritFail": "¡El equipo de {actor} sufrió graves daños! {n} objetos dañados: {items} (tirada plana {total} vs CD {dc})",
+      "CombatEndNoGear": "{actor} no tiene equipo Preparado en riesgo",
+      "ApplyDings": "Aplicar {n} Golpe(s)",
+      "AbsorbedFully": "La armadura de {actor} absorbe el golpe — recibe 1 moretón en su lugar"
+    },
+    "Backdrop": {
+      "Title": "Fondo de la Hoja",
+      "Path": "Imagen / vídeo",
+      "Browse": "Explorar archivos",
+      "Opacity": "Visibilidad del fondo",
+      "Save": "Guardar",
+      "Clear": "Limpiar"
+    },
+    "Settings": {
+      "Animations": "Animaciones de la interfaz",
+      "AnimationsHint": "Animaciones de entrada, pestañas y respuesta. Desactívalas para máximo rendimiento.",
+      "UiAudio": "Audio de la interfaz",
+      "UiAudioHint": "Clics y alertas sintetizados sutiles al interactuar. No usa archivos de audio.",
+      "UiAudioVolume": "Volumen del audio de la interfaz",
+      "ChatTheme": "Tema HUD del chat",
+      "ChatThemeHint": "Reestiliza los mensajes de chat y las tarjetas de tirada con el look HUD militar de la hoja Hopefinder.",
+      "HighContrast": "Modo de alto contraste",
+      "HighContrastHint": "Bordes y texto más marcados; elimina el grano de película y el viñeteado.",
+      "FontScale": "Escala del texto de la hoja (%)",
+      "FontScaleHint": "Escala todo el texto dentro de la hoja de Hopefinder."
+    }
+  }
+}

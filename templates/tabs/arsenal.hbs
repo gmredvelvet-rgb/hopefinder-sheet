@@ -1,0 +1,108 @@
+{{!-- ══════════ ARSENAL — weapon systems ══════════ --}}
+<div class="hf-arsenal-layout">
+  {{#if strikes.length}}
+    {{#each strikes}}
+      <article class="hf-panel hf-weapon {{#unless this.ready}}hf-weapon--stowed{{/unless}}"
+               {{#if this.itemId}}data-item-id="{{this.itemId}}"{{/if}}>
+
+        <div class="hf-weapon-visual" {{#if this.itemId}}data-hf-tip="{{this.itemId}}"{{/if}}>
+          <img src="{{this.img}}" alt="{{this.label}}">
+          {{#if this.destroyed}}
+            <span class="hf-status-badge hf-status-badge--destroyed">{{localize 'HOPEFINDER.Gear.Destroyed'}}</span>
+          {{else if this.broken}}
+            <span class="hf-status-badge hf-status-badge--broken">{{localize 'HOPEFINDER.Gear.Broken'}}</span>
+          {{/if}}
+          {{#if this.integrityPct}}
+            <div class="hf-weapon-integrity" title="{{localize 'HOPEFINDER.Gear.Integrity'}}: {{this.integrityPct}}%">
+              <div style="width: {{this.integrityPct}}%;"></div>
+            </div>
+          {{/if}}
+        </div>
+
+        <div class="hf-weapon-main">
+          <header class="hf-weapon-head">
+            <h3>{{this.label}}</h3>
+            {{#unless this.ready}}<span class="hf-weapon-badge">{{localize 'HOPEFINDER.Arsenal.Stowed'}}</span>{{/unless}}
+            {{#if this.isRanged}}<span class="hf-weapon-badge hf-weapon-badge--range"><i class="fas fa-bullseye"></i> {{this.range}} ft</span>{{/if}}
+            {{#if this.reload}}<span class="hf-weapon-badge"><i class="fas fa-rotate"></i> {{this.reload}}</span>{{/if}}
+          </header>
+
+          {{#if this.traits.length}}
+            <div class="hf-chip-row">
+              {{#each this.traits}}<span class="hf-chip">{{this}}</span>{{/each}}
+            </div>
+          {{/if}}
+
+          <div class="hf-weapon-fire">
+            {{#each this.variants}}
+              <button type="button" class="hf-btn hf-btn--attack {{#if (hfEq this.idx 0)}}primary{{/if}}"
+                      data-action="strike-attack" data-idx="{{../idx}}" data-variant="{{this.idx}}" {{#if ../destroyed}}disabled{{/if}}>
+                {{#if (hfEq this.idx 0)}}<i class="fas fa-crosshairs"></i>{{/if}}{{this.label}}
+              </button>
+            {{/each}}
+            <button type="button" class="hf-btn hf-btn--damage" data-action="strike-damage" data-idx="{{this.idx}}" {{#if this.destroyed}}disabled{{/if}}>
+              <i class="fas fa-burst"></i>{{localize 'HOPEFINDER.Arsenal.Damage'}}
+            </button>
+            <button type="button" class="hf-btn hf-btn--crit" data-action="strike-critical" data-idx="{{this.idx}}" {{#if this.destroyed}}disabled{{/if}}>
+              <i class="fas fa-skull"></i>{{localize 'HOPEFINDER.Arsenal.Critical'}}
+            </button>
+          </div>
+
+          <footer class="hf-weapon-foot">
+            {{#if this.damagePreview}}
+              <span class="hf-weapon-dmg" title="{{localize 'HOPEFINDER.Arsenal.BaseDamage'}}">
+                <i class="fas fa-bolt"></i>{{this.damagePreview}}
+              </span>
+            {{/if}}
+
+            {{#if this.hasAmmo}}
+              <div class="hf-ammo">
+                <i class="fas fa-box-archive"></i>
+                {{#if this.ammoOptions.length}}
+                  <select data-change="ammo-select" data-idx="{{this.idx}}" {{#unless ../editable}}disabled{{/unless}}>
+                    <option value="">{{localize 'HOPEFINDER.Arsenal.NoAmmo'}}</option>
+                    {{#each this.ammoOptions}}
+                      <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+                    {{/each}}
+                  </select>
+                {{/if}}
+                {{#if this.ammoCount includeZero=true}}
+                  <span class="hf-ammo-count {{#unless this.ammoCount}}empty{{/unless}}">{{this.ammoCount}}</span>
+                {{/if}}
+              </div>
+            {{/if}}
+
+            {{#if this.auxiliary.length}}
+              <div class="hf-weapon-aux">
+                {{#each this.auxiliary}}
+                  <button type="button" class="hf-btn hf-btn--ghost" data-action="strike-aux"
+                          data-idx="{{../idx}}" data-aux="{{this.idx}}">{{this.label}}</button>
+                {{/each}}
+              </div>
+            {{/if}}
+
+            {{#if this.itemId}}
+              <div class="hf-weapon-manage">
+                {{#if this.integrityPct}}
+                  <button type="button" class="hf-btn hf-btn--ghost" data-action="item-repair" {{#if this.destroyed}}disabled{{/if}}
+                          title="{{localize 'HOPEFINDER.Arsenal.Repair'}}"><i class="fas fa-screwdriver-wrench"></i></button>
+                {{/if}}
+                <button type="button" class="hf-btn hf-btn--ghost" data-action="item-equip" {{#if this.destroyed}}disabled{{/if}}
+                        title="{{localize 'HOPEFINDER.Gear.Equip'}}"><i class="fas fa-hand"></i></button>
+                <button type="button" class="hf-btn hf-btn--ghost {{#if this.hasFx}}hf-btn--fx-active{{/if}}" data-action="weapon-fx-config"
+                        title="{{localize 'HOPEFINDER.ActionFx.ConfigTitle'}}"><i class="fas fa-music"></i></button>
+                <button type="button" class="hf-btn hf-btn--ghost" data-action="item-open"
+                        title="{{localize 'HOPEFINDER.Common.Edit'}}"><i class="fas fa-pen"></i></button>
+              </div>
+            {{/if}}
+          </footer>
+        </div>
+      </article>
+    {{/each}}
+  {{else}}
+    <div class="hf-empty">
+      <i class="fas fa-crosshairs"></i>
+      <p>{{localize 'HOPEFINDER.Arsenal.Empty'}}</p>
+    </div>
+  {{/if}}
+</div>

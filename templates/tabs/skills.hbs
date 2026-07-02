@@ -1,0 +1,23 @@
+{{!-- ══════════ SKILLS — training matrix ══════════ --}}
+<div class="hf-skills-layout">
+  <div class="hf-skills-grid">
+    {{#each skills}}
+      <button type="button" class="hf-skill-card hf-rank--{{this.rank}} {{#if this.lore}}hf-skill--lore{{/if}}"
+              data-action="roll-skill" data-skill="{{this.key}}"
+              title="{{localize 'HOPEFINDER.Skills.RollHint'}}">
+        <div class="hf-skill-top">
+          <span class="hf-skill-name">{{this.label}}</span>
+          <span class="hf-skill-attr">{{this.attribute}}</span>
+        </div>
+        <div class="hf-skill-mod">{{this.modStr}}</div>
+        <div class="hf-skill-rank">
+          <div class="hf-rank-pips">
+            {{#each this.rankPips}}<span class="{{#if this.filled}}filled{{/if}}"></span>{{/each}}
+          </div>
+          <span class="hf-skill-ranklabel">{{this.rankLabel}}</span>
+        </div>
+        {{#if this.lore}}<span class="hf-skill-lorebadge">{{localize 'HOPEFINDER.Skills.Lore'}}</span>{{/if}}
+      </button>
+    {{/each}}
+  </div>
+</div>

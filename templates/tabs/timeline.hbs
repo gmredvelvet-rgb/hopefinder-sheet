@@ -1,0 +1,43 @@
+{{!-- ══════════ TIMELINE — operations log ══════════ --}}
+<div class="hf-timeline-layout">
+
+  <div class="hf-tl-toolbar">
+    <h2 class="hf-panel-title"><i class="fas fa-clock-rotate-left"></i>{{localize 'HOPEFINDER.TimelineTab.Title'}}</h2>
+    {{#if editable}}
+      <div class="hf-tl-composer">
+        <input type="text" maxlength="200" placeholder="{{localize 'HOPEFINDER.TimelineTab.NotePlaceholder'}}">
+        <button type="button" class="hf-btn" data-action="tl-note">
+          <i class="fas fa-pen"></i>{{localize 'HOPEFINDER.TimelineTab.Log'}}
+        </button>
+      </div>
+      <button type="button" class="hf-btn hf-btn--ghost hf-danger" data-action="tl-clear"
+              title="{{localize 'HOPEFINDER.TimelineTab.Clear'}}"><i class="fas fa-eraser"></i></button>
+    {{/if}}
+  </div>
+
+  {{#if timeline.length}}
+    <div class="hf-tl-scroll">
+      {{#each timeline}}
+        <div class="hf-tl-day">
+          <div class="hf-tl-daymark"><span>{{this.day}}</span></div>
+          {{#each this.events}}
+            <div class="hf-tl-entry hf-tl-entry--{{this.type}}">
+              <span class="hf-tl-node"><i class="fas {{this.icon}}"></i></span>
+              <span class="hf-tl-time">{{this.time}}</span>
+              <span class="hf-tl-text">{{this.text}}</span>
+              {{#if ../../editable}}
+                <button type="button" class="hf-icon-btn hf-tl-remove" data-action="tl-remove" data-t="{{this.t}}"
+                        title="{{localize 'HOPEFINDER.Common.Remove'}}"><i class="fas fa-xmark"></i></button>
+              {{/if}}
+            </div>
+          {{/each}}
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <div class="hf-empty">
+      <i class="fas fa-clock-rotate-left"></i>
+      <p>{{localize 'HOPEFINDER.TimelineTab.Empty'}}</p>
+    </div>
+  {{/if}}
+</div>

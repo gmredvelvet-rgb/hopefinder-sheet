@@ -1,0 +1,73 @@
+<form class="hf-fx-form" autocomplete="off" onsubmit="event.preventDefault();">
+
+  <p class="hf-fx-hint">{{localize 'HOPEFINDER.ActionFx.ConfigHint'}} — <strong>{{itemName}}</strong></p>
+
+  <div class="hf-fx-tabs">
+    {{#each tabs}}
+      <button type="button" class="hf-fx-tab {{#if this.active}}active{{/if}} {{#if this.hasSound}}has-sound{{/if}}"
+              data-tab="{{this.key}}" title="{{this.label}}">
+        <i class="fas {{this.icon}}"></i>
+        <span class="hf-fx-tab-lbl">{{this.label}}</span>
+      </button>
+    {{/each}}
+  </div>
+
+  {{#each tabs}}
+    <div class="hf-fx-panel {{#if this.active}}active{{/if}}" data-tab-panel="{{this.key}}">
+      <div class="hf-fx-field">
+        <label><i class="fas fa-list"></i>{{localize 'HOPEFINDER.ActionFx.Playlist'}}</label>
+        <select data-field="playlist" name="{{this.key}}.playlist">
+          <option value="">{{localize 'HOPEFINDER.ActionFx.NonePlaylist'}}</option>
+          {{#each ../playlists}}
+            <option value="{{this.id}}" {{#if (hfEq this.id ../playlistId)}}selected{{/if}}>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="hf-fx-field">
+        <label><i class="fas fa-music"></i>{{localize 'HOPEFINDER.ActionFx.Track'}}</label>
+        <select data-field="track" name="{{this.key}}.track">
+          <option value="">{{localize 'HOPEFINDER.ActionFx.NonePlaylist'}}</option>
+          {{#if this.tracks.length}}
+            <option value="random-track" {{#if (hfEq this.trackId "random-track")}}selected{{/if}}>{{localize 'HOPEFINDER.ActionFx.RandomTrack'}}</option>
+          {{/if}}
+          {{#each this.tracks}}
+            <option value="{{this.id}}" {{#if (hfEq this.id ../trackId)}}selected{{/if}}>{{this.name}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="hf-fx-field">
+        <label><i class="fas fa-volume-high"></i>{{localize 'HOPEFINDER.ActionFx.Volume'}}: <span class="hf-fx-vol-val">{{this.volumePct}}%</span></label>
+        <input type="range" data-field="volume" name="{{this.key}}.volume" min="0" max="1" step="0.05" value="{{this.volume}}">
+      </div>
+
+      <div class="hf-fx-buttons">
+        <button type="button" class="hf-btn hf-btn--ghost hf-fx-preview"><i class="fas fa-play"></i>{{localize 'HOPEFINDER.ActionFx.Preview'}}</button>
+        <button type="button" class="hf-btn hf-btn--ghost hf-fx-clear-tab" data-clear-tab="{{this.key}}"><i class="fas fa-xmark"></i>{{localize 'HOPEFINDER.ActionFx.Clear'}}</button>
+      </div>
+    </div>
+  {{/each}}
+
+  <hr class="hf-fx-divider">
+
+  <div class="hf-fx-image-group">
+    <label><i class="fas fa-image"></i>{{localize 'HOPEFINDER.ActionFx.Image'}}</label>
+    <div class="hf-fx-img-row">
+      <img class="hf-fx-img-preview" src="{{image}}"{{#unless image}} style="display:none;"{{/unless}} alt="">
+      <input type="hidden" name="image" value="{{image}}">
+      <button type="button" class="hf-btn hf-btn--ghost hf-fx-img-pick" title="{{localize 'HOPEFINDER.ActionFx.PickImage'}}">
+        <i class="fas fa-folder-open"></i>
+      </button>
+      <button type="button" class="hf-btn hf-btn--ghost hf-fx-img-clear" title="{{localize 'HOPEFINDER.ActionFx.ClearImage'}}">
+        <i class="fas fa-xmark"></i>
+      </button>
+    </div>
+    <p class="hf-fx-img-hint">{{localize 'HOPEFINDER.ActionFx.ImageHint'}}</p>
+  </div>
+
+  <div class="hf-fx-buttons hf-fx-bottom-buttons">
+    <button type="submit" class="hf-btn"><i class="fas fa-save"></i>{{localize 'HOPEFINDER.ActionFx.Save'}}</button>
+    <button type="button" class="hf-btn hf-btn--ghost hf-fx-clear-all"><i class="fas fa-trash"></i>{{localize 'HOPEFINDER.ActionFx.ClearAll'}}</button>
+  </div>
+</form>

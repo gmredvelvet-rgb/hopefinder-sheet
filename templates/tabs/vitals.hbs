@@ -1,0 +1,71 @@
+{{!-- ══════════ VITAL SIGNS — biomonitor ══════════ --}}
+<div class="hf-vitals-layout">
+
+  <section class="hf-panel hf-biomonitor">
+    <h2 class="hf-panel-title"><i class="fas fa-heart-pulse"></i>{{localize 'HOPEFINDER.VitalsTab.Biomonitor'}}</h2>
+    <div class="hf-bio-readout">
+      <div class="hf-ecg" aria-hidden="true">
+        <svg viewBox="0 0 200 40" preserveAspectRatio="none">
+          <path class="hf-ecg-path" d="M0,20 L28,20 34,20 38,8 42,32 46,16 50,20 78,20 84,20 88,8 92,32 96,16 100,20 128,20 134,20 138,8 142,32 146,16 150,20 178,20 184,20 188,8 192,32 196,16 200,20" />
+        </svg>
+      </div>
+      <div class="hf-bio-hp">
+        <span class="hf-bio-hp-value">{{combat.hp.value}}</span>
+        <span class="hf-bio-hp-label">/ {{combat.hp.max}} {{localize 'HOPEFINDER.VitalsTab.HP'}}</span>
+        <span class="hf-bio-state hf-lamp--{{state.id}}">{{state.label}}</span>
+        <span class="hf-bio-bruises" title="{{localize 'HOPEFINDER.VitalsTab.BruisesHint'}}">
+          <i class="fas fa-hand-fist"></i>
+          {{#if editable}}
+            <button type="button" class="hf-vital-step" data-action="bruise-step" data-delta="-1"><i class="fas fa-minus"></i></button>
+          {{/if}}
+          <span class="hf-bio-bruises-value">{{combat.bruises}}</span>
+          {{#if editable}}
+            <button type="button" class="hf-vital-step" data-action="bruise-step" data-delta="1"><i class="fas fa-plus"></i></button>
+          {{/if}}
+          <span class="hf-bio-bruises-label">{{localize 'HOPEFINDER.VitalsTab.Bruises'}}</span>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  {{#each vitalGroups}}
+    <section class="hf-panel hf-vital-group" data-group="{{this.id}}">
+      <h2 class="hf-panel-title">
+        {{#if (hfEq this.id "condition")}}<i class="fas fa-kit-medical"></i>{{/if}}
+        {{#if (hfEq this.id "needs")}}<i class="fas fa-fire-burner"></i>{{/if}}
+        {{#if (hfEq this.id "mind")}}<i class="fas fa-brain"></i>{{/if}}
+        {{this.label}}
+      </h2>
+      <div class="hf-vital-list">
+        {{#each this.vitals}}
+          <div class="hf-vital hf-vital--{{this.severity}} hf-vital-kind--{{this.kind}}"
+               data-value="{{this.value}}" title="{{this.hint}}">
+            <div class="hf-vital-head">
+              <i class="fas {{this.icon}}"></i>
+              <span class="hf-vital-label">{{this.label}}</span>
+              <span class="hf-vital-status">{{this.statusLabel}}</span>
+            </div>
+            <div class="hf-vital-body">
+              {{#if ../../editable}}
+                <button type="button" class="hf-vital-step" data-action="vital-step"
+                        data-vital="{{this.key}}" data-delta="-1"><i class="fas fa-minus"></i></button>
+              {{/if}}
+              <div class="hf-vital-meter">
+                {{#each this.segments}}
+                  <button type="button" class="hf-vital-seg {{#if this.filled}}filled{{/if}}"
+                          data-action="vital-seg" data-vital="{{../key}}" data-index="{{this.index}}"
+                          {{#unless ../../../editable}}disabled{{/unless}}></button>
+                {{/each}}
+              </div>
+              {{#if ../../editable}}
+                <button type="button" class="hf-vital-step" data-action="vital-step"
+                        data-vital="{{this.key}}" data-delta="1"><i class="fas fa-plus"></i></button>
+              {{/if}}
+              <span class="hf-vital-num">{{this.value}}<em>/{{this.max}}</em></span>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/each}}
+</div>

@@ -1,0 +1,122 @@
+{{!-- ══════════ JOURNAL — field notes ══════════ --}}
+<div class="hf-journal-layout">
+
+  <nav class="hf-subnav">
+    <button type="button" class="hf-subnav-item" data-action="journal-tab" data-journal-tab="notes">
+      <i class="fas fa-pen"></i>{{localize 'HOPEFINDER.Journal.Notes'}}
+    </button>
+    <button type="button" class="hf-subnav-item" data-action="journal-tab" data-journal-tab="story">
+      <i class="fas fa-book"></i>{{localize 'HOPEFINDER.Journal.Story'}}
+    </button>
+    <button type="button" class="hf-subnav-item" data-action="journal-tab" data-journal-tab="people">
+      <i class="fas fa-users"></i>{{localize 'HOPEFINDER.Journal.People'}}
+    </button>
+    <button type="button" class="hf-subnav-item" data-action="journal-tab" data-journal-tab="objectives">
+      <i class="fas fa-list-check"></i>{{localize 'HOPEFINDER.Journal.Objectives'}}
+    </button>
+  </nav>
+
+  <div class="hf-journal-panels">
+
+    <div class="hf-journal-panel" data-journal-panel="notes">
+      <section class="hf-panel hf-paper">
+        <h2 class="hf-panel-title"><i class="fas fa-pen"></i>{{localize 'HOPEFINDER.Journal.FieldNotes'}}</h2>
+        {{editor journal.notes target="system.details.biography.campaignNotes" button=true editable=editable engine="prosemirror"}}
+      </section>
+    </div>
+
+    <div class="hf-journal-panel" data-journal-panel="story">
+      <section class="hf-panel hf-paper">
+        <h2 class="hf-panel-title"><i class="fas fa-book"></i>{{localize 'HOPEFINDER.Journal.SurvivorStory'}}</h2>
+        {{editor journal.story target="system.details.biography.backstory" button=true editable=editable engine="prosemirror"}}
+      </section>
+      <section class="hf-panel hf-paper">
+        <h2 class="hf-panel-title"><i class="fas fa-user"></i>{{localize 'HOPEFINDER.Journal.Appearance'}}</h2>
+        {{editor journal.appearance target="system.details.biography.appearance" button=true editable=editable engine="prosemirror"}}
+      </section>
+    </div>
+
+    <div class="hf-journal-panel" data-journal-panel="people">
+      <section class="hf-panel">
+        <h2 class="hf-panel-title">
+          <i class="fas fa-address-book"></i>{{localize 'HOPEFINDER.Journal.Contacts'}}
+          {{#if editable}}
+            <button type="button" class="hf-btn hf-btn--ghost hf-title-action" data-action="contact-add">
+              <i class="fas fa-plus"></i>{{localize 'HOPEFINDER.Common.Add'}}
+            </button>
+          {{/if}}
+        </h2>
+        {{#if journal.contacts.length}}
+          <div class="hf-contact-list">
+            {{#each journal.contacts}}
+              <div class="hf-contact">
+                <i class="fas fa-user-tag"></i>
+                <input type="text" data-change="contact-field" data-id="{{this.id}}" data-field="name"
+                       value="{{this.name}}" placeholder="{{localize 'HOPEFINDER.Journal.ContactName'}}"
+                       {{#unless ../editable}}disabled{{/unless}}>
+                <input type="text" data-change="contact-field" data-id="{{this.id}}" data-field="where"
+                       value="{{this.where}}" placeholder="{{localize 'HOPEFINDER.Journal.ContactWhere'}}"
+                       {{#unless ../editable}}disabled{{/unless}}>
+                <input type="text" data-change="contact-field" data-id="{{this.id}}" data-field="status"
+                       value="{{this.status}}" placeholder="{{localize 'HOPEFINDER.Journal.ContactStatus'}}"
+                       {{#unless ../editable}}disabled{{/unless}}>
+                {{#if ../editable}}
+                  <button type="button" class="hf-icon-btn hf-danger" data-action="contact-remove" data-id="{{this.id}}">
+                    <i class="fas fa-xmark"></i>
+                  </button>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          <p class="hf-empty">{{localize 'HOPEFINDER.Journal.NoContacts'}}</p>
+        {{/if}}
+      </section>
+
+      <section class="hf-panel hf-paper">
+        <h2 class="hf-panel-title"><i class="fas fa-handshake-angle"></i>{{localize 'HOPEFINDER.Journal.Allies'}}</h2>
+        {{editor journal.allies target="system.details.biography.allies" button=true editable=editable engine="prosemirror"}}
+      </section>
+      <section class="hf-panel hf-paper">
+        <h2 class="hf-panel-title"><i class="fas fa-skull-crossbones"></i>{{localize 'HOPEFINDER.Journal.Enemies'}}</h2>
+        {{editor journal.enemies target="system.details.biography.enemies" button=true editable=editable engine="prosemirror"}}
+      </section>
+    </div>
+
+    <div class="hf-journal-panel" data-journal-panel="objectives">
+      <section class="hf-panel">
+        <h2 class="hf-panel-title">
+          <i class="fas fa-list-check"></i>{{localize 'HOPEFINDER.Journal.Objectives'}}
+          <span class="hf-obj-count">{{journal.objectivesDone}}/{{journal.objectives.length}}</span>
+          {{#if editable}}
+            <button type="button" class="hf-btn hf-btn--ghost hf-title-action" data-action="objective-add">
+              <i class="fas fa-plus"></i>{{localize 'HOPEFINDER.Common.Add'}}
+            </button>
+          {{/if}}
+        </h2>
+        {{#if journal.objectives.length}}
+          <div class="hf-objective-list">
+            {{#each journal.objectives}}
+              <div class="hf-objective {{#if this.done}}done{{/if}}">
+                <button type="button" class="hf-obj-check" data-action="objective-toggle" data-id="{{this.id}}"
+                        {{#unless ../editable}}disabled{{/unless}}>
+                  <i class="fas {{#if this.done}}fa-square-check{{else}}fa-square{{/if}}"></i>
+                </button>
+                <input type="text" data-change="objective-text" data-id="{{this.id}}" value="{{this.text}}"
+                       placeholder="{{localize 'HOPEFINDER.Journal.ObjectivePlaceholder'}}"
+                       {{#unless ../editable}}disabled{{/unless}}>
+                {{#if ../editable}}
+                  <button type="button" class="hf-icon-btn hf-danger" data-action="objective-remove" data-id="{{this.id}}">
+                    <i class="fas fa-xmark"></i>
+                  </button>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+        {{else}}
+          <p class="hf-empty">{{localize 'HOPEFINDER.Journal.NoObjectives'}}</p>
+        {{/if}}
+      </section>
+    </div>
+  </div>
+</div>

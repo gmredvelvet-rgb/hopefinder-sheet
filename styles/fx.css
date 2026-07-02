@@ -1,0 +1,161 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOPEFINDER SURVIVOR SHEET — FX
+   Keyframes, global state themes, flash overlay, accessibility.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Keyframes ─────────────────────────────────────────────── */
+@keyframes hf-lamp-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+@keyframes hf-hp-throb {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5); }
+}
+@keyframes hf-seg-throb {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.6); }
+}
+@keyframes hf-ecg-run {
+  0% { stroke-dashoffset: 460; }
+  70% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes hf-flash-pop {
+  0% { opacity: 0.85; }
+  100% { opacity: 0; }
+}
+@keyframes hf-state-pulse {
+  0%, 100% { box-shadow: inset 0 0 60px rgba(194, 59, 46, 0); }
+  50% { box-shadow: inset 0 0 90px rgba(194, 59, 46, 0.22); }
+}
+
+/* ── Damage / heal edge flash ──────────────────────────────── */
+.hopefinder-sheet .hf-flash {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  opacity: 0;
+}
+.hopefinder-sheet .hf-flash[data-kind="damage"] {
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(160, 20, 12, 0.55) 100%);
+}
+.hopefinder-sheet .hf-flash[data-kind="heal"] {
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(60, 140, 80, 0.4) 100%);
+}
+.hopefinder-sheet .hf-flash--on {
+  animation: hf-flash-pop 0.7s ease-out forwards;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL STATE THEMES — the whole interface reacts to condition
+   ═══════════════════════════════════════════════════════════════ */
+
+/* WOUNDED — amber undertone */
+.hopefinder-sheet .hf-root.hf-state-wounded {
+  --hf-accent: var(--hf-amber);
+  --hf-accent-hi: var(--hf-amber-hi);
+  --hf-accent-dim: var(--hf-amber-dim);
+}
+.hopefinder-sheet .hf-state-wounded .hf-portrait-blood { opacity: 0.4; }
+
+/* CRITICAL — red undertone, persistent unease */
+.hopefinder-sheet .hf-root.hf-state-critical {
+  --hf-accent: var(--hf-red);
+  --hf-accent-hi: var(--hf-red-hi);
+  --hf-accent-dim: var(--hf-red-dim);
+}
+.hopefinder-sheet .hf-state-critical .hf-portrait-blood { opacity: 0.75; }
+.hopefinder-sheet .hf-state-critical .hf-vignette {
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(60, 5, 5, 0.65) 100%);
+  animation: hf-state-pulse 2.4s ease-in-out infinite;
+}
+.hopefinder-sheet .hf-state-critical .hf-portrait { filter: saturate(0.6) contrast(1.1); }
+
+/* DOWN — desaturated, dying */
+.hopefinder-sheet .hf-root.hf-state-down {
+  --hf-accent: var(--hf-red);
+  --hf-accent-hi: var(--hf-red-hi);
+  --hf-accent-dim: var(--hf-red-dim);
+}
+.hopefinder-sheet .hf-state-down .hf-portrait {
+  filter: grayscale(0.85) contrast(1.15) brightness(0.8);
+}
+.hopefinder-sheet .hf-state-down .hf-portrait-blood { opacity: 0.9; }
+.hopefinder-sheet .hf-state-down .hf-vignette {
+  background: radial-gradient(ellipse at center, transparent 30%, rgba(30, 2, 2, 0.85) 100%);
+  animation: hf-state-pulse 1.4s ease-in-out infinite;
+}
+.hopefinder-sheet .hf-state-down .hf-ecg-path {
+  stroke: var(--hf-red-hi);
+  animation-duration: 5.5s;
+}
+
+/* INFECTED — sickly green cast */
+.hopefinder-sheet .hf-root.hf-state-infected .hf-grain { opacity: 0.09; }
+.hopefinder-sheet .hf-state-infected .hf-portrait {
+  filter: saturate(0.7) hue-rotate(18deg) contrast(1.05);
+}
+.hopefinder-sheet .hf-state-infected .hf-statusbar {
+  border-bottom-color: rgba(110, 160, 60, 0.35);
+}
+.hopefinder-sheet .hf-state-infected .hf-vignette {
+  background: radial-gradient(ellipse at center, transparent 45%, rgba(40, 60, 10, 0.55) 100%);
+}
+
+/* BLEEDING — red streak on the rail */
+.hopefinder-sheet .hf-state-bleeding .hf-rail {
+  border-right-color: rgba(194, 59, 46, 0.5);
+  box-shadow: inset -12px 0 24px -14px rgba(194, 59, 46, 0.5);
+}
+
+/* ── High contrast mode (client setting) ───────────────────── */
+body.hf-high-contrast .hopefinder-sheet {
+  --hf-text: #d6dcd2;
+  --hf-text-hi: #ffffff;
+  --hf-text-dim: #aab2aa;
+  --hf-text-faint: #8a928a;
+  --hf-line: rgba(230, 235, 228, 0.25);
+  --hf-line-strong: rgba(230, 235, 228, 0.45);
+  --hf-panel: rgba(14, 17, 19, 0.98);
+}
+body.hf-high-contrast .hopefinder-sheet .hf-grain,
+body.hf-high-contrast .hopefinder-sheet .hf-vignette { display: none; }
+
+/* ── Reduced motion ────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hopefinder-sheet *,
+  .hopefinder-sheet *::before,
+  .hopefinder-sheet *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
+  .hopefinder-sheet .hf-ecg-path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+}
+
+/* ── Dings & Broken Gear — chat card buttons (outside .hopefinder-sheet scope) ── */
+.hf-ding-apply-btn,
+.hf-resolve-hit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 4px 6px;
+  background: rgba(194, 59, 46, 0.12);
+  border: 1px solid #c23b2e;
+  border-radius: 2px;
+  color: #e85e4d;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.hf-ding-apply-btn:hover,
+.hf-resolve-hit-btn:hover { background: rgba(194, 59, 46, 0.22); }

@@ -1,0 +1,218 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOPEFINDER SURVIVOR SHEET — CHAT HUD
+   Reskins native Foundry/pf2e chat messages to match the sheet's
+   military-HUD language. Pure CSS on native selectors — no DOM
+   manipulation, no template overrides. Gated behind body.hf-chat-theme
+   (toggled by the "Chat HUD theme" client setting in main.mjs) and
+   scoped to .chat-message so it never leaks into the rest of the UI.
+   Design tokens (--hf-*) are shared with core.css.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Message shell ─────────────────────────────────────────── */
+body.hf-chat-theme .chat-message {
+  position: relative;
+  padding: 8px 10px 8px 12px;
+  margin-bottom: 6px;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-accent);
+  border-radius: var(--hf-radius);
+  box-shadow: var(--hf-shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  color: var(--hf-text);
+  font-family: var(--hf-font-body);
+}
+body.hf-chat-theme .chat-message::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hf-accent-dim), transparent);
+}
+body.hf-chat-theme .chat-message.whisper,
+body.hf-chat-theme .chat-message.message-blind {
+  border-left-color: var(--hf-cyan);
+}
+body.hf-chat-theme .chat-message.emote {
+  border-left-color: var(--hf-text-faint);
+}
+
+/* ── Header: sender / metadata / flavor ───────────────────── */
+body.hf-chat-theme .chat-message .message-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--hf-line);
+  color: var(--hf-text-dim);
+}
+body.hf-chat-theme .chat-message .message-sender {
+  font-family: var(--hf-font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+}
+body.hf-chat-theme .chat-message .message-metadata {
+  margin-left: auto;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--hf-text-faint);
+}
+body.hf-chat-theme .chat-message .message-metadata .message-delete:hover {
+  color: var(--hf-red-hi);
+}
+body.hf-chat-theme .chat-message .flavor-text {
+  font-size: 12px;
+  color: var(--hf-text);
+}
+body.hf-chat-theme .chat-message .flavor-text h4.action {
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hf-accent-hi);
+}
+
+/* Degree-of-success readout */
+body.hf-chat-theme .chat-message .degree-of-success .criticalSuccess {
+  color: var(--hf-olive-hi);
+  text-shadow: 0 0 6px var(--hf-olive-dim);
+}
+body.hf-chat-theme .chat-message .degree-of-success .success { color: var(--hf-olive-hi); }
+body.hf-chat-theme .chat-message .degree-of-success .failure { color: var(--hf-amber); }
+body.hf-chat-theme .chat-message .degree-of-success .criticalFailure {
+  color: var(--hf-red-hi);
+  text-shadow: 0 0 6px var(--hf-red-dim);
+}
+
+/* ── Message content ──────────────────────────────────────── */
+body.hf-chat-theme .chat-message .message-content {
+  color: var(--hf-text);
+  font-size: 12.5px;
+}
+body.hf-chat-theme .chat-message .message-content a.content-link,
+body.hf-chat-theme .chat-message .message-content a.inline-roll {
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-hi);
+}
+body.hf-chat-theme .chat-message .message-content a.content-link:hover,
+body.hf-chat-theme .chat-message .message-content a.inline-roll:hover {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+}
+
+/* ── Item / action chat cards (.pf2e.chat-card) ───────────── */
+body.hf-chat-theme .chat-message .pf2e.chat-card .card-header {
+  border-top: none;
+  border-bottom: 1px solid var(--hf-line);
+  padding-bottom: 6px;
+}
+body.hf-chat-theme .chat-message .pf2e.chat-card .card-header h3 {
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+}
+body.hf-chat-theme .chat-message .pf2e.chat-card .card-header h4.level,
+body.hf-chat-theme .chat-message .pf2e.chat-card .card-header h4.rank {
+  font-family: var(--hf-font-mono);
+  color: var(--hf-amber);
+}
+body.hf-chat-theme .chat-message .pf2e.chat-card .tags {
+  border-bottom: 1px solid var(--hf-line);
+  border-top: none;
+}
+body.hf-chat-theme .chat-message .pf2e.chat-card .tag {
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text);
+  font-family: var(--hf-font-display);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+body.hf-chat-theme .chat-message .pf2e.chat-card footer {
+  border-top: 1px solid var(--hf-line);
+  color: var(--hf-text-faint);
+  font-family: var(--hf-font-mono);
+}
+body.hf-chat-theme .chat-message .pf2e.chat-card footer span {
+  border-right-color: var(--hf-line);
+}
+
+/* ── Dice rolls ────────────────────────────────────────────── */
+body.hf-chat-theme .chat-message .dice-roll {
+  color: var(--hf-text);
+}
+body.hf-chat-theme .chat-message .dice-formula {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-mono);
+}
+body.hf-chat-theme .chat-message .dice-tooltip {
+  background: var(--hf-inset);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+}
+body.hf-chat-theme .chat-message .dice-tooltip .dice-total,
+body.hf-chat-theme .chat-message .dice-total {
+  background: transparent;
+  font-family: var(--hf-font-display);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--hf-text-hi);
+}
+body.hf-chat-theme .chat-message h4.dice-total.success {
+  color: var(--hf-olive-hi);
+  text-shadow: 0 0 6px var(--hf-olive-dim);
+}
+body.hf-chat-theme .chat-message h4.dice-total.failure {
+  color: var(--hf-red-hi);
+  text-shadow: 0 0 6px var(--hf-red-dim);
+}
+body.hf-chat-theme .chat-message .dice-total .total {
+  color: var(--hf-amber-hi);
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+body.hf-chat-theme .chat-message .card-buttons button,
+body.hf-chat-theme .chat-message .message-buttons button {
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.16s ease;
+}
+body.hf-chat-theme .chat-message .card-buttons button:hover,
+body.hf-chat-theme .chat-message .message-buttons button:hover {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+  background: var(--hf-accent-dim);
+  box-shadow: 0 0 10px var(--hf-accent-dim);
+}
+
+/* ── Chat log scrollbar (sidebar tab + popout) ────────────── */
+body.hf-chat-theme #chat-log::-webkit-scrollbar,
+body.hf-chat-theme #chat-popout .chat-message::-webkit-scrollbar { width: 7px; }
+body.hf-chat-theme #chat-log::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
+body.hf-chat-theme #chat-log::-webkit-scrollbar-thumb {
+  background: var(--hf-steel-hi);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+body.hf-chat-theme #chat-log::-webkit-scrollbar-thumb:hover { background: var(--hf-accent); }

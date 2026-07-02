@@ -1,0 +1,374 @@
+{
+  "HOPEFINDER": {
+    "License": {
+      "Title": "Hopefinder Survivor Sheet",
+      "Body": "A Patreon subscription is required to use this character sheet. Connect your account to unlock it.",
+      "Connect": "Connect Patreon",
+      "Connecting": "Opening Patreon...",
+      "HaveCode": "I have an auth code"
+    },
+    "Tabs": {
+      "survivor": "Survivor",
+      "vitals": "Vital Signs",
+      "gear": "Gear",
+      "arsenal": "Arsenal",
+      "medical": "Medical",
+      "skills": "Skills",
+      "journal": "Journal",
+      "factions": "Factions",
+      "timeline": "Timeline"
+    },
+    "Header": {
+      "ChangePortrait": "Change portrait",
+      "Callsign": "callsign / alias",
+      "Hope": "Hope",
+      "HopeHint": "Hope points. Click a marker to set, right-click to spend.",
+      "HpInputHint": "Type an amount (12) or a change (+5 / -3) and press Enter",
+      "TempHp": "Temporary HP"
+    },
+    "Actions": {
+      "Initiative": "Roll initiative",
+      "Rest": "Rest for the night"
+    },
+    "State": {
+      "stable": "Stable",
+      "wounded": "Wounded",
+      "critical": "Critical",
+      "down": "Down"
+    },
+    "Combat": {
+      "AC": "Armor",
+      "Perception": "Percep.",
+      "RollPerception": "Roll Perception",
+      "Speed": "Speed",
+      "OtherSpeeds": "Other movement",
+      "Dying": "Dying",
+      "DyingHint": "Dying condition. Click a marker to set, right-click to reduce.",
+      "Wounded": "Wounded",
+      "WoundedHint": "Wounded condition. Click a marker to set, right-click to reduce."
+    },
+    "Saves": {
+      "fortitude": "Fortitude",
+      "reflex": "Reflex",
+      "will": "Will"
+    },
+    "Abilities": {
+      "str": "STR",
+      "dex": "DEX",
+      "con": "CON",
+      "int": "INT",
+      "wis": "WIS",
+      "cha": "CHA"
+    },
+    "Rank": {
+      "untrained": "Untrained",
+      "trained": "Trained",
+      "expert": "Expert",
+      "master": "Master",
+      "legendary": "Legendary"
+    },
+    "Rarity": {
+      "common": "Common",
+      "uncommon": "Uncommon",
+      "rare": "Rare",
+      "unique": "Unique"
+    },
+    "Conditions": {
+      "Add": "Add condition",
+      "BadgeHint": "click +1 · right-click −1"
+    },
+    "Survivor": {
+      "Dossier": "Dossier",
+      "Level": "Level",
+      "Archetype": "Archetype",
+      "Ancestry": "Origin",
+      "Background": "Background",
+      "XP": "Experience",
+      "Threat": "Threat Level",
+      "ThreatHint": "Current threat pressure on this survivor. Click a marker to set.",
+      "Attributes": "Attributes",
+      "RollAbility": "Roll ability check",
+      "Sitrep": "Sitrep",
+      "Senses": "Senses",
+      "Languages": "Languages",
+      "Resistances": "Resistances",
+      "Immunities": "Immunities",
+      "Weaknesses": "Weaknesses",
+      "ActiveEffects": "Active effects",
+      "QuickStrikes": "Quick Strikes",
+      "NoStrikes": "No readied attacks"
+    },
+    "VitalGroups": {
+      "condition": "Condition",
+      "needs": "Physical Needs",
+      "mind": "Mental State"
+    },
+    "Vitals": {
+      "bleeding": "Bleeding",
+      "infection": "Infection",
+      "trauma": "Trauma",
+      "hunger": "Hunger",
+      "thirst": "Thirst",
+      "fatigue": "Fatigue",
+      "sleep": "Sleep Deprivation",
+      "temperature": "Temperature",
+      "stress": "Stress",
+      "addiction": "Addiction",
+      "morale": "Morale"
+    },
+    "VitalsHint": {
+      "bleeding": "Open wounds and blood loss",
+      "infection": "Contamination and disease progression",
+      "trauma": "Untreated physical trauma",
+      "hunger": "Time without proper food",
+      "thirst": "Time without clean water",
+      "fatigue": "Physical exhaustion",
+      "sleep": "Accumulated lack of sleep",
+      "temperature": "Body temperature — the center of the scale is safe",
+      "stress": "Acute psychological pressure",
+      "addiction": "Substance dependency",
+      "morale": "Will to keep going — higher is better"
+    },
+    "Severity": {
+      "clear": "Clear",
+      "low": "Stable",
+      "elevated": "Elevated",
+      "high": "Severe",
+      "critical": "Critical"
+    },
+    "Temp": {
+      "Hypothermia": "Hypothermia",
+      "Cold": "Cold",
+      "Normal": "Normal",
+      "Hot": "Overheated",
+      "Heatstroke": "Heatstroke"
+    },
+    "VitalsTab": {
+      "Biomonitor": "Biomonitor",
+      "HP": "HP",
+      "Bruises": "Bruises",
+      "BruisesHint": "Bruises taken from bare-handed critical misses and fully-absorbed hits"
+    },
+    "Gear": {
+      "Loadout": "Loadout",
+      "ArmorSlot": "Armor",
+      "NoArmor": "No armor worn",
+      "Hands": "In hands",
+      "EmptyHands": "Hands free",
+      "Worn": "Worn",
+      "Load": "Load",
+      "Encumbered": "Encumbered",
+      "Currency": "Currency",
+      "Search": "Search gear…",
+      "Favorite": "Favorite",
+      "Integrity": "Integrity",
+      "Use": "Use",
+      "Equip": "Equip / stow",
+      "ToChat": "Show in chat",
+      "Empty": "Nothing matches — pack is empty",
+      "Broken": "Broken",
+      "Destroyed": "Destroyed",
+      "Resistance": "Resistance"
+    },
+    "GearFilters": {
+      "all": "All",
+      "weapon": "Weapons",
+      "armor": "Armor",
+      "consumable": "Consumables",
+      "ammo": "Ammo",
+      "equipment": "Equipment",
+      "container": "Containers",
+      "favorites": "★ Favorites"
+    },
+    "ItemType": {
+      "weapon": "Weapon",
+      "armor": "Armor",
+      "shield": "Shield",
+      "equipment": "Equipment",
+      "consumable": "Consumable",
+      "ammo": "Ammo",
+      "treasure": "Valuables",
+      "backpack": "Container",
+      "kit": "Kit",
+      "book": "Book"
+    },
+    "Arsenal": {
+      "Stowed": "Stowed",
+      "Damage": "Damage",
+      "Critical": "Critical",
+      "BaseDamage": "Base damage",
+      "NoAmmo": "— no ammo —",
+      "Repair": "Repair",
+      "Empty": "No weapons available. Add weapons from the compendium or the Gear tab."
+    },
+    "ActionFx": {
+      "ConfigTitle": "Weapon FX",
+      "ConfigHint": "Attach a sound and image to this weapon's rolls",
+      "Attack1": "1st Attack",
+      "Attack2": "2nd Attack (MAP -5)",
+      "Attack3": "3rd Attack (MAP -10)",
+      "Damage": "Damage",
+      "Critical": "Critical",
+      "Playlist": "Playlist",
+      "Track": "Track",
+      "NonePlaylist": "— None —",
+      "RandomTrack": "🎲 Random Track",
+      "Volume": "Volume",
+      "Preview": "Preview",
+      "Clear": "Clear",
+      "ClearAll": "Clear All",
+      "Save": "Save",
+      "PickFirst": "Select a playlist and track first.",
+      "Saved": "Weapon FX saved for {item}",
+      "Image": "Action Image",
+      "ImageHint": "Shown as a full-screen overlay by vnd-enhanced (if installed) when this weapon rolls",
+      "PickImage": "Pick image",
+      "ClearImage": "Clear image"
+    },
+    "Medical": {
+      "Triage": "Field Triage",
+      "Medicine": "Medicine",
+      "RollMedicine": "Roll Medicine",
+      "TreatWounds": "Treat Wounds",
+      "FirstAid": "First Aid",
+      "Supplies": "Medical Supplies",
+      "Apply": "Apply",
+      "NoSupplies": "No medical supplies in the pack",
+      "Provisions": "Provisions",
+      "Consume": "Consume",
+      "NoProvisions": "No food or water located"
+    },
+    "Skills": {
+      "RollHint": "Click to roll",
+      "Lore": "Lore"
+    },
+    "Journal": {
+      "Notes": "Notes",
+      "Story": "Story",
+      "People": "People",
+      "Objectives": "Objectives",
+      "FieldNotes": "Field Notes",
+      "SurvivorStory": "Survivor Story",
+      "Appearance": "Description",
+      "Contacts": "Contacts",
+      "ContactName": "Name",
+      "ContactWhere": "Last seen",
+      "ContactStatus": "Status",
+      "NoContacts": "No contacts recorded",
+      "Allies": "Allies",
+      "Enemies": "Enemies",
+      "ObjectivePlaceholder": "Describe the objective…",
+      "NoObjectives": "No active objectives"
+    },
+    "Factions": {
+      "Title": "Faction Standing",
+      "Add": "New faction",
+      "NamePlaceholder": "Faction name…",
+      "NotesPlaceholder": "Agreements, debts, incidents…",
+      "Empty": "No known factions. Register the groups this survivor has met."
+    },
+    "Standing": {
+      "hostile": "Hostile",
+      "unfriendly": "Unfriendly",
+      "wary": "Wary",
+      "neutral": "Neutral",
+      "friendly": "Friendly",
+      "trusted": "Trusted",
+      "allied": "Allied"
+    },
+    "TimelineTab": {
+      "Title": "Operations Log",
+      "NotePlaceholder": "Log a manual entry…",
+      "Log": "Log",
+      "Clear": "Clear the whole log",
+      "Empty": "No recorded events yet. Damage, healing, loot and level-ups are logged automatically."
+    },
+    "Timeline": {
+      "TookDamage": "Took {amount} damage",
+      "Healed": "Recovered {amount} HP",
+      "WentDown": "WENT DOWN — took {amount} damage",
+      "LevelUp": "Reached level {level}",
+      "Acquired": "Acquired: {item}",
+      "Discarded": "Discarded: {item}",
+      "Used": "Used: {item}",
+      "Equipped": "Changed loadout: {item}",
+      "ConditionGained": "Condition gained: {condition}",
+      "FactionShift": "Standing changed with {faction}"
+    },
+    "Tip": {
+      "Damage": "Damage",
+      "Range": "Range",
+      "Reload": "Reload",
+      "DexCap": "Dex cap",
+      "Uses": "Uses",
+      "Qty": "Qty",
+      "Integrity": "Integrity",
+      "Value": "Value"
+    },
+    "Common": {
+      "Add": "Add",
+      "Edit": "Edit",
+      "Delete": "Delete",
+      "Remove": "Remove"
+    },
+    "Dialog": {
+      "DeleteTitle": "Discard item",
+      "DeleteBody": "Permanently discard {item}?",
+      "ClearLogTitle": "Clear operations log",
+      "ClearLogBody": "This erases every entry in this survivor's timeline. Continue?",
+      "ResolveHitTitle": "Resolve Armor Hit",
+      "Damage": "Damage dealt",
+      "Resistance": "Armor Resistance",
+      "TypeCovered": "Damage type covered by armor",
+      "CriticalHit": "Critical hit",
+      "Helmet": "Armor has the Helmet trait",
+      "Apply": "Apply",
+      "SetResistanceTitle": "Armor Resistance",
+      "ResistanceValue": "Resistance value",
+      "ResistanceTypes": "Covered damage types (blank = all)"
+    },
+    "Warn": {
+      "ActionUnavailable": "PF2e action \"{action}\" is not available in this system version.",
+      "CannotRepairDestroyed": "{item} is destroyed and cannot be repaired — it must be rebuilt from parts.",
+      "CannotEquipDestroyed": "{item} is destroyed and cannot be equipped.",
+      "NothingToRepair": "{item} has no tracked Integrity.",
+      "NoTarget": "No target selected."
+    },
+    "Chat": {
+      "Ding": "{item} takes a Ding — Integrity {dings}/{max}",
+      "Broken": "{item} is now BROKEN",
+      "Destroyed": "{item} is DESTROYED and was unequipped",
+      "Repaired": "{item} repaired: +{amount} Integrity ({dings}/{max})",
+      "RepairCriticalFailure": "The repair attempt backfires, damaging {item} further",
+      "CriticalMissBruise": "{actor} fumbles bare-handed and takes a bruise",
+      "CombatEndTitle": "End of Combat — Gear Check",
+      "CombatEndPass": "{actor}'s gear held up (flat check {total} vs DC {dc})",
+      "CombatEndFail": "{actor}'s gear took a beating: {item} takes a Ding (flat check {total} vs DC {dc})",
+      "CombatEndCritFail": "{actor}'s gear took a serious beating! {n} items damaged: {items} (flat check {total} vs DC {dc})",
+      "CombatEndNoGear": "{actor} has no Ready gear at risk",
+      "ApplyDings": "Apply {n} Ding(s)",
+      "AbsorbedFully": "{actor}'s armor absorbs the hit — takes 1 bruise instead"
+    },
+    "Backdrop": {
+      "Title": "Sheet Backdrop",
+      "Path": "Image / video",
+      "Browse": "Browse files",
+      "Opacity": "Backdrop visibility",
+      "Save": "Save",
+      "Clear": "Clear"
+    },
+    "Settings": {
+      "Animations": "Interface animations",
+      "AnimationsHint": "Entrance, tab and feedback animations. Disable for maximum performance.",
+      "UiAudio": "Interface audio",
+      "UiAudioHint": "Subtle synthesized clicks and alerts on interaction. No audio files are used.",
+      "UiAudioVolume": "Interface audio volume",
+      "ChatTheme": "Chat HUD theme",
+      "ChatThemeHint": "Restyles chat messages and roll cards to match the Hopefinder sheet's military HUD look.",
+      "HighContrast": "High contrast mode",
+      "HighContrastHint": "Stronger borders and text, removes film grain and vignette.",
+      "FontScale": "Sheet text scale (%)",
+      "FontScaleHint": "Scales all text inside the Hopefinder sheet."
+    }
+  }
+}

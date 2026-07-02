@@ -1,0 +1,79 @@
+{{!-- ══════════ MEDICAL — field triage ══════════ --}}
+<div class="hf-medical-layout">
+
+  <section class="hf-panel hf-triage">
+    <h2 class="hf-panel-title"><i class="fas fa-kit-medical"></i>{{localize 'HOPEFINDER.Medical.Triage'}}</h2>
+    <div class="hf-triage-row">
+      {{#if medical.medicine}}
+        <button type="button" class="hf-triage-stat" data-action="roll-skill" data-skill="medicine"
+                title="{{localize 'HOPEFINDER.Medical.RollMedicine'}}">
+          <i class="fas fa-user-nurse"></i>
+          <span class="hf-triage-mod">{{medical.medicine.mod}}</span>
+          <label>{{localize 'HOPEFINDER.Medical.Medicine'}} · {{medical.medicine.rankLabel}}</label>
+        </button>
+      {{/if}}
+      <button type="button" class="hf-btn hf-btn--medic" data-action="medic-action" data-slug="treat-wounds">
+        <i class="fas fa-bandage"></i>{{localize 'HOPEFINDER.Medical.TreatWounds'}}
+      </button>
+      <button type="button" class="hf-btn hf-btn--medic" data-action="medic-action" data-slug="administer-first-aid">
+        <i class="fas fa-hand-holding-medical"></i>{{localize 'HOPEFINDER.Medical.FirstAid'}}
+      </button>
+    </div>
+  </section>
+
+  <section class="hf-panel">
+    <h2 class="hf-panel-title"><i class="fas fa-prescription-bottle-medical"></i>{{localize 'HOPEFINDER.Medical.Supplies'}}</h2>
+    {{#if medical.supplies.length}}
+      <div class="hf-med-grid">
+        {{#each medical.supplies}}
+          <div class="hf-card hf-card--med" data-item-id="{{this.id}}" data-hf-tip="{{this.id}}" draggable="true">
+            <div class="hf-card-visual">
+              <img src="{{this.img}}" alt="" loading="lazy">
+              {{#if (hfGt this.quantity 1)}}<span class="hf-card-qty">×{{this.quantity}}</span>{{/if}}
+            </div>
+            <div class="hf-card-body">
+              <span class="hf-card-name">{{this.name}}</span>
+              <span class="hf-card-meta">{{this.typeLabel}}{{#if this.uses}} · {{this.uses.value}}/{{this.uses.max}}{{/if}}</span>
+            </div>
+            {{#if ../editable}}
+              <button type="button" class="hf-med-use" data-action="item-use">
+                <i class="fas fa-syringe"></i>{{localize 'HOPEFINDER.Medical.Apply'}}
+              </button>
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="hf-empty">{{localize 'HOPEFINDER.Medical.NoSupplies'}}</p>
+    {{/if}}
+  </section>
+
+  <section class="hf-panel">
+    <h2 class="hf-panel-title"><i class="fas fa-utensils"></i>{{localize 'HOPEFINDER.Medical.Provisions'}}</h2>
+    {{#if medical.provisions.length}}
+      <div class="hf-med-grid">
+        {{#each medical.provisions}}
+          <div class="hf-card hf-card--med" data-item-id="{{this.id}}" data-hf-tip="{{this.id}}" draggable="true">
+            <div class="hf-card-visual">
+              <img src="{{this.img}}" alt="" loading="lazy">
+              {{#if (hfGt this.quantity 1)}}<span class="hf-card-qty">×{{this.quantity}}</span>{{/if}}
+            </div>
+            <div class="hf-card-body">
+              <span class="hf-card-name">{{this.name}}</span>
+              <span class="hf-card-meta">{{this.typeLabel}}</span>
+            </div>
+            {{#if ../editable}}
+              {{#if this.canConsume}}
+                <button type="button" class="hf-med-use" data-action="item-use">
+                  <i class="fas fa-utensils"></i>{{localize 'HOPEFINDER.Medical.Consume'}}
+                </button>
+              {{/if}}
+            {{/if}}
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="hf-empty">{{localize 'HOPEFINDER.Medical.NoProvisions'}}</p>
+    {{/if}}
+  </section>
+</div>

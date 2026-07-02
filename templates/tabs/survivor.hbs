@@ -1,0 +1,191 @@
+{{!-- ══════════ SURVIVOR — dossier / overview ══════════ --}}
+<div class="hf-survivor-grid">
+
+  {{!-- Identity dossier --}}
+  <section class="hf-panel hf-dossier">
+    <h2 class="hf-panel-title"><i class="fas fa-address-card"></i>{{localize 'HOPEFINDER.Survivor.Dossier'}}</h2>
+
+    <div class="hf-field-grid">
+      <div class="hf-field">
+        <label>{{localize 'HOPEFINDER.Survivor.Level'}}</label>
+        <input type="number" name="system.details.level.value" value="{{header.level}}" min="1" max="20"
+               {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="hf-field">
+        <label>{{localize 'HOPEFINDER.Survivor.Archetype'}}</label>
+        <input type="text" data-change="archetype" value="{{header.archetype}}"
+               placeholder="—" {{#unless editable}}disabled{{/unless}}>
+      </div>
+      <div class="hf-field">
+        <label>{{localize 'HOPEFINDER.Survivor.Ancestry'}}</label>
+        <span class="hf-field-static">{{#if header.ancestryName}}{{header.ancestryName}}{{#if header.heritageName}} · {{header.heritageName}}{{/if}}{{else}}—{{/if}}</span>
+      </div>
+      <div class="hf-field">
+        <label>{{localize 'HOPEFINDER.Survivor.Background'}}</label>
+        <span class="hf-field-static">{{#if header.backgroundName}}{{header.backgroundName}}{{else}}—{{/if}}</span>
+      </div>
+    </div>
+
+    <div class="hf-xp">
+      <div class="hf-xp-head">
+        <label>{{localize 'HOPEFINDER.Survivor.XP'}}</label>
+        <span class="hf-xp-nums">
+          {{#if editable}}
+            <input type="number" name="system.details.xp.value" value="{{header.xp.value}}" min="0">
+          {{else}}
+            {{header.xp.value}}
+          {{/if}}
+          / {{header.xp.max}}
+        </span>
+      </div>
+      <div class="hf-xp-track"><div class="hf-xp-fill" style="width: {{header.xp.pct}}%;"></div></div>
+    </div>
+
+    <div class="hf-threat">
+      <label title="{{localize 'HOPEFINDER.Survivor.ThreatHint'}}">
+        <i class="fas fa-triangle-exclamation"></i>{{localize 'HOPEFINDER.Survivor.Threat'}}
+      </label>
+      <div class="hf-pip-row hf-pip-row--threat">
+        {{#each header.threat.pips}}
+          <button type="button" class="hf-pip hf-pip--threat {{#if this.filled}}filled{{/if}}"
+                  data-action="pip-threat" data-index="{{this.index}}">
+            <i class="fas fa-radiation"></i>
+          </button>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="hf-recovery">
+      <div class="hf-recovery-block" title="{{localize 'HOPEFINDER.Combat.DyingHint'}}">
+        <label>{{localize 'HOPEFINDER.Combat.Dying'}}</label>
+        <div class="hf-pip-row">
+          {{#each combat.dying.pips}}
+            <button type="button" class="hf-pip hf-pip--dying {{#if this.filled}}filled{{/if}}"
+                    data-action="pip-dying" data-index="{{this.index}}"><i class="fas fa-skull"></i></button>
+          {{/each}}
+        </div>
+      </div>
+      <div class="hf-recovery-block" title="{{localize 'HOPEFINDER.Combat.WoundedHint'}}">
+        <label>{{localize 'HOPEFINDER.Combat.Wounded'}}</label>
+        <div class="hf-pip-row">
+          {{#each combat.wounded.pips}}
+            <button type="button" class="hf-pip hf-pip--wounded {{#if this.filled}}filled{{/if}}"
+                    data-action="pip-wounded" data-index="{{this.index}}"><i class="fas fa-bandage"></i></button>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {{!-- Attributes --}}
+  <section class="hf-panel hf-attributes">
+    <h2 class="hf-panel-title"><i class="fas fa-dna"></i>{{localize 'HOPEFINDER.Survivor.Attributes'}}</h2>
+    <div class="hf-ability-row">
+      {{#each abilities}}
+        <button type="button" class="hf-ability" data-action="roll-ability" data-ability="{{this.key}}"
+                title="{{localize 'HOPEFINDER.Survivor.RollAbility'}}">
+          <span class="hf-ability-key">{{this.label}}</span>
+          <span class="hf-ability-mod">{{this.modStr}}</span>
+        </button>
+      {{/each}}
+    </div>
+
+    <div class="hf-saves-row">
+      {{#each combat.saves}}
+        <button type="button" class="hf-save hf-rank--{{this.rank}}" data-action="roll-save" data-save="{{this.key}}">
+          <span class="hf-save-label">{{this.label}}</span>
+          <span class="hf-save-mod">{{this.modStr}}</span>
+          <span class="hf-save-rank">{{this.rankLabel}}</span>
+        </button>
+      {{/each}}
+    </div>
+  </section>
+
+  {{!-- Situation report: senses / languages / IWR --}}
+  <section class="hf-panel hf-sitrep">
+    <h2 class="hf-panel-title"><i class="fas fa-satellite-dish"></i>{{localize 'HOPEFINDER.Survivor.Sitrep'}}</h2>
+    <div class="hf-sitrep-grid">
+      {{#if combat.senses.length}}
+        <div class="hf-sitrep-row">
+          <label>{{localize 'HOPEFINDER.Survivor.Senses'}}</label>
+          <div class="hf-chip-row">{{#each combat.senses}}<span class="hf-chip">{{this}}</span>{{/each}}</div>
+        </div>
+      {{/if}}
+      {{#if combat.languages.length}}
+        <div class="hf-sitrep-row">
+          <label>{{localize 'HOPEFINDER.Survivor.Languages'}}</label>
+          <div class="hf-chip-row">{{#each combat.languages}}<span class="hf-chip">{{this}}</span>{{/each}}</div>
+        </div>
+      {{/if}}
+      {{#if combat.resistances.length}}
+        <div class="hf-sitrep-row">
+          <label>{{localize 'HOPEFINDER.Survivor.Resistances'}}</label>
+          <div class="hf-chip-row">{{#each combat.resistances}}<span class="hf-chip hf-chip--good">{{this}}</span>{{/each}}</div>
+        </div>
+      {{/if}}
+      {{#if combat.immunities.length}}
+        <div class="hf-sitrep-row">
+          <label>{{localize 'HOPEFINDER.Survivor.Immunities'}}</label>
+          <div class="hf-chip-row">{{#each combat.immunities}}<span class="hf-chip hf-chip--good">{{this}}</span>{{/each}}</div>
+        </div>
+      {{/if}}
+      {{#if combat.weaknesses.length}}
+        <div class="hf-sitrep-row">
+          <label>{{localize 'HOPEFINDER.Survivor.Weaknesses'}}</label>
+          <div class="hf-chip-row">{{#each combat.weaknesses}}<span class="hf-chip hf-chip--bad">{{this}}</span>{{/each}}</div>
+        </div>
+      {{/if}}
+      {{#if combat.speed.others.length}}
+        <div class="hf-sitrep-row">
+          <label>{{localize 'HOPEFINDER.Combat.OtherSpeeds'}}</label>
+          <div class="hf-chip-row">{{#each combat.speed.others}}<span class="hf-chip">{{this.label}} {{this.value}}</span>{{/each}}</div>
+        </div>
+      {{/if}}
+    </div>
+
+    {{#if effects.length}}
+      <div class="hf-effects">
+        <label>{{localize 'HOPEFINDER.Survivor.ActiveEffects'}}</label>
+        <div class="hf-effect-row">
+          {{#each effects}}
+            <span class="hf-effect" data-item-id="{{this.id}}" data-hf-tip="{{this.id}}">
+              <img src="{{this.img}}" alt="" data-action="effect-open">
+              {{#if this.badge}}<b>{{this.badge}}</b>{{/if}}
+              <button type="button" class="hf-effect-x" data-action="effect-remove" title="{{localize 'HOPEFINDER.Common.Remove'}}">
+                <i class="fas fa-xmark"></i>
+              </button>
+            </span>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+  </section>
+
+  {{!-- Quick strikes --}}
+  <section class="hf-panel hf-quickstrikes">
+    <h2 class="hf-panel-title"><i class="fas fa-crosshairs"></i>{{localize 'HOPEFINDER.Survivor.QuickStrikes'}}</h2>
+    {{#if strikes.length}}
+      <div class="hf-quickstrike-list">
+        {{#each strikes}}
+          <div class="hf-quickstrike" {{#if this.itemId}}data-item-id="{{this.itemId}}" data-hf-tip="{{this.itemId}}"{{/if}}>
+            <img src="{{this.img}}" alt="">
+            <div class="hf-quickstrike-info">
+              <span class="hf-quickstrike-name">{{this.label}}</span>
+              {{#if this.damagePreview}}<span class="hf-quickstrike-dmg">{{this.damagePreview}}</span>{{/if}}
+            </div>
+            <div class="hf-quickstrike-buttons">
+              {{#each this.variants}}
+                <button type="button" class="hf-btn hf-btn--attack" data-action="strike-attack"
+                        data-idx="{{../idx}}" data-variant="{{this.idx}}">{{this.label}}</button>
+              {{/each}}
+              <button type="button" class="hf-btn hf-btn--damage" data-action="strike-damage" data-idx="{{this.idx}}"
+                      title="{{localize 'HOPEFINDER.Arsenal.Damage'}}"><i class="fas fa-burst"></i></button>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="hf-empty">{{localize 'HOPEFINDER.Survivor.NoStrikes'}}</p>
+    {{/if}}
+  </section>
+</div>

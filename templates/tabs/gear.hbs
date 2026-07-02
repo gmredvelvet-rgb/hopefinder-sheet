@@ -1,0 +1,167 @@
+{{!-- ══════════ GEAR — inventory grid + loadout ══════════ --}}
+<div class="hf-gear-layout">
+
+  {{!-- Loadout column --}}
+  <aside class="hf-panel hf-loadout">
+    <h2 class="hf-panel-title"><i class="fas fa-vest"></i>{{localize 'HOPEFINDER.Gear.Loadout'}}</h2>
+
+    <div class="hf-loadout-section">
+      <label>{{localize 'HOPEFINDER.Gear.ArmorSlot'}}</label>
+      {{#if loadout.armor}}
+        <div class="hf-loadout-item" data-item-id="{{loadout.armor.id}}" data-hf-tip="{{loadout.armor.id}}" draggable="true">
+          <img src="{{loadout.armor.img}}" alt="">
+          <span class="hf-loadout-name">{{loadout.armor.name}}</span>
+          {{#if loadout.armor.destroyed}}
+            <span class="hf-status-badge hf-status-badge--destroyed">{{localize 'HOPEFINDER.Gear.Destroyed'}}</span>
+          {{else if loadout.armor.broken}}
+            <span class="hf-status-badge hf-status-badge--broken">{{localize 'HOPEFINDER.Gear.Broken'}}</span>
+          {{/if}}
+          {{#if loadout.armor.condition}}
+            <span class="hf-integrity hf-integrity--{{loadout.armor.condition}}" style="--pct: {{loadout.armor.integrityPct}}%;"></span>
+          {{/if}}
+          {{#if loadout.armor.resistance}}
+            <button type="button" class="hf-resistance-chip" data-action="armor-resistance"
+                    title="{{localize 'HOPEFINDER.Gear.Resistance'}}">
+              <i class="fas fa-shield-halved"></i>{{loadout.armor.resistance.effective}}
+            </button>
+          {{/if}}
+        </div>
+      {{else}}
+        <div class="hf-loadout-empty">{{localize 'HOPEFINDER.Gear.NoArmor'}}</div>
+      {{/if}}
+    </div>
+
+    <div class="hf-loadout-section">
+      <label>{{localize 'HOPEFINDER.Gear.Hands'}}</label>
+      {{#each loadout.held}}
+        <div class="hf-loadout-item" data-item-id="{{this.id}}" data-hf-tip="{{this.id}}" draggable="true">
+          <img src="{{this.img}}" alt="">
+          <span class="hf-loadout-name">{{this.name}}</span>
+          {{#if this.destroyed}}
+            <span class="hf-status-badge hf-status-badge--destroyed">{{localize 'HOPEFINDER.Gear.Destroyed'}}</span>
+          {{else if this.broken}}
+            <span class="hf-status-badge hf-status-badge--broken">{{localize 'HOPEFINDER.Gear.Broken'}}</span>
+          {{/if}}
+          {{#if this.condition}}
+            <span class="hf-integrity hf-integrity--{{this.condition}}" style="--pct: {{this.integrityPct}}%;"></span>
+          {{/if}}
+        </div>
+      {{else}}
+        <div class="hf-loadout-empty">{{localize 'HOPEFINDER.Gear.EmptyHands'}}</div>
+      {{/each}}
+    </div>
+
+    <div class="hf-loadout-section">
+      <label>{{localize 'HOPEFINDER.Gear.Worn'}}</label>
+      {{#each loadout.worn}}
+        <div class="hf-loadout-item" data-item-id="{{this.id}}" data-hf-tip="{{this.id}}" draggable="true">
+          <img src="{{this.img}}" alt="">
+          <span class="hf-loadout-name">{{this.name}}</span>
+        </div>
+      {{else}}
+        <div class="hf-loadout-empty">—</div>
+      {{/each}}
+    </div>
+
+    <div class="hf-bulk">
+      <div class="hf-bulk-head">
+        <label><i class="fas fa-weight-hanging"></i>{{localize 'HOPEFINDER.Gear.Load'}}</label>
+        <span class="{{#if gear.bulk.isEncumbered}}hf-text-danger{{/if}}">{{gear.bulk.value}} / {{gear.bulk.max}}</span>
+      </div>
+      <div class="hf-bulk-track">
+        <div class="hf-bulk-fill {{#if gear.bulk.isEncumbered}}over{{/if}}" style="width: {{gear.bulk.pct}}%;"></div>
+      </div>
+      {{#if gear.bulk.isEncumbered}}
+        <span class="hf-bulk-warning"><i class="fas fa-triangle-exclamation"></i>{{localize 'HOPEFINDER.Gear.Encumbered'}}</span>
+      {{/if}}
+    </div>
+
+    <div class="hf-coins" title="{{localize 'HOPEFINDER.Gear.Currency'}}">
+      {{#if gear.coins.pp}}<span class="hf-coin hf-coin--pp">{{gear.coins.pp}} pp</span>{{/if}}
+      <span class="hf-coin hf-coin--gp">{{gear.coins.gp}} gp</span>
+      <span class="hf-coin hf-coin--sp">{{gear.coins.sp}} sp</span>
+      <span class="hf-coin hf-coin--cp">{{gear.coins.cp}} cp</span>
+    </div>
+  </aside>
+
+  {{!-- Inventory grid --}}
+  <section class="hf-gear-main">
+    <div class="hf-gear-toolbar">
+      <div class="hf-search">
+        <i class="fas fa-magnifying-glass"></i>
+        <input type="search" data-action="gear-search" data-noclick="true"
+               placeholder="{{localize 'HOPEFINDER.Gear.Search'}}" value="{{gear.search}}">
+      </div>
+      <div class="hf-filter-row">
+        {{#each gear.filters}}
+          <button type="button" class="hf-filter-chip {{#if this.active}}active{{/if}}"
+                  data-action="gear-filter" data-filter="{{this.id}}">{{this.label}}</button>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="hf-gear-grid">
+      {{#each gear.items}}
+        <div class="hf-card hf-card--{{this.rarity}} {{#if this.equipped}}equipped{{/if}}"
+             data-item-id="{{this.id}}" data-hf-tip="{{this.id}}" draggable="true"
+             data-filter-type="{{this.filterType}}" data-fav="{{this.favorite}}" data-search="{{this.searchKey}}">
+          <div class="hf-card-visual">
+            <img src="{{this.img}}" alt="" loading="lazy">
+            {{#if this.equipped}}<span class="hf-card-flag"><i class="fas fa-check"></i></span>{{/if}}
+            {{#if this.quantity}}{{#if (hfGt this.quantity 1)}}<span class="hf-card-qty">×{{this.quantity}}</span>{{/if}}{{/if}}
+            {{#if this.destroyed}}
+              <span class="hf-status-badge hf-status-badge--destroyed">{{localize 'HOPEFINDER.Gear.Destroyed'}}</span>
+            {{else if this.broken}}
+              <span class="hf-status-badge hf-status-badge--broken">{{localize 'HOPEFINDER.Gear.Broken'}}</span>
+            {{/if}}
+            {{#if ../editable}}
+              <button type="button" class="hf-card-fav {{#if this.favorite}}on{{/if}}" data-action="item-favorite"
+                      title="{{localize 'HOPEFINDER.Gear.Favorite'}}"><i class="fas fa-star"></i></button>
+            {{/if}}
+          </div>
+          <div class="hf-card-body">
+            <span class="hf-card-name">{{this.name}}</span>
+            <span class="hf-card-meta">
+              {{this.typeLabel}}
+              {{#if this.uses}} · {{this.uses.value}}/{{this.uses.max}}{{/if}}
+              {{#if this.isContainer}} · {{this.containerContents}} <i class="fas fa-box"></i>{{/if}}
+              · <i class="fas fa-weight-hanging"></i> {{this.bulk}}
+            </span>
+            {{#if this.condition}}
+              <span class="hf-integrity hf-integrity--{{this.condition}}" style="--pct: {{this.integrityPct}}%;"
+                    title="{{localize 'HOPEFINDER.Gear.Integrity'}}: {{this.integrityPct}}%"></span>
+            {{/if}}
+            {{#if this.resistance}}
+              <button type="button" class="hf-resistance-chip" data-action="armor-resistance"
+                      title="{{localize 'HOPEFINDER.Gear.Resistance'}}">
+                <i class="fas fa-shield-halved"></i>{{this.resistance.effective}}
+              </button>
+            {{/if}}
+          </div>
+          {{#if ../editable}}
+            <div class="hf-card-actions">
+              {{#if this.canConsume}}
+                <button type="button" data-action="item-use" title="{{localize 'HOPEFINDER.Gear.Use'}}"><i class="fas fa-hand-holding-medical"></i></button>
+              {{/if}}
+              {{#if this.canEquip}}
+                <button type="button" data-action="item-equip" title="{{localize 'HOPEFINDER.Gear.Equip'}}"><i class="fas fa-vest"></i></button>
+              {{/if}}
+              {{#if this.stackable}}
+                <button type="button" data-action="item-qty" data-delta="-1" title="-1"><i class="fas fa-minus"></i></button>
+                <button type="button" data-action="item-qty" data-delta="1" title="+1"><i class="fas fa-plus"></i></button>
+              {{/if}}
+              <button type="button" data-action="item-chat" title="{{localize 'HOPEFINDER.Gear.ToChat'}}"><i class="fas fa-comment"></i></button>
+              <button type="button" data-action="item-open" title="{{localize 'HOPEFINDER.Common.Edit'}}"><i class="fas fa-pen"></i></button>
+              <button type="button" class="hf-danger" data-action="item-delete" title="{{localize 'HOPEFINDER.Common.Delete'}}"><i class="fas fa-trash"></i></button>
+            </div>
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="hf-gear-empty hf-empty {{#if gear.items.length}}hf-hidden{{/if}}">
+      <i class="fas fa-box-open"></i>
+      <p>{{localize 'HOPEFINDER.Gear.Empty'}}</p>
+    </div>
+  </section>
+</div>

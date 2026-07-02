@@ -1,0 +1,502 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOPEFINDER SURVIVOR SHEET — CORE
+   Design tokens, window frame, cinematic layers, master layout.
+   Palette: carbon black · industrial gray · military olive · amber
+            emergency red · dirty white · cold blue
+   ═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=Share+Tech+Mono&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────── */
+/* Shared with the chat HUD reskin (styles/chat.css) via the body.hf-chat-theme
+   switch, so both surfaces read from the same single source of truth. */
+.hopefinder-sheet,
+body.hf-chat-theme {
+  /* Surfaces */
+  --hf-void: #07090a;
+  --hf-bg: #0c0f11;
+  --hf-panel: rgba(18, 22, 25, 0.92);
+  --hf-panel-solid: #14181b;
+  --hf-steel: #1b2126;
+  --hf-steel-hi: #232a30;
+  --hf-inset: rgba(0, 0, 0, 0.45);
+
+  /* Lines & edges */
+  --hf-line: rgba(214, 222, 214, 0.09);
+  --hf-line-strong: rgba(214, 222, 214, 0.2);
+  --hf-edge: #2a3138;
+
+  /* Ink */
+  --hf-text: #b9bfb6;
+  --hf-text-hi: #e6e3d8;
+  --hf-text-dim: #78807a;
+  --hf-text-faint: #565d58;
+
+  /* Signals */
+  --hf-olive: #7d8f63;
+  --hf-olive-hi: #a4b884;
+  --hf-olive-dim: rgba(125, 143, 99, 0.16);
+  --hf-amber: #d9a441;
+  --hf-amber-hi: #f2c56a;
+  --hf-amber-dim: rgba(217, 164, 65, 0.14);
+  --hf-red: #c23b2e;
+  --hf-red-hi: #e85e4d;
+  --hf-red-dim: rgba(194, 59, 46, 0.16);
+  --hf-cyan: #6fa8b8;
+  --hf-cyan-dim: rgba(111, 168, 184, 0.14);
+  --hf-green: #5f9e6b;
+
+  /* Active accent — retinted by sheet state (see fx.css) */
+  --hf-accent: var(--hf-olive);
+  --hf-accent-hi: var(--hf-olive-hi);
+  --hf-accent-dim: var(--hf-olive-dim);
+
+  /* Type */
+  --hf-font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --hf-font-body: "Barlow", "Segoe UI", sans-serif;
+  --hf-font-mono: "Share Tech Mono", "Consolas", monospace;
+  --hf-font-scale: 1;
+
+  /* Rhythm */
+  --hf-radius: 3px;
+  --hf-gap: 10px;
+  --hf-shadow: 0 10px 32px rgba(0, 0, 0, 0.65);
+  --hf-shadow-sm: 0 3px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* ── Application window ────────────────────────────────────── */
+.hopefinder-sheet.window-app,
+.hopefinder-sheet.app {
+  border: 1px solid var(--hf-edge);
+  box-shadow: var(--hf-shadow);
+  background: var(--hf-void);
+}
+.hopefinder-sheet .window-header {
+  background: linear-gradient(180deg, #171c20 0%, #0e1114 100%);
+  border-bottom: 1px solid var(--hf-line-strong);
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.hopefinder-sheet .window-content {
+  padding: 0;
+  margin: 0;
+  background: var(--hf-bg);
+  color: var(--hf-text);
+  overflow: hidden;
+  display: flex;
+}
+
+/* ── Root & cinematic layers ───────────────────────────────── */
+.hopefinder-sheet .hf-root {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  font-family: var(--hf-font-body);
+  font-size: calc(13px * var(--hf-font-scale));
+  color: var(--hf-text);
+  container-type: inline-size;
+  container-name: hf;
+  isolation: isolate;
+}
+
+.hopefinder-sheet .hf-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background: var(--hf-bg);
+}
+.hopefinder-sheet .hf-backdrop img,
+.hopefinder-sheet .hf-backdrop video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.7) contrast(1.05);
+  opacity: var(--hf-backdrop-op, 0.85);
+}
+/* Template sets inline opacity for the DIM layer over the image */
+.hopefinder-sheet .hf-backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(7, 9, 10, 0.55) 0%, rgba(7, 9, 10, 0.92) 100%);
+}
+.hopefinder-sheet .hf-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+.hopefinder-sheet .hf-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.5) 100%);
+}
+
+/* ── Left rail ─────────────────────────────────────────────── */
+.hopefinder-sheet .hf-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-gap);
+  width: 236px;
+  flex: 0 0 236px;
+  padding: 12px 10px;
+  background: linear-gradient(180deg, rgba(16, 20, 23, 0.97) 0%, rgba(10, 13, 15, 0.97) 100%);
+  border-right: 1px solid var(--hf-line);
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 2;
+}
+
+/* Portrait */
+.hopefinder-sheet .hf-portrait-frame {
+  position: relative;
+  aspect-ratio: 4 / 4.6;
+  overflow: hidden;
+  border: 1px solid var(--hf-edge);
+  background: var(--hf-void);
+  cursor: pointer;
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  filter: saturate(0.85) contrast(1.05);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+.hopefinder-sheet .hf-portrait-frame:hover .hf-portrait {
+  transform: scale(1.035);
+  filter: saturate(1) contrast(1.05);
+}
+.hopefinder-sheet .hf-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--hf-accent);
+  z-index: 3;
+  opacity: 0.9;
+  transition: all 0.25s ease;
+}
+.hopefinder-sheet .hf-corner.tl { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+.hopefinder-sheet .hf-corner.tr { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+.hopefinder-sheet .hf-corner.bl { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+.hopefinder-sheet .hf-corner.br { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+.hopefinder-sheet .hf-portrait-frame:hover .hf-corner { width: 18px; height: 18px; }
+
+.hopefinder-sheet .hf-portrait-blood {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(ellipse at 20% 95%, rgba(120, 10, 8, 0.55) 0%, transparent 45%),
+    radial-gradient(ellipse at 85% 90%, rgba(120, 10, 8, 0.45) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 110%, rgba(90, 5, 5, 0.7) 0%, transparent 55%);
+  transition: opacity 0.6s ease;
+}
+.hopefinder-sheet .hf-portrait-scan {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    180deg, transparent 0px, transparent 3px, rgba(0, 0, 0, 0.12) 4px);
+  opacity: 0.5;
+}
+.hopefinder-sheet .hf-id-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 8px;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 6, 7, 0.92) 55%);
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.hopefinder-sheet .hf-id-level {
+  color: var(--hf-amber);
+  text-shadow: 0 0 6px rgba(217, 164, 65, 0.5);
+}
+
+/* Status lamps (shared) */
+.hopefinder-sheet .hf-id-state,
+.hopefinder-sheet .hf-bio-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-transform: uppercase;
+  font-family: var(--hf-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+}
+.hopefinder-sheet .hf-id-state::before,
+.hopefinder-sheet .hf-bio-state::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 7px currentColor;
+}
+.hopefinder-sheet .hf-lamp--stable { color: var(--hf-olive-hi); }
+.hopefinder-sheet .hf-lamp--wounded { color: var(--hf-amber); }
+.hopefinder-sheet .hf-lamp--critical { color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-lamp--down { color: var(--hf-red-hi); animation: hf-lamp-blink 0.9s steps(2) infinite; }
+
+/* Identity block */
+.hopefinder-sheet .hf-identity { text-align: center; }
+.hopefinder-sheet .hf-name {
+  margin: 0;
+  border: none;
+  font-family: var(--hf-font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+  line-height: 1.1;
+}
+.hopefinder-sheet .hf-callsign,
+.hopefinder-sheet .hf-callsign-static {
+  width: 100%;
+  margin-top: 3px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--hf-line);
+  text-align: center;
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  color: var(--hf-amber);
+  letter-spacing: 0.08em;
+}
+.hopefinder-sheet .hf-callsign:focus {
+  outline: none;
+  border-bottom-color: var(--hf-amber);
+  box-shadow: none;
+}
+.hopefinder-sheet .hf-role-line {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 7px;
+}
+.hopefinder-sheet .hf-role-pill {
+  padding: 2px 8px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.hopefinder-sheet .hf-role-pill:hover {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+  background: var(--hf-accent-dim);
+}
+
+/* Hope */
+.hopefinder-sheet .hf-hope {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-amber);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-hope > label {
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+
+/* Navigation */
+.hopefinder-sheet .hf-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+  flex: 1;
+}
+.hopefinder-sheet .hf-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: transparent;
+  border: none;
+  border-left: 2px solid transparent;
+  border-radius: 0;
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-display);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.hopefinder-sheet .hf-nav-item i {
+  width: 16px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.hopefinder-sheet .hf-nav-item:hover {
+  color: var(--hf-text-hi);
+  background: rgba(255, 255, 255, 0.03);
+  border-left-color: var(--hf-line-strong);
+  box-shadow: none;
+}
+.hopefinder-sheet .hf-nav-item.active {
+  color: var(--hf-accent-hi);
+  background: linear-gradient(90deg, var(--hf-accent-dim) 0%, transparent 90%);
+  border-left-color: var(--hf-accent);
+}
+.hopefinder-sheet .hf-nav-item.active i { opacity: 1; }
+
+/* Rail quick actions */
+.hopefinder-sheet .hf-rail-actions {
+  display: flex;
+  gap: 6px;
+}
+.hopefinder-sheet .hf-rail-actions button {
+  flex: 1;
+  padding: 7px 0;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  color: var(--hf-text-dim);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.hopefinder-sheet .hf-rail-actions button:hover {
+  color: var(--hf-accent-hi);
+  border-color: var(--hf-accent);
+  background: var(--hf-accent-dim);
+  box-shadow: 0 0 10px var(--hf-accent-dim);
+}
+
+/* ── Main stage ────────────────────────────────────────────── */
+.hopefinder-sheet .hf-stage {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  z-index: 1;
+}
+
+/* Status bar */
+.hopefinder-sheet .hf-statusbar {
+  display: flex;
+  align-items: stretch;
+  gap: var(--hf-gap);
+  padding: 10px 14px;
+  background: linear-gradient(180deg, rgba(15, 19, 22, 0.95) 0%, rgba(11, 14, 16, 0.9) 100%);
+  border-bottom: 1px solid var(--hf-line);
+  flex-wrap: wrap;
+}
+
+/* Tabs container */
+.hopefinder-sheet .hf-tabs {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.hopefinder-sheet .hf-tab {
+  display: none;
+  position: absolute;
+  inset: 0;
+  padding: 14px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.hopefinder-sheet .hf-tab.active { display: block; }
+
+/* ── Scrollbars ────────────────────────────────────────────── */
+.hopefinder-sheet ::-webkit-scrollbar { width: 7px; height: 7px; }
+.hopefinder-sheet ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); }
+.hopefinder-sheet ::-webkit-scrollbar-thumb {
+  background: var(--hf-steel-hi);
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+.hopefinder-sheet ::-webkit-scrollbar-thumb:hover { background: var(--hf-accent); }
+
+/* ── Base input reset inside the sheet ─────────────────────── */
+.hopefinder-sheet input[type="text"],
+.hopefinder-sheet input[type="number"],
+.hopefinder-sheet input[type="search"],
+.hopefinder-sheet select,
+.hopefinder-sheet textarea {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  padding: 3px 6px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.hopefinder-sheet input:focus,
+.hopefinder-sheet select:focus,
+.hopefinder-sheet textarea:focus {
+  outline: none;
+  border-color: var(--hf-accent);
+  box-shadow: 0 0 6px var(--hf-accent-dim);
+}
+.hopefinder-sheet input::placeholder,
+.hopefinder-sheet textarea::placeholder {
+  color: var(--hf-text-faint);
+  letter-spacing: 0.05em;
+}
+.hopefinder-sheet input[type="number"] { text-align: center; }
+.hopefinder-sheet input[type="number"]::-webkit-inner-spin-button { display: none; }
+.hopefinder-sheet button { line-height: 1.2; }
+.hopefinder-sheet button:focus-visible {
+  outline: 1px solid var(--hf-accent);
+  outline-offset: 1px;
+}
+
+/* ── Responsive (container queries) ───────────────────────── */
+@container hf (max-width: 860px) {
+  .hopefinder-sheet .hf-rail { width: 190px; flex-basis: 190px; }
+  .hopefinder-sheet .hf-nav-item { font-size: 12px; padding: 7px 8px; }
+}
+@container hf (max-width: 700px) {
+  .hopefinder-sheet .hf-rail { width: 64px; flex-basis: 64px; padding: 8px 6px; }
+  .hopefinder-sheet .hf-identity,
+  .hopefinder-sheet .hf-hope,
+  .hopefinder-sheet .hf-nav-item span { display: none; }
+  .hopefinder-sheet .hf-nav-item { justify-content: center; }
+  .hopefinder-sheet .hf-nav-item i { width: auto; font-size: 15px; }
+  .hopefinder-sheet .hf-rail-actions { flex-direction: column; }
+}

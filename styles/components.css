@@ -1,0 +1,1161 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOPEFINDER SURVIVOR SHEET — COMPONENTS
+   Panels, buttons, pips, chips, cards, meters, tooltip, HUD blocks.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Panels ────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-panel {
+  position: relative;
+  padding: 12px;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  box-shadow: var(--hf-shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+.hopefinder-sheet .hf-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--hf-accent-dim), transparent);
+}
+.hopefinder-sheet .hf-panel-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px 0;
+  padding-bottom: 7px;
+  border-bottom: 1px solid var(--hf-line);
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-panel-title i {
+  color: var(--hf-accent);
+  font-size: 12px;
+}
+.hopefinder-sheet .hf-title-action { margin-left: auto; }
+
+/* Paper panels (journal) */
+.hopefinder-sheet .hf-paper {
+  background:
+    linear-gradient(180deg, rgba(230, 227, 216, 0.03) 0%, transparent 30%),
+    var(--hf-panel);
+}
+
+/* ── Buttons ───────────────────────────────────────────────── */
+.hopefinder-sheet .hf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 12px;
+  width: auto;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  position: relative;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hopefinder-sheet .hf-btn:hover {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+  background: var(--hf-accent-dim);
+  box-shadow: 0 0 10px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-btn--attack {
+  border-color: rgba(217, 164, 65, 0.4);
+}
+.hopefinder-sheet .hf-btn--attack:hover,
+.hopefinder-sheet .hf-btn--attack.primary {
+  border-color: var(--hf-amber);
+  color: var(--hf-amber-hi);
+  background: var(--hf-amber-dim);
+  box-shadow: 0 0 10px var(--hf-amber-dim);
+}
+.hopefinder-sheet .hf-btn--damage:hover {
+  border-color: var(--hf-red);
+  color: var(--hf-red-hi);
+  background: var(--hf-red-dim);
+  box-shadow: 0 0 10px var(--hf-red-dim);
+}
+.hopefinder-sheet .hf-btn--crit {
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-btn--crit:hover {
+  border-color: var(--hf-red-hi);
+  color: #fff;
+  background: var(--hf-red);
+  box-shadow: 0 0 14px var(--hf-red-dim);
+}
+.hopefinder-sheet .hf-btn--ghost {
+  background: transparent;
+  border-color: var(--hf-line);
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-btn--medic {
+  border-color: rgba(111, 168, 184, 0.4);
+  padding: 10px 16px;
+}
+.hopefinder-sheet .hf-btn--medic:hover {
+  border-color: var(--hf-cyan);
+  color: var(--hf-cyan);
+  background: var(--hf-cyan-dim);
+  box-shadow: 0 0 10px var(--hf-cyan-dim);
+}
+.hopefinder-sheet .hf-danger:hover {
+  border-color: var(--hf-red) !important;
+  color: var(--hf-red-hi) !important;
+  background: var(--hf-red-dim) !important;
+}
+.hopefinder-sheet .hf-btn--fx-active {
+  border-color: var(--hf-cyan);
+  color: var(--hf-cyan);
+}
+.hopefinder-sheet .hf-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: var(--hf-text-faint);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.hopefinder-sheet .hf-icon-btn:hover {
+  color: var(--hf-text-hi);
+  border-color: var(--hf-line-strong);
+  box-shadow: none;
+}
+
+/* ── Pips ──────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-pip-row { display: flex; gap: 4px; }
+.hopefinder-sheet .hf-pip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text-faint);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.hopefinder-sheet .hf-pip:hover {
+  border-color: var(--hf-amber);
+  color: var(--hf-amber);
+  box-shadow: none;
+}
+.hopefinder-sheet .hf-pip.filled {
+  background: var(--hf-amber-dim);
+  border-color: var(--hf-amber);
+  color: var(--hf-amber-hi);
+  text-shadow: 0 0 6px rgba(217, 164, 65, 0.6);
+}
+.hopefinder-sheet .hf-pip--dying.filled {
+  background: var(--hf-red-dim);
+  border-color: var(--hf-red);
+  color: var(--hf-red-hi);
+  text-shadow: 0 0 6px rgba(194, 59, 46, 0.6);
+}
+.hopefinder-sheet .hf-pip--wounded.filled {
+  background: var(--hf-red-dim);
+  border-color: var(--hf-red);
+  color: var(--hf-red-hi);
+}
+.hopefinder-sheet .hf-pip--threat.filled {
+  background: var(--hf-red-dim);
+  border-color: var(--hf-red-hi);
+  color: var(--hf-red-hi);
+  text-shadow: 0 0 8px rgba(232, 94, 77, 0.7);
+}
+
+/* ── Chips ─────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.hopefinder-sheet .hf-chip {
+  padding: 1px 7px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--hf-text-dim);
+  text-transform: lowercase;
+}
+.hopefinder-sheet .hf-chip--good { border-color: rgba(95, 158, 107, 0.5); color: var(--hf-green); }
+.hopefinder-sheet .hf-chip--bad { border-color: rgba(194, 59, 46, 0.5); color: var(--hf-red-hi); }
+
+/* ── Status bar blocks ─────────────────────────────────────── */
+.hopefinder-sheet .hf-status-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  min-width: 64px;
+  padding: 4px 10px;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-status-block i {
+  font-size: 11px;
+  color: var(--hf-accent);
+  opacity: 0.85;
+}
+.hopefinder-sheet .hf-status-block .hf-status-value {
+  font-family: var(--hf-font-mono);
+  font-size: 17px;
+  color: var(--hf-text-hi);
+  line-height: 1;
+}
+.hopefinder-sheet .hf-status-block label {
+  font-family: var(--hf-font-display);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+  white-space: nowrap;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hopefinder-sheet .hf-clickable { cursor: pointer; transition: all 0.18s ease; }
+.hopefinder-sheet .hf-clickable:hover {
+  border-color: var(--hf-accent);
+  box-shadow: 0 0 10px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-shield-block.broken { border-color: var(--hf-red); }
+.hopefinder-sheet .hf-shield-block.broken .hf-status-value { color: var(--hf-red-hi); }
+
+/* ── HP module ─────────────────────────────────────────────── */
+.hopefinder-sheet .hf-hp-module {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 220px;
+  padding: 6px 12px;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-accent);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-hp-readout {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  font-family: var(--hf-font-mono);
+}
+.hopefinder-sheet .hf-hp-readout i {
+  color: var(--hf-accent);
+  font-size: 13px;
+  align-self: center;
+}
+.hopefinder-sheet .hf-hp-num {
+  font-size: 24px;
+  color: var(--hf-text-hi);
+  line-height: 1;
+  text-shadow: 0 0 12px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-hp-sep,
+.hopefinder-sheet .hf-hp-max { color: var(--hf-text-dim); font-size: 13px; }
+.hopefinder-sheet .hf-hp-temp {
+  margin-left: 6px;
+  padding: 0 5px;
+  border: 1px solid rgba(111, 168, 184, 0.5);
+  border-radius: 2px;
+  color: var(--hf-cyan);
+  font-size: 11px;
+}
+.hopefinder-sheet .hf-hp-track {
+  position: relative;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-hp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--hf-accent) 0%, var(--hf-accent-hi) 100%);
+  box-shadow: 0 0 8px var(--hf-accent-dim);
+  transition: width 0.55s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+}
+.hopefinder-sheet .hf-hp-module[data-low="true"] .hf-hp-fill {
+  background: linear-gradient(90deg, var(--hf-red) 0%, var(--hf-red-hi) 100%);
+  animation: hf-hp-throb 1.2s ease-in-out infinite;
+}
+.hopefinder-sheet .hf-hp-ticks {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0, transparent calc(10% - 1px), rgba(0, 0, 0, 0.5) calc(10% - 1px), rgba(0, 0, 0, 0.5) 10%);
+  pointer-events: none;
+}
+.hopefinder-sheet .hf-hp-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.hopefinder-sheet .hf-hp-controls button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-size: 9px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.hopefinder-sheet .hf-hp-controls button:hover {
+  color: var(--hf-text-hi);
+  border-color: var(--hf-accent);
+  box-shadow: none;
+}
+.hopefinder-sheet .hf-hp-input { width: 52px; height: 20px; text-align: center; }
+.hopefinder-sheet .hf-temp-input {
+  width: 44px;
+  height: 20px;
+  margin-left: auto;
+  border-color: rgba(111, 168, 184, 0.35);
+  color: var(--hf-cyan);
+}
+
+/* ── Condition chips (status bar) ──────────────────────────── */
+.hopefinder-sheet .hf-statusbar-conditions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-left: auto;
+  max-width: 40%;
+}
+.hopefinder-sheet .hf-cond-chip {
+  position: relative;
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.hopefinder-sheet .hf-cond-chip:hover { border-color: var(--hf-amber); }
+.hopefinder-sheet .hf-cond-chip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  filter: grayscale(0.3);
+}
+.hopefinder-sheet .hf-cond-chip b {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 2px;
+  background: var(--hf-red);
+  border-radius: 2px;
+  color: #fff;
+  font-family: var(--hf-font-mono);
+  font-size: 9px;
+  line-height: 14px;
+  text-align: center;
+}
+.hopefinder-sheet .hf-cond-menu { position: relative; }
+.hopefinder-sheet .hf-cond-menu summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 1px dashed var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text-faint);
+  cursor: pointer;
+  list-style: none;
+  transition: all 0.15s ease;
+}
+.hopefinder-sheet .hf-cond-menu summary::-webkit-details-marker { display: none; }
+.hopefinder-sheet .hf-cond-menu summary:hover { color: var(--hf-accent-hi); border-color: var(--hf-accent); }
+.hopefinder-sheet .hf-cond-list {
+  position: absolute;
+  right: 0;
+  top: 34px;
+  z-index: 40;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(90px, 1fr));
+  gap: 3px;
+  padding: 8px;
+  background: var(--hf-panel-solid);
+  border: 1px solid var(--hf-edge);
+  border-radius: var(--hf-radius);
+  box-shadow: var(--hf-shadow);
+  max-height: 260px;
+  overflow-y: auto;
+  width: max-content;
+  max-width: 340px;
+}
+.hopefinder-sheet .hf-cond-list button {
+  padding: 4px 8px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text);
+  font-size: 11px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+.hopefinder-sheet .hf-cond-list button:hover {
+  border-color: var(--hf-amber);
+  color: var(--hf-amber-hi);
+  box-shadow: none;
+}
+
+/* ── Item cards ────────────────────────────────────────────── */
+.hopefinder-sheet .hf-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--hf-panel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  overflow: hidden;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.hopefinder-sheet .hf-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--hf-line-strong);
+  box-shadow: var(--hf-shadow-sm), 0 0 12px rgba(0, 0, 0, 0.4);
+}
+.hopefinder-sheet .hf-card.equipped { border-color: rgba(125, 143, 99, 0.55); }
+.hopefinder-sheet .hf-card.equipped::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--hf-accent);
+  box-shadow: 0 0 8px var(--hf-accent);
+}
+.hopefinder-sheet .hf-hidden { display: none !important; }
+
+/* Rarity edge */
+.hopefinder-sheet .hf-card--uncommon { border-left: 2px solid #c45500; }
+.hopefinder-sheet .hf-card--rare { border-left: 2px solid #4a7bd0; }
+.hopefinder-sheet .hf-card--unique { border-left: 2px solid #9855d4; }
+
+.hopefinder-sheet .hf-card-visual {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(ellipse at center, rgba(255, 255, 255, 0.045) 0%, transparent 70%),
+    var(--hf-void);
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-card-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: none;
+  padding: 6px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.6));
+  transition: transform 0.25s ease;
+}
+.hopefinder-sheet .hf-card:hover .hf-card-visual img { transform: scale(1.07); }
+.hopefinder-sheet .hf-card-qty {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  padding: 1px 6px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-card-flag {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hf-accent-dim);
+  border: 1px solid var(--hf-accent);
+  border-radius: 2px;
+  color: var(--hf-accent-hi);
+  font-size: 9px;
+}
+.hopefinder-sheet .hf-card-fav {
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid transparent;
+  border-radius: 2px;
+  color: var(--hf-text-faint);
+  font-size: 10px;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-card:hover .hf-card-fav,
+.hopefinder-sheet .hf-card-fav.on { opacity: 1; }
+.hopefinder-sheet .hf-card-fav.on { color: var(--hf-amber); text-shadow: 0 0 6px rgba(217, 164, 65, 0.7); }
+
+.hopefinder-sheet .hf-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 7px 9px 8px;
+}
+.hopefinder-sheet .hf-card-name {
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--hf-text-hi);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hopefinder-sheet .hf-card-meta {
+  font-family: var(--hf-font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.04em;
+  color: var(--hf-text-faint);
+  text-transform: uppercase;
+}
+.hopefinder-sheet .hf-card-meta i { font-size: 8px; }
+
+/* Slide-up action bar */
+.hopefinder-sheet .hf-card-actions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 6, 7, 0.95) 40%);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.18s ease;
+  pointer-events: none;
+}
+.hopefinder-sheet .hf-card:hover .hf-card-actions,
+.hopefinder-sheet .hf-card:focus-within .hf-card-actions {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+.hopefinder-sheet .hf-card-actions button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+.hopefinder-sheet .hf-card-actions button:hover {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+  box-shadow: none;
+}
+
+/* ── Integrity (durability) bars ───────────────────────────── */
+.hopefinder-sheet .hf-integrity {
+  display: block;
+  height: 3px;
+  margin-top: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+.hopefinder-sheet .hf-integrity::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--pct, 100%);
+  border-radius: 2px;
+}
+.hopefinder-sheet .hf-integrity--good::after { background: var(--hf-green); }
+.hopefinder-sheet .hf-integrity--worn::after { background: var(--hf-olive); }
+.hopefinder-sheet .hf-integrity--damaged::after { background: var(--hf-amber); }
+.hopefinder-sheet .hf-integrity--critical::after { background: var(--hf-red); }
+.hopefinder-sheet .hf-integrity--broken::after { background: var(--hf-red); animation: hf-lamp-blink 1s steps(2) infinite; }
+.hopefinder-sheet .hf-integrity--destroyed::after { background: #1a1a1a; }
+
+/* ── Broken / Destroyed status badges (Dings & Broken Gear) ─── */
+.hopefinder-sheet .hf-status-badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border: 1px solid var(--hf-red);
+  border-radius: 2px;
+  background: var(--hf-red-dim);
+  color: var(--hf-red-hi);
+  font-family: var(--hf-font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hopefinder-sheet .hf-status-badge--broken { animation: hf-lamp-blink 1.2s steps(2) infinite; }
+.hopefinder-sheet .hf-status-badge--destroyed { background: rgba(0, 0, 0, 0.75); border-color: #000; }
+.hopefinder-sheet .hf-card-visual .hf-status-badge,
+.hopefinder-sheet .hf-weapon-visual .hf-status-badge {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-8deg);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Armor Resistance chip ─────────────────────────────────── */
+.hopefinder-sheet .hf-resistance-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-top: 2px;
+  padding: 0 5px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  cursor: pointer;
+}
+.hopefinder-sheet .hf-resistance-chip:hover { border-color: var(--hf-accent); color: var(--hf-accent-hi); }
+
+/* ── Search + filter chips ─────────────────────────────────── */
+.hopefinder-sheet .hf-search {
+  position: relative;
+  flex: 1;
+  min-width: 160px;
+}
+.hopefinder-sheet .hf-search i {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  color: var(--hf-text-faint);
+  pointer-events: none;
+}
+.hopefinder-sheet .hf-search input {
+  width: 100%;
+  height: 28px;
+  padding-left: 28px;
+  letter-spacing: 0.05em;
+}
+.hopefinder-sheet .hf-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.hopefinder-sheet .hf-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  height: 28px;
+  padding: 0 12px;
+  background: transparent;
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.hopefinder-sheet .hf-filter-chip:hover {
+  color: var(--hf-text-hi);
+  border-color: var(--hf-line-strong);
+  box-shadow: none;
+}
+.hopefinder-sheet .hf-filter-chip.active {
+  color: var(--hf-accent-hi);
+  border-color: var(--hf-accent);
+  background: var(--hf-accent-dim);
+}
+
+/* ── Sub navigation (journal) ──────────────────────────────── */
+.hopefinder-sheet .hf-subnav {
+  display: flex;
+  gap: 2px;
+  margin-bottom: var(--hf-gap);
+  border-bottom: 1px solid var(--hf-line);
+}
+.hopefinder-sheet .hf-subnav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hopefinder-sheet .hf-subnav-item:hover { color: var(--hf-text-hi); box-shadow: none; }
+.hopefinder-sheet .hf-subnav-item.active {
+  color: var(--hf-accent-hi);
+  border-bottom-color: var(--hf-accent);
+}
+.hopefinder-sheet .hf-journal-panel { display: none; }
+.hopefinder-sheet .hf-journal-panel.active {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-gap);
+}
+
+/* ── Empty states ──────────────────────────────────────────── */
+.hopefinder-sheet .hf-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 28px 12px;
+  color: var(--hf-text-faint);
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.hopefinder-sheet .hf-empty i { font-size: 26px; opacity: 0.35; }
+.hopefinder-sheet .hf-empty p { margin: 0; }
+.hopefinder-sheet .hf-text-danger { color: var(--hf-red-hi); }
+
+/* ── Effects (survivor tab) ────────────────────────────────── */
+.hopefinder-sheet .hf-effects { margin-top: 10px; }
+.hopefinder-sheet .hf-effects > label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--hf-font-display);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--hf-text-faint);
+}
+.hopefinder-sheet .hf-effect-row { display: flex; flex-wrap: wrap; gap: 5px; }
+.hopefinder-sheet .hf-effect {
+  position: relative;
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  overflow: visible;
+}
+.hopefinder-sheet .hf-effect img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.hopefinder-sheet .hf-effect b {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  min-width: 14px;
+  height: 14px;
+  background: var(--hf-steel-hi);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-mono);
+  font-size: 9px;
+  line-height: 13px;
+  text-align: center;
+}
+.hopefinder-sheet .hf-effect-x {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 14px;
+  height: 14px;
+  padding: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--hf-red);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 8px;
+  cursor: pointer;
+}
+.hopefinder-sheet .hf-effect:hover .hf-effect-x { display: inline-flex; }
+
+/* ── Premium tooltip (appended to body) ────────────────────── */
+#hf-tooltip {
+  position: fixed;
+  z-index: 10000;
+  width: 300px;
+  padding: 0;
+  background: linear-gradient(180deg, #171c20 0%, #0d1013 100%);
+  border: 1px solid #2e363d;
+  border-radius: 3px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  font-family: "Barlow", "Segoe UI", sans-serif;
+  color: #b9bfb6;
+}
+#hf-tooltip.hf-tooltip--on { opacity: 1; transform: none; }
+#hf-tooltip .hf-tooltip-head {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border-bottom: 1px solid rgba(214, 222, 214, 0.09);
+  background: rgba(0, 0, 0, 0.25);
+}
+#hf-tooltip .hf-tooltip-head img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  border: 1px solid rgba(214, 222, 214, 0.12);
+  border-radius: 2px;
+  background: #07090a;
+}
+#hf-tooltip .hf-tooltip-title { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+#hf-tooltip .hf-tooltip-name {
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #e6e3d8;
+}
+#hf-tooltip .hf-tooltip-sub { display: flex; align-items: center; gap: 8px; }
+#hf-tooltip .hf-tooltip-lvl {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 10px;
+  color: #78807a;
+}
+#hf-tooltip .hf-rarity {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+#hf-tooltip .hf-rarity--common { color: #9aa39a; }
+#hf-tooltip .hf-rarity--uncommon { color: #d07a2d; }
+#hf-tooltip .hf-rarity--rare { color: #6f9ede; }
+#hf-tooltip .hf-rarity--unique { color: #b07ae0; }
+#hf-tooltip .hf-tooltip-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 10px 0;
+}
+#hf-tooltip .hf-tooltip-stat {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(214, 222, 214, 0.09);
+  border-radius: 2px;
+}
+#hf-tooltip .hf-tooltip-stat label {
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #565d58;
+}
+#hf-tooltip .hf-tooltip-stat b {
+  font-family: "Share Tech Mono", monospace;
+  font-size: 12px;
+  color: #e6e3d8;
+}
+#hf-tooltip .hf-tooltip-traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px 10px 0;
+}
+#hf-tooltip .hf-tooltip-traits span {
+  padding: 1px 6px;
+  background: rgba(125, 143, 99, 0.12);
+  border: 1px solid rgba(125, 143, 99, 0.35);
+  border-radius: 2px;
+  font-family: "Share Tech Mono", monospace;
+  font-size: 9px;
+  color: #a4b884;
+}
+#hf-tooltip .hf-tooltip-desc {
+  padding: 8px 10px 10px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: #969c92;
+}
+
+/* ── Backdrop config dialog (renders outside the sheet) ────── */
+.hf-backdrop-form .form-fields { display: flex; gap: 6px; }
+.hf-backdrop-form .form-fields input { flex: 1; }
+.hf-backdrop-form .hf-browse { flex: 0 0 32px; }
+
+/* ── Weapon FX config dialog (renders outside the sheet) ────── */
+.hf-fx-config .window-content { background: var(--hf-bg); }
+.hf-fx-form { padding: 10px; color: var(--hf-text); }
+.hf-fx-hint {
+  margin: 0 0 10px;
+  font-size: 11px;
+  color: var(--hf-text-dim);
+}
+.hf-fx-hint strong { color: var(--hf-text-hi); }
+.hf-fx-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.hf-fx-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 2px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  color: var(--hf-text-dim);
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+.hf-fx-tab:hover { border-color: var(--hf-line-strong); color: var(--hf-text-hi); }
+.hf-fx-tab.active {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+  background: var(--hf-accent-dim);
+}
+.hf-fx-tab.has-sound { color: var(--hf-cyan); }
+.hf-fx-tab-lbl {
+  font-family: var(--hf-font-display);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.hf-fx-panel { display: none; }
+.hf-fx-panel.active { display: block; }
+.hf-fx-field { margin-bottom: 8px; }
+.hf-fx-field label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 3px;
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hf-fx-field select,
+.hf-fx-field input[type="range"] {
+  width: 100%;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  padding: 4px 6px;
+}
+.hf-fx-vol-val { color: var(--hf-text-hi); }
+.hf-fx-buttons { display: flex; gap: 6px; margin-top: 4px; }
+.hf-fx-bottom-buttons { margin-top: 10px; }
+.hf-fx-divider { border: none; border-top: 1px solid var(--hf-line); margin: 12px 0; }
+.hf-fx-image-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  font-family: var(--hf-font-display);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hf-fx-img-row { display: flex; align-items: center; gap: 6px; }
+.hf-fx-img-preview {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  background: var(--hf-steel);
+}
+.hf-fx-img-hint {
+  margin: 4px 0 0;
+  font-size: 10px;
+  color: var(--hf-text-faint);
+}
+
+/* ── License gate (Patreon) ──────────────────────────────────── */
+.hf-license-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 8, 7, 0.93);
+  border-radius: inherit;
+}
+.hf-license-box {
+  text-align: center;
+  padding: 32px;
+  max-width: 360px;
+}
+.hf-license-icon {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+  color: var(--hf-amber);
+}
+.hf-license-box h2 {
+  margin: 0 0 8px;
+  font-family: var(--hf-font-display);
+  color: var(--hf-amber-hi);
+}
+.hf-license-box p {
+  color: var(--hf-text-dim);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+.hf-license-box .hf-btn { display: block; width: 100%; margin-bottom: 8px; }
+
+.hf-license-widget {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  z-index: 9999;
+  width: 300px;
+  padding: 18px 20px;
+  background: var(--hf-panel-solid);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: var(--hf-radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  font-family: var(--hf-font-display);
+  color: var(--hf-text);
+}
+.hf-license-widget-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  color: var(--hf-amber-hi);
+}
+.hf-license-widget-body {
+  font-size: 0.82rem;
+  color: var(--hf-text-dim);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+.hf-license-widget-actions { display: flex; flex-direction: column; gap: 8px; }
+.hf-license-widget-actions .hf-btn { width: 100%; }
+.hf-license-widget-dismiss {
+  background: none;
+  border: none;
+  color: var(--hf-text-faint);
+  font-size: 0.7rem;
+  cursor: pointer;
+  text-align: right;
+  padding: 0;
+}
+.hf-license-code-input {
+  width: 100%;
+  padding: 8px;
+  border-radius: var(--hf-radius);
+  border: 1px solid var(--hf-line-strong);
+  background: var(--hf-bg);
+  color: var(--hf-text-hi);
+  font-family: var(--hf-font-mono);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,51 @@
+{
+  "id": "hopefinder-sheet",
+  "title": "Hopefinder Survivor Sheet",
+  "description": "A cinematic, tactical survivor character sheet for Hopefinder on the PF2e system. Military-grade HUD design, live vital signs, Tarkov-style inventory, and full PF2e integration.",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "GM RedVelvet",
+      "discord": "gmredvelvet"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "5.0.0",
+          "verified": "6.5.0"
+        }
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/main.mjs"
+  ],
+  "styles": [
+    "styles/core.css",
+    "styles/components.css",
+    "styles/tabs.css",
+    "styles/fx.css",
+    "styles/chat.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    }
+  ]
+}
