@@ -308,7 +308,12 @@ export class HopefinderSheet extends ActorSheetV1 {
       if (!PHYSICAL_TYPES.includes(item.type)) continue;
       const sys = item.system ?? {};
       const carryType = sys.equipped?.carryType ?? "stowed";
-      const equipped = carryType === "held" || carryType === "worn";
+      // PF2e defaults every new physical item to carryType "worn" (= carried on
+      // person). Only treat "worn" as equipped when the item is actually wearable.
+      const usage = sys.usage ?? {};
+      const wearable = item.type === "armor" ||
+        usage.type === "worn" || String(usage.value ?? "").startsWith("worn");
+      const equipped = carryType === "held" || (carryType === "worn" && wearable);
       const hpMax = sys.hp?.max ?? 0;
       const hpVal = sys.hp?.value ?? 0;
       const integrityPct = hpMax > 0 ? clamp(Math.round((hpVal / hpMax) * 100), 0, 100) : null;
@@ -356,7 +361,8 @@ export class HopefinderSheet extends ActorSheetV1 {
         favorite: favorites.includes(item.id),
         isContainer: item.type === "backpack",
         containerContents: item.type === "backpack" ? (item.contents?.size ?? 0) : null,
-        canEquip: ["weapon", "shield", "armor", "equipment"].includes(item.type) && !destroyed,
+        canEquip: (["weapon", "shield", "armor"].includes(item.type) ||
+          (item.type === "equipment" && wearable)) && !destroyed,
         canConsume: item.type === "consumable",
         isMedical,
         isProvision,
@@ -371,10 +377,13 @@ export class HopefinderSheet extends ActorSheetV1 {
       if (isMedical) supplies.push(ctx);
       else if (isProvision && ["consumable", "equipment"].includes(item.type)) provisions.push(ctx);
 
-      // Loadout column
-      if (item.type === "armor" && carryType === "worn") loadout.armor = ctx;
+      // Loadout column — only genuinely equipped gear, not everything carried
+      if (item.type === "armor" && carryType === "worn") {
+        // Several armors can be "worn" (PF2e default) — the donned one is inSlot
+        if (sys.equipped?.inSlot || !loadout.armor) loadout.armor = ctx;
+      }
       else if (carryType === "held") loadout.held.push(ctx);
-      else if (carryType === "worn") loadout.worn.push(ctx);
+      else if (carryType === "worn" && wearable) loadout.worn.push(ctx);
     }
 
     items.sort((a, b) => Number(b.equipped) - Number(a.equipped) || a.name.localeCompare(b.name));
@@ -609,7 +618,10 @@ export class HopefinderSheet extends ActorSheetV1 {
   _injectLicenseOverlay(html) {
     const root = html[0]?.closest(".hopefinder-sheet") ?? html[0];
     if (!root) return;
-    root.style.position = "relative";
+    // The app window is already absolutely positioned by Foundry; forcing
+    // "relative" here would pull it into the #interface flex flow and shove
+    // the sidebar aside. Only add positioning if the element is static.
+    if (getComputedStyle(root).position === "static") root.style.position = "relative";
 
     const overlay = document.createElement("div");
     overlay.className = "hf-license-overlay";
@@ -1153,8 +1165,8 @@ export class HopefinderSheet extends ActorSheetV1 {
 
     if (item.type === "armor") {
       return carry === "worn"
-        ? change({ carryType: "stowed", handsHeld: 0 })
-        : change({ carryType: "worn", handsHeld: 0 });
+        ? change({ carryType: "stowed", handsHeld: 0, inSlot: false })
+        : change({ carryType: "worn", handsHeld: 0, inSlot: true });
     }
     if (item.type === "weapon" || item.type === "shield") {
       const hands = /two/.test(sys.usage?.value ?? "") ? 2 : 1;
@@ -1162,10 +1174,10 @@ export class HopefinderSheet extends ActorSheetV1 {
         ? change({ carryType: "stowed", handsHeld: 0 })
         : change({ carryType: "held", handsHeld: hands });
     }
-    // Generic equipment: worn ↔ stowed
+    // Wearable equipment: worn ↔ stowed (inSlot marks it as actually donned)
     return carry === "worn"
-      ? change({ carryType: "stowed", handsHeld: 0 })
-      : change({ carryType: "worn", handsHeld: 0 });
+      ? change({ carryType: "stowed", handsHeld: 0, inSlot: false })
+      : change({ carryType: "worn", handsHeld: 0, inSlot: true });
   }
 
   /** Invoke a PF2e system action by slug, with legacy fallback. */

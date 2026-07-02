@@ -61,7 +61,7 @@ body.hf-chat-theme .chat-message .message-metadata {
   font-family: var(--hf-font-mono);
   font-size: 10px;
   letter-spacing: 0.04em;
-  color: var(--hf-text-faint);
+  color: var(--hf-text);
 }
 body.hf-chat-theme .chat-message .message-metadata .message-delete:hover {
   color: var(--hf-red-hi);
@@ -134,7 +134,7 @@ body.hf-chat-theme .chat-message .pf2e.chat-card .tag {
   background: var(--hf-steel);
   border: 1px solid var(--hf-line);
   border-radius: 2px;
-  color: var(--hf-text);
+  color: var(--hf-text-hi);
   font-family: var(--hf-font-display);
   font-size: 10.5px;
   letter-spacing: 0.08em;
@@ -142,7 +142,7 @@ body.hf-chat-theme .chat-message .pf2e.chat-card .tag {
 }
 body.hf-chat-theme .chat-message .pf2e.chat-card footer {
   border-top: 1px solid var(--hf-line);
-  color: var(--hf-text-faint);
+  color: var(--hf-text);
   font-family: var(--hf-font-mono);
 }
 body.hf-chat-theme .chat-message .pf2e.chat-card footer span {
@@ -157,7 +157,7 @@ body.hf-chat-theme .chat-message .dice-formula {
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid var(--hf-line);
   border-radius: var(--hf-radius);
-  color: var(--hf-text-dim);
+  color: var(--hf-text-hi);
   font-family: var(--hf-font-mono);
 }
 body.hf-chat-theme .chat-message .dice-tooltip {
@@ -204,6 +204,62 @@ body.hf-chat-theme .chat-message .message-buttons button:hover {
   color: var(--hf-accent-hi);
   background: var(--hf-accent-dim);
   box-shadow: 0 0 10px var(--hf-accent-dim);
+}
+
+/* ── Legibility: force light ink on system-rendered bits ───── */
+/* pf2e renders modifier/trait tags in the flavor text, OUTSIDE
+   .pf2e.chat-card, with dark ink meant for its parchment theme.
+   !important is required to beat the system stylesheet. */
+body.hf-chat-theme .chat-message .tags .tag,
+body.hf-chat-theme .chat-message .tags .tag.tag_alt,
+body.hf-chat-theme .chat-message .tags .tag.tag_secondary,
+body.hf-chat-theme .chat-message .tags .tag.tag_transparent,
+body.hf-chat-theme .chat-message .flavor-text .tag {
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line-strong);
+  border-radius: 2px;
+  color: var(--hf-text-hi) !important;
+}
+
+/* Roll breakdown inside the expandable dice tooltip */
+body.hf-chat-theme .chat-message .dice-tooltip .part-formula,
+body.hf-chat-theme .chat-message .dice-tooltip .part-flavor,
+body.hf-chat-theme .chat-message .dice-tooltip .part-total,
+body.hf-chat-theme .chat-message .dice-tooltip .dice .die,
+body.hf-chat-theme .chat-message .dice-tooltip .dice ol.dice-rolls .roll {
+  color: var(--hf-text-hi);
+}
+
+/* Target / DC / degree-of-success readouts in the flavor text */
+body.hf-chat-theme .chat-message .flavor-text .target-dc,
+body.hf-chat-theme .chat-message .flavor-text .result,
+body.hf-chat-theme .chat-message .flavor-text .statements {
+  color: var(--hf-text);
+}
+
+/* Every system-injected button (pf2e damage-application row, shield
+   block, revert damage…), icons included. The module's own alert
+   buttons keep their red styling from fx.css. */
+body.hf-chat-theme .chat-message button:not(.hf-ding-apply-btn):not(.hf-resolve-hit-btn) {
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line-strong);
+  color: var(--hf-text-hi);
+}
+body.hf-chat-theme .chat-message button:not(.hf-ding-apply-btn):not(.hf-resolve-hit-btn) i,
+body.hf-chat-theme .chat-message button:not(.hf-ding-apply-btn):not(.hf-resolve-hit-btn) span {
+  color: inherit;
+}
+body.hf-chat-theme .chat-message button:not(.hf-ding-apply-btn):not(.hf-resolve-hit-btn):hover {
+  border-color: var(--hf-accent);
+  color: var(--hf-accent-hi);
+  background: var(--hf-accent-dim);
+}
+
+/* Damage-taken summaries and other secondary lines */
+body.hf-chat-theme .chat-message .message-content p,
+body.hf-chat-theme .chat-message .message-content li,
+body.hf-chat-theme .chat-message .message-content span:not(.tag) {
+  color: inherit;
 }
 
 /* ── Chat log scrollbar (sidebar tab + popout) ────────────── */

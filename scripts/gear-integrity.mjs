@@ -188,6 +188,19 @@ export const GearIntegrityManager = {
     });
   },
 
+  /**
+   * The armor the actor is actually wearing. PF2e defaults every item's
+   * carryType to "worn", so "worn" alone can match spare armor in the bag —
+   * the donned one is worn + inSlot. Falls back to the only worn armor when
+   * none is flagged inSlot (legacy data equipped before inSlot was set).
+   */
+  getWornArmor(actor) {
+    if (!actor) return null;
+    if (actor.wornArmor) return actor.wornArmor;
+    const worn = (actor.itemTypes?.armor ?? []).filter(a => a.system.equipped?.carryType === "worn");
+    return worn.find(a => a.system.equipped?.inSlot) ?? (worn.length === 1 ? worn[0] : null);
+  },
+
   /** Effective Resistance right now: halved (round down) if Broken, 0 if Destroyed. */
   getEffectiveResistance(item) {
     const base = this.getBaseResistance(item).value ?? 0;
@@ -488,7 +501,7 @@ async function openResolveHitDialog({ actorHint, rawDamage, sourceName }) {
   const target = game.user.targets.first()?.actor ?? actorHint;
   if (!target) { ui.notifications?.warn(loc("Warn.NoTarget")); return; }
 
-  const armor = (target.itemTypes?.armor ?? []).find(a => a.system.equipped?.carryType === "worn") ?? null;
+  const armor = GearIntegrityManager.getWornArmor(target);
   const base = armor ? GearIntegrityManager.getBaseResistance(armor) : { value: 0, types: "", helmet: false };
   const effective = armor ? GearIntegrityManager.getEffectiveResistance(armor) : 0;
 

@@ -1,9 +1,10 @@
 /**
  * Hopefinder Survivor Sheet — License Client
  *
- * Shares Patreon tokens with vnd-enhanced (same subscription unlocks all VNE modules,
- * Hopefinder included). All sensitive operations happen on the server; this is the
- * client-side coordinator only — it never sees the Patreon client secret.
+ * Same Patreon subscription unlocks all VNE modules, but each module holds its own
+ * installation ID and token set (the server tracks installations per module).
+ * All sensitive operations happen on the server; this is the client-side
+ * coordinator only — it never sees the Patreon client secret.
  */
 
 const OWN_MODULE_ID = 'hopefinder-sheet';
@@ -11,14 +12,18 @@ const API_BASE      = 'https://vnd-license.gmredvelvet.workers.dev';
 
 const RSA_PUBLIC_KEY = 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3-hTzuHo9lgENNQiA4-Fm7VIdalqisZ5NhqrBioXmIXSMbEhYpy1TnPkCBAdAzXAsyX1YdTYLcMADETPnERvceLsDoAWHFZzHGxoXBkOGw0ukAyHJyrwBZxCf_bY_FSbip_-XQuTS4YuyhLPVNjbGMZdVarkegh7BKwW4CR9MDb1DMtf_NxtfNqJ3MxhfAiTxIod4AWer8esisr0IekQlPLmMPA2KggzQw9rFj61B4DAVk2F_TAXPMOKyEcX_zVGpp00JTurTsfwK2023UHKO9t98R0rG17oX0rK_x2EOBiW2Nla3NChZyR4yi8zHe0vjYhprqcwozv9wN0wbANnzwIDAQAB';
 
-// Shared with vnd-enhanced (and pf2e-velvet-sheet) — one Patreon connection unlocks all of them.
+// Per-module storage keys (same pattern as sf2e-cyber-sheet / starfinderdashboard).
+// The server registers each module as its own installation, so tokens and the
+// installation ID must NOT be shared with vnd-enhanced: reusing its installation ID
+// makes /oauth/exchange reject the activation with INSTALL_CONFLICT, and reusing its
+// token slots would clobber vnd-enhanced's refresh-token rotation.
 const SK = {
-  accessToken:    'vnd-enhanced:at',
-  refreshToken:   'vnd-enhanced:rt',
-  tokenExpiry:    'vnd-enhanced:exp',
-  installationId: 'vnd-enhanced:iid',
-  tier:           'vnd-enhanced:tier',
-  features:       'vnd-enhanced:features',
+  accessToken:    `${OWN_MODULE_ID}:at`,
+  refreshToken:   `${OWN_MODULE_ID}:rt`,
+  tokenExpiry:    `${OWN_MODULE_ID}:exp`,
+  installationId: `${OWN_MODULE_ID}:iid`,
+  tier:           `${OWN_MODULE_ID}:tier`,
+  features:       `${OWN_MODULE_ID}:features`,
 };
 
 export class HopefinderLicenseClient {
