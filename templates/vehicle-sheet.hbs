@@ -1,0 +1,494 @@
+<form class="hf-root hf-vehicle {{state.classes}}" autocomplete="off">
+
+  {{!-- Cinematic layers --}}
+  <div class="hf-backdrop" style="--hf-backdrop-op: calc({{backdrop.opacity}} / 100);">
+    {{#if backdrop.img}}
+      {{#if backdrop.isVideo}}
+        <video src="{{backdrop.img}}" autoplay loop muted playsinline></video>
+      {{else}}
+        <img src="{{backdrop.img}}" alt="">
+      {{/if}}
+    {{/if}}
+  </div>
+  <div class="hf-grain" aria-hidden="true"></div>
+  <div class="hf-vignette" aria-hidden="true"></div>
+  <div class="hf-flash" aria-hidden="true"></div>
+
+  {{!-- ══════════ LEFT RAIL ══════════ --}}
+  <aside class="hf-rail">
+    <div class="hf-portrait-frame" data-action="portrait" title="{{localize 'HOPEFINDER.Header.ChangePortrait'}}">
+      <span class="hf-corner tl"></span><span class="hf-corner tr"></span>
+      <span class="hf-corner bl"></span><span class="hf-corner br"></span>
+      {{#if header.portraitIsVideo}}
+        <video class="hf-portrait" src="{{header.img}}" autoplay loop muted playsinline></video>
+      {{else}}
+        <img class="hf-portrait" src="{{header.img}}" alt="{{header.name}}">
+      {{/if}}
+      <div class="hf-portrait-scan" aria-hidden="true"></div>
+      <div class="hf-id-strip">
+        <span class="hf-id-level">LV {{header.level}}</span>
+        <span class="hf-id-state hf-lamp--{{state.id}}">{{state.label}}</span>
+      </div>
+    </div>
+
+    <div class="hf-identity">
+      <h1 class="hf-name">{{header.name}}</h1>
+      <div class="hf-role-line">
+        {{#if header.crew}}<span class="hf-role-pill" title="{{localize 'HOPEFINDER.Vehicle.Crew'}}"><i class="fas fa-users"></i> {{header.crew}}</span>{{/if}}
+        {{#if header.passengers}}<span class="hf-role-pill" title="{{localize 'HOPEFINDER.Vehicle.Passengers'}}"><i class="fas fa-person-seat"></i> {{header.passengers}}</span>{{/if}}
+      </div>
+    </div>
+
+    <div class="hf-hope" title="{{localize 'HOPEFINDER.Vehicle.OdometerHint'}}">
+      <label>{{localize 'HOPEFINDER.Vehicle.Odometer'}}</label>
+      <span class="hf-odometer">{{vehicle.odometer}} km</span>
+    </div>
+
+    <nav class="hf-nav" role="tablist">
+      {{#each tabs}}
+        <button type="button" class="hf-nav-item {{#if this.active}}active{{/if}}" role="tab"
+                data-action="tab" data-tab="{{this.id}}" aria-selected="{{this.active}}">
+          <i class="fas {{this.icon}}"></i><span>{{this.label}}</span>
+        </button>
+      {{/each}}
+    </nav>
+
+    <div class="hf-rail-actions">
+      <button type="button" data-action="vehicle-refuel" title="{{localize 'HOPEFINDER.Vehicle.Refuel'}}">
+        <i class="fas fa-gas-pump"></i>
+      </button>
+      <button type="button" data-action="vehicle-config" title="{{localize 'HOPEFINDER.Vehicle.Configure'}}">
+        <i class="fas fa-screwdriver-wrench"></i>
+      </button>
+      <button type="button" data-action="backdrop-config" title="{{localize 'HOPEFINDER.Backdrop.Title'}}">
+        <i class="fas fa-panorama"></i>
+      </button>
+    </div>
+  </aside>
+
+  {{!-- ══════════ MAIN STAGE ══════════ --}}
+  <main class="hf-stage">
+
+    <header class="hf-statusbar">
+      <div class="hf-hp-module" data-low="{{structure.hp.low}}">
+        <div class="hf-hp-readout">
+          <i class="fas fa-car-side"></i>
+          <span class="hf-hp-num">{{structure.hp.value}}</span>
+          <span class="hf-hp-sep">/</span>
+          {{#if editable}}
+            <input type="number" class="hf-hp-max-input" name="system.attributes.hp.max"
+                   value="{{structure.hp.max}}" min="0" title="{{localize 'HOPEFINDER.Vehicle.HpMaxHint'}}">
+          {{else}}
+            <span class="hf-hp-max">{{structure.hp.max}}</span>
+          {{/if}}
+        </div>
+        <div class="hf-hp-track">
+          <div class="hf-hp-fill" style="width: {{structure.hp.pct}}%;"></div>
+          <div class="hf-hp-ticks" aria-hidden="true"></div>
+        </div>
+        {{#if editable}}
+          <div class="hf-hp-controls">
+            <button type="button" data-action="hp-adjust" data-delta="-1" title="-1"><i class="fas fa-minus"></i></button>
+            <input type="text" class="hf-hp-input" data-change="hp-input"
+                   placeholder="±" title="{{localize 'HOPEFINDER.Header.HpInputHint'}}">
+            <button type="button" data-action="hp-adjust" data-delta="1" title="+1"><i class="fas fa-plus"></i></button>
+          </div>
+        {{/if}}
+      </div>
+
+      <div class="hf-status-block" title="{{localize 'HOPEFINDER.Combat.AC'}}">
+        <i class="fas fa-shield-halved"></i>
+        {{#if editable}}
+          <input type="number" class="hf-status-input" name="system.attributes.ac.value"
+                 value="{{structure.ac}}" min="0">
+        {{else}}
+          <span class="hf-status-value">{{structure.ac}}</span>
+        {{/if}}
+        {{#if structure.acBonus}}
+          <span class="hf-ac-bonus" title="{{localize 'HOPEFINDER.Vehicle.AcBonusHint'}}">+{{structure.acBonus}}</span>
+        {{/if}}
+        <label>{{localize 'HOPEFINDER.Combat.AC'}}</label>
+      </div>
+
+      <div class="hf-status-block" title="{{localize 'HOPEFINDER.Vehicle.Hardness'}}">
+        <i class="fas fa-cube"></i>
+        {{#if editable}}
+          <input type="number" class="hf-status-input" name="{{structure.hardnessPath}}"
+                 value="{{structure.hardness}}" min="0">
+        {{else}}
+          <span class="hf-status-value">{{structure.hardness}}</span>
+        {{/if}}
+        <label>{{localize 'HOPEFINDER.Vehicle.Hardness'}}</label>
+      </div>
+
+      <div class="hf-status-block {{#if vehicle.fuel.low}}hf-block-alert{{/if}}" title="{{localize 'HOPEFINDER.Vehicle.FuelHint'}}">
+        <i class="fas fa-gas-pump"></i>
+        <span class="hf-status-value">{{vehicle.fuel.value}}<em class="hf-status-sub">/{{vehicle.fuel.max}} L</em></span>
+        <label>{{localize 'HOPEFINDER.Vehicle.Fuel'}}</label>
+      </div>
+
+      <div class="hf-status-block {{#if vehicle.profile.immobile}}hf-block-alert{{/if}}" title="{{localize 'HOPEFINDER.Vehicle.SpeedHint'}}">
+        <i class="fas fa-gauge-high"></i>
+        <span class="hf-status-value">{{vehicle.profile.kmh}}<em class="hf-status-sub"> km/h</em></span>
+        <label>{{localize 'HOPEFINDER.Vehicle.Speed'}}</label>
+      </div>
+    </header>
+
+    <section class="hf-tabs">
+
+      {{!-- ── STATUS ── --}}
+      <div class="hf-tab active" data-tab="status">
+        <div class="hf-vehicle-grid">
+
+          {{!-- Travel console --}}
+          <section class="hf-panel hf-console">
+            <h2 class="hf-panel-title"><i class="fas fa-route"></i>{{localize 'HOPEFINDER.Vehicle.Console'}}</h2>
+
+            <div class="hf-console-readout">
+              <div class="hf-console-speed {{#if vehicle.profile.immobile}}dead{{/if}}">
+                <span class="hf-console-kmh">{{vehicle.profile.kmh}}</span>
+                <span class="hf-console-unit">km/h</span>
+                <span class="hf-console-pct">{{vehicle.profile.pct}}% {{localize 'HOPEFINDER.Vehicle.OfBase'}} {{vehicle.baseSpeed}}</span>
+              </div>
+              <div class="hf-console-stats">
+                <span title="{{localize 'HOPEFINDER.Vehicle.RangeHint'}}">
+                  <i class="fas fa-road"></i>{{localize 'HOPEFINDER.Vehicle.Range'}}: <b>{{vehicle.fuel.range}} km</b>
+                </span>
+                <span class="{{#if vehicle.fuel.strained}}hf-text-danger{{/if}}" title="{{localize 'HOPEFINDER.Vehicle.RateHint'}}">
+                  <i class="fas fa-fire-flame-simple"></i>{{localize 'HOPEFINDER.Vehicle.Rate'}}: <b>{{vehicle.fuel.rate}} L/100km</b>
+                  {{#if vehicle.fuel.strained}}<i class="fas fa-arrow-trend-up"></i>{{/if}}
+                </span>
+                <span class="{{#if vehicle.load.over}}hf-text-danger{{/if}}" title="{{localize 'HOPEFINDER.Vehicle.LoadHint'}}">
+                  <i class="fas fa-weight-hanging"></i>{{localize 'HOPEFINDER.Vehicle.Load'}}: <b>{{vehicle.load.value}}/{{vehicle.load.max}}</b>
+                  {{#if vehicle.load.penaltyPct}} (−{{vehicle.load.penaltyPct}}% <i class="fas fa-gauge-high"></i>){{/if}}
+                </span>
+              </div>
+            </div>
+
+            {{#if vehicle.profile.immobile}}
+              <div class="hf-console-blocked">
+                <i class="fas fa-triangle-exclamation"></i>
+                {{localize 'HOPEFINDER.Vehicle.Immobile'}}{{#each vehicle.profile.blockers}} · {{this}}{{/each}}
+              </div>
+            {{else}}
+              <div class="hf-console-travel">
+                <div class="hf-travel-presets">
+                  <button type="button" data-action="travel-preset" data-km="10">10</button>
+                  <button type="button" data-action="travel-preset" data-km="25">25</button>
+                  <button type="button" data-action="travel-preset" data-km="50">50</button>
+                  <button type="button" data-action="travel-preset" data-km="100">100</button>
+                </div>
+                <input type="number" data-ref="travel-km" data-noclick="true" min="1" step="1"
+                       placeholder="km" {{#unless editable}}disabled{{/unless}}>
+                <button type="button" class="hf-btn hf-btn--attack hf-travel-go" data-action="vehicle-travel"
+                        {{#unless editable}}disabled{{/unless}}>
+                  <i class="fas fa-route"></i>{{localize 'HOPEFINDER.Vehicle.Travel'}}
+                </button>
+              </div>
+            {{/if}}
+          </section>
+
+          {{!-- Fuel --}}
+          <section class="hf-panel hf-fuel-panel">
+            <h2 class="hf-panel-title">
+              <i class="fas fa-gas-pump"></i>{{localize 'HOPEFINDER.Vehicle.Fuel'}}
+              <button type="button" class="hf-title-action" data-action="vehicle-refuel" title="{{localize 'HOPEFINDER.Vehicle.Refuel'}}">
+                <i class="fas fa-fill-drip"></i>
+              </button>
+            </h2>
+            <div class="hf-fuel-gauge {{#if vehicle.fuel.low}}low{{/if}}">
+              <div class="hf-fuel-fill" style="width: {{vehicle.fuel.pct}}%;"></div>
+              <span class="hf-fuel-label">
+                {{#if editable}}
+                  <input type="number" class="hf-fuel-input" data-change="fuel-input" data-noclick="true"
+                         value="{{vehicle.fuel.value}}" min="0" max="{{vehicle.fuel.max}}" step="0.5">
+                {{else}}
+                  {{vehicle.fuel.value}}
+                {{/if}}
+                / {{vehicle.fuel.max}} L
+              </span>
+            </div>
+            {{#if editable}}
+              <div class="hf-fuel-controls">
+                <button type="button" data-action="fuel-step" data-delta="-5">-5</button>
+                <button type="button" data-action="fuel-step" data-delta="-1">-1</button>
+                <button type="button" data-action="fuel-step" data-delta="1">+1</button>
+                <button type="button" data-action="fuel-step" data-delta="5">+5</button>
+              </div>
+            {{/if}}
+            <p class="hf-fuel-note">
+              {{localize 'HOPEFINDER.Vehicle.BaseRate'}}: {{vehicle.fuel.base}} L/100km
+              {{#if vehicle.fuel.strained}}
+                <span class="hf-text-danger"><i class="fas fa-triangle-exclamation"></i> {{localize 'HOPEFINDER.Vehicle.EngineStrain'}}</span>
+              {{/if}}
+            </p>
+          </section>
+
+          {{!-- Wheels --}}
+          <section class="hf-panel hf-wheels-panel">
+            <h2 class="hf-panel-title">
+              <i class="fas fa-circle-dot"></i>{{localize 'HOPEFINDER.Vehicle.Wheels'}}
+              <span class="hf-spares" title="{{localize 'HOPEFINDER.Vehicle.SparesHint'}}">
+                {{#if editable}}<button type="button" class="hf-vital-step" data-action="spare-step" data-delta="-1"><i class="fas fa-minus"></i></button>{{/if}}
+                <i class="fas fa-life-ring"></i> {{vehicle.spares}}
+                {{#if editable}}<button type="button" class="hf-vital-step" data-action="spare-step" data-delta="1"><i class="fas fa-plus"></i></button>{{/if}}
+              </span>
+            </h2>
+            <div class="hf-wheel-grid">
+              {{#each vehicle.wheels}}
+                <div class="hf-vital hf-wheel hf-vital--{{this.severity}} {{#if this.flat}}flat{{/if}}" data-value="{{this.value}}">
+                  <div class="hf-vital-head">
+                    <i class="fas {{#if this.flat}}fa-car-burst{{else}}fa-circle-dot{{/if}}"></i>
+                    <span class="hf-vital-label">{{this.label}}</span>
+                    <span class="hf-vital-status">{{this.stateLabel}}</span>
+                  </div>
+                  <div class="hf-vital-body">
+                    {{#if ../editable}}
+                      <button type="button" class="hf-vital-step" data-action="wheel-step"
+                              data-index="{{this.index}}" data-delta="-1"><i class="fas fa-minus"></i></button>
+                    {{/if}}
+                    <div class="hf-vital-meter">
+                      {{#each this.segments}}
+                        <button type="button" class="hf-vital-seg {{#if this.filled}}filled{{/if}}"
+                                data-action="wheel-seg" data-index="{{../index}}" data-seg="{{this.index}}"
+                                {{#unless ../../editable}}disabled{{/unless}}></button>
+                      {{/each}}
+                    </div>
+                    {{#if ../editable}}
+                      <button type="button" class="hf-vital-step" data-action="wheel-step"
+                              data-index="{{this.index}}" data-delta="1"><i class="fas fa-plus"></i></button>
+                    {{/if}}
+                    <span class="hf-vital-num">{{this.value}}<em>/{{this.max}}</em></span>
+                    {{#if ../editable}}
+                      {{#if this.canChange}}
+                        <button type="button" class="hf-wheel-swap" data-action="wheel-change" data-index="{{this.index}}"
+                                title="{{localize 'HOPEFINDER.Vehicle.ChangeWheel'}}">
+                          <i class="fas fa-arrows-rotate"></i>
+                        </button>
+                      {{/if}}
+                    {{/if}}
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+
+          {{!-- Systems --}}
+          <section class="hf-panel hf-systems-panel">
+            <h2 class="hf-panel-title"><i class="fas fa-gears"></i>{{localize 'HOPEFINDER.Vehicle.Systems'}}</h2>
+            <div class="hf-vital-list">
+              {{#each vehicle.systems}}
+                <div class="hf-vital hf-vital--{{this.severity}}" data-value="{{this.value}}" title="{{this.hint}}">
+                  <div class="hf-vital-head">
+                    <i class="fas {{this.icon}}"></i>
+                    <span class="hf-vital-label">{{this.label}}</span>
+                    <span class="hf-vital-status">{{this.statusLabel}}</span>
+                  </div>
+                  <div class="hf-vital-body">
+                    {{#if ../editable}}
+                      <button type="button" class="hf-vital-step" data-action="system-step"
+                              data-system="{{this.key}}" data-delta="-1"><i class="fas fa-minus"></i></button>
+                    {{/if}}
+                    <div class="hf-vital-meter">
+                      {{#each this.segments}}
+                        <button type="button" class="hf-vital-seg {{#if this.filled}}filled{{/if}}"
+                                data-action="system-seg" data-system="{{../key}}" data-seg="{{this.index}}"
+                                {{#unless ../../editable}}disabled{{/unless}}></button>
+                      {{/each}}
+                    </div>
+                    {{#if ../editable}}
+                      <button type="button" class="hf-vital-step" data-action="system-step"
+                              data-system="{{this.key}}" data-delta="1"><i class="fas fa-plus"></i></button>
+                    {{/if}}
+                    <span class="hf-vital-num">{{this.value}}<em>/{{this.max}}</em></span>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </section>
+        </div>
+      </div>
+
+      {{!-- ── CREW ── --}}
+      <div class="hf-tab" data-tab="crew">
+        <div class="hf-crew-grid">
+
+          {{!-- Seats --}}
+          <section class="hf-panel hf-seats-panel">
+            <h2 class="hf-panel-title">
+              <i class="fas fa-users-gear"></i>{{localize 'HOPEFINDER.Vehicle.Seats'}}
+              {{#if editable}}
+                <button type="button" class="hf-title-action" data-action="seat-add" title="{{localize 'HOPEFINDER.Vehicle.AddSeat'}}">
+                  <i class="fas fa-plus"></i>
+                </button>
+              {{/if}}
+            </h2>
+            <div class="hf-seat-list">
+              {{#each crew.seats}}
+                <div class="hf-seat hf-seat--{{this.role}} {{#if this.occupied}}occupied{{/if}}" data-seat-id="{{this.id}}">
+                  <div class="hf-seat-portrait" data-action="seat-open"
+                       title="{{#if this.occupied}}{{this.name}}{{else}}{{localize 'HOPEFINDER.Vehicle.SeatEmpty'}}{{/if}}">
+                    {{#if this.occupied}}
+                      <img src="{{this.img}}" alt="{{this.name}}">
+                    {{else}}
+                      <i class="fas fa-chair"></i>
+                    {{/if}}
+                  </div>
+                  <div class="hf-seat-info">
+                    <span class="hf-seat-role"><i class="fas {{this.roleIcon}}"></i>
+                      {{#if ../editable}}
+                        <select data-change="seat-role" data-noclick="true">
+                          {{#each this.roleOptions}}
+                            <option value="{{this.id}}" {{#if this.selected}}selected{{/if}}>{{this.label}}</option>
+                          {{/each}}
+                        </select>
+                      {{else}}
+                        {{this.roleLabel}}
+                      {{/if}}
+                    </span>
+                    <span class="hf-seat-name">
+                      {{#if this.occupied}}{{this.name}}{{else}}<em>{{localize 'HOPEFINDER.Vehicle.SeatEmpty'}}</em>{{/if}}
+                    </span>
+                  </div>
+                  {{#if ../editable}}
+                    <div class="hf-seat-actions">
+                      {{#if this.occupied}}
+                        <button type="button" data-action="seat-eject" title="{{localize 'HOPEFINDER.Vehicle.EjectSeat'}}">
+                          <i class="fas fa-person-through-window"></i>
+                        </button>
+                      {{/if}}
+                      <button type="button" class="hf-danger" data-action="seat-remove" title="{{localize 'HOPEFINDER.Vehicle.RemoveSeat'}}">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  {{/if}}
+                </div>
+              {{/each}}
+            </div>
+          </section>
+
+          {{!-- Mounts / attachments --}}
+          <section class="hf-panel hf-mounts-panel">
+            <h2 class="hf-panel-title">
+              <i class="fas fa-wrench"></i>{{localize 'HOPEFINDER.Vehicle.Mounts'}}
+              {{#if editable}}
+                <button type="button" class="hf-title-action" data-action="mount-add" title="{{localize 'HOPEFINDER.Vehicle.AddMount'}}">
+                  <i class="fas fa-plus"></i>
+                </button>
+              {{/if}}
+            </h2>
+            {{#if crew.mounts.length}}
+              <div class="hf-mount-list">
+                {{#each crew.mounts}}
+                  <div class="hf-mount hf-mount--{{this.kind}}" data-mount-id="{{this.id}}">
+                    <i class="fas {{this.icon}} hf-mount-icon"></i>
+                    <div class="hf-mount-info">
+                      <span class="hf-mount-name">{{this.name}}</span>
+                      <span class="hf-mount-meta">
+                        {{this.kindLabel}}
+                        {{#if this.ac}} · <i class="fas fa-shield-halved"></i> +{{this.ac}}{{/if}}
+                        {{#if this.speed}} · <i class="fas fa-gauge-high"></i> {{this.speed}}%{{/if}}
+                        {{#if this.weight}} · <i class="fas fa-weight-hanging"></i> {{this.weight}}{{/if}}
+                        {{#if this.isWeapon}}{{#if this.damage}} · <i class="fas fa-burst"></i> {{this.damage}} ({{this.attackBonusStr}}){{/if}}{{/if}}
+                      </span>
+                      {{#if this.notes}}<span class="hf-mount-notes">{{this.notes}}</span>{{/if}}
+                    </div>
+                    <div class="hf-mount-actions">
+                      {{#if this.isWeapon}}
+                        <button type="button" class="hf-btn hf-btn--attack" data-action="mount-attack"
+                                title="{{localize 'HOPEFINDER.Vehicle.Mount.Attack'}}">{{this.attackBonusStr}}</button>
+                        {{#if this.damage}}
+                          <button type="button" class="hf-btn hf-btn--damage" data-action="mount-damage"
+                                  title="{{localize 'HOPEFINDER.Vehicle.Mount.Damage'}}"><i class="fas fa-burst"></i></button>
+                        {{/if}}
+                      {{/if}}
+                      {{#if ../editable}}
+                        <button type="button" data-action="mount-edit" title="{{localize 'HOPEFINDER.Common.Edit'}}"><i class="fas fa-pen"></i></button>
+                        <button type="button" class="hf-danger" data-action="mount-remove" title="{{localize 'HOPEFINDER.Common.Delete'}}"><i class="fas fa-trash"></i></button>
+                      {{/if}}
+                    </div>
+                  </div>
+                {{/each}}
+              </div>
+            {{else}}
+              <p class="hf-empty">{{localize 'HOPEFINDER.Vehicle.MountsEmpty'}}</p>
+            {{/if}}
+          </section>
+        </div>
+      </div>
+
+      {{!-- ── CARGO ── --}}
+      <div class="hf-tab" data-tab="cargo">
+        <section class="hf-gear-main">
+          <div class="hf-bulk hf-cargo-bulk" title="{{localize 'HOPEFINDER.Vehicle.LoadHint'}}">
+            <div class="hf-bulk-head">
+              <label><i class="fas fa-weight-hanging"></i>{{localize 'HOPEFINDER.Vehicle.Load'}}</label>
+              <span class="{{#if vehicle.load.over}}hf-text-danger{{/if}}">
+                {{vehicle.load.value}} / {{vehicle.load.max}}
+                {{#if vehicle.load.penaltyPct}} · −{{vehicle.load.penaltyPct}}% <i class="fas fa-gauge-high"></i>{{/if}}
+              </span>
+            </div>
+            <div class="hf-bulk-track">
+              <div class="hf-bulk-fill {{#if vehicle.load.over}}over{{/if}}" style="width: {{vehicle.load.barPct}}%;"></div>
+            </div>
+            {{#if vehicle.load.over}}
+              <span class="hf-bulk-warning"><i class="fas fa-triangle-exclamation"></i>{{localize 'HOPEFINDER.Vehicle.Overloaded'}}</span>
+            {{/if}}
+          </div>
+
+          <div class="hf-gear-toolbar">
+            <div class="hf-search">
+              <i class="fas fa-magnifying-glass"></i>
+              <input type="search" data-action="gear-search" data-noclick="true"
+                     placeholder="{{localize 'HOPEFINDER.Gear.Search'}}" value="{{cargo.search}}">
+            </div>
+            <div class="hf-filter-row">
+              {{#each cargo.filters}}
+                <button type="button" class="hf-filter-chip {{#if this.active}}active{{/if}}"
+                        data-action="gear-filter" data-filter="{{this.id}}">{{this.label}}</button>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="hf-gear-grid">
+            {{#each cargo.items}}
+              <div class="hf-card hf-card--{{this.rarity}}"
+                   data-item-id="{{this.id}}" data-hf-tip="{{this.id}}" draggable="true"
+                   data-filter-type="{{this.filterType}}" data-fav="{{this.favorite}}" data-search="{{this.searchKey}}">
+                <div class="hf-card-visual">
+                  <img src="{{this.img}}" alt="" loading="lazy">
+                  {{#if this.quantity}}{{#if (hfGt this.quantity 1)}}<span class="hf-card-qty">×{{this.quantity}}</span>{{/if}}{{/if}}
+                </div>
+                <div class="hf-card-body">
+                  <span class="hf-card-name">{{this.name}}</span>
+                  <span class="hf-card-meta">{{this.typeLabel}} · <i class="fas fa-weight-hanging"></i> {{this.bulk}}</span>
+                </div>
+                {{#if ../editable}}
+                  <div class="hf-card-actions">
+                    {{#if this.stackable}}
+                      <button type="button" data-action="item-qty" data-delta="-1" title="-1"><i class="fas fa-minus"></i></button>
+                      <button type="button" data-action="item-qty" data-delta="1" title="+1"><i class="fas fa-plus"></i></button>
+                    {{/if}}
+                    <button type="button" data-action="item-chat" title="{{localize 'HOPEFINDER.Gear.ToChat'}}"><i class="fas fa-comment"></i></button>
+                    <button type="button" data-action="item-open" title="{{localize 'HOPEFINDER.Common.Edit'}}"><i class="fas fa-pen"></i></button>
+                    <button type="button" class="hf-danger" data-action="item-delete" title="{{localize 'HOPEFINDER.Common.Delete'}}"><i class="fas fa-trash"></i></button>
+                  </div>
+                {{/if}}
+              </div>
+            {{/each}}
+          </div>
+
+          <div class="hf-gear-empty hf-empty {{#if cargo.items.length}}hf-hidden{{/if}}">
+            <i class="fas fa-box-open"></i>
+            <p>{{localize 'HOPEFINDER.Vehicle.CargoEmpty'}}</p>
+          </div>
+        </section>
+      </div>
+
+      {{!-- ── LOG ── --}}
+      <div class="hf-tab" data-tab="log">
+        {{> "modules/hopefinder-sheet/templates/tabs/timeline.hbs"}}
+      </div>
+    </section>
+  </main>
+</form>

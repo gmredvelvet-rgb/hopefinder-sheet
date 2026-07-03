@@ -1154,3 +1154,595 @@
 .hopefinder-sheet .hf-tl-entry--equip { border-left-color: var(--hf-olive); }
 .hopefinder-sheet .hf-tl-entry--note { border-left-color: var(--hf-cyan); }
 .hopefinder-sheet .hf-tl-entry--note .hf-tl-node { color: var(--hf-cyan); }
+
+/* ═══════════════════════════════════════════════════════════════
+   HOPEFINDER SURVIVOR SHEET — NPC & VEHICLE SHEETS
+   Layouts and components specific to the NPC dossier and the
+   vehicle maintenance HUD. Reuses every design token from core.css.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Foundry/PF2e core styles stretch form buttons to 100% width —
+   every compact control on these sheets must opt out explicitly. */
+.hopefinder-sheet .hf-travel-presets button,
+.hopefinder-sheet .hf-fuel-controls button,
+.hopefinder-sheet .hf-travel-go,
+.hopefinder-sheet .hf-wheel-swap,
+.hopefinder-sheet .hf-spares button {
+  width: auto;
+  flex: 0 0 auto;
+  line-height: 1.2;
+}
+
+/* ── Shared status-bar tweaks ─────────────────────────────────── */
+.hopefinder-sheet .hf-status-sub {
+  font-size: 11px;
+  font-style: normal;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-block-alert {
+  border-color: var(--hf-red) !important;
+  box-shadow: 0 0 10px var(--hf-red-dim);
+}
+.hopefinder-sheet .hf-block-alert .hf-status-value { color: var(--hf-red-hi); }
+
+/* ═══════════════════════════════════════════════════════════════
+   VEHICLE
+   ═══════════════════════════════════════════════════════════════ */
+
+.hopefinder-sheet .hf-odometer {
+  font-family: var(--hf-font-mono);
+  font-size: 13px;
+  color: var(--hf-amber);
+  letter-spacing: 0.08em;
+}
+
+.hopefinder-sheet .hf-vehicle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: var(--hf-gap);
+  align-items: start;
+}
+.hopefinder-sheet .hf-vehicle-grid .hf-wheels-panel,
+.hopefinder-sheet .hf-vehicle-grid .hf-console { grid-column: 1; }
+.hopefinder-sheet .hf-vehicle-grid .hf-fuel-panel,
+.hopefinder-sheet .hf-vehicle-grid .hf-systems-panel { grid-column: 2; }
+
+@container hf (max-width: 820px) {
+  .hopefinder-sheet .hf-vehicle-grid { grid-template-columns: 1fr; }
+  .hopefinder-sheet .hf-vehicle-grid .hf-console,
+  .hopefinder-sheet .hf-vehicle-grid .hf-fuel-panel,
+  .hopefinder-sheet .hf-vehicle-grid .hf-wheels-panel,
+  .hopefinder-sheet .hf-vehicle-grid .hf-systems-panel { grid-column: 1; }
+}
+
+/* ── Travel console ───────────────────────────────────────────── */
+.hopefinder-sheet .hf-console-readout {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.hopefinder-sheet .hf-console-speed {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--hf-inset);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-accent);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-console-speed.dead { border-left-color: var(--hf-red); }
+.hopefinder-sheet .hf-console-speed.dead .hf-console-kmh { color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-console-kmh {
+  font-family: var(--hf-font-mono);
+  font-size: 30px;
+  color: var(--hf-text-hi);
+  text-shadow: 0 0 10px var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-console-unit {
+  font-family: var(--hf-font-mono);
+  font-size: 12px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-console-pct {
+  margin-left: 8px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  color: var(--hf-text-faint);
+  letter-spacing: 0.06em;
+}
+.hopefinder-sheet .hf-console-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-console-stats i { width: 15px; text-align: center; margin-right: 4px; color: var(--hf-accent); }
+.hopefinder-sheet .hf-console-stats b { color: var(--hf-text-hi); }
+.hopefinder-sheet .hf-console-stats .hf-text-danger,
+.hopefinder-sheet .hf-console-stats .hf-text-danger b,
+.hopefinder-sheet .hf-console-stats .hf-text-danger i { color: var(--hf-red-hi); }
+
+.hopefinder-sheet .hf-console-blocked {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: var(--hf-red-dim);
+  border: 1px solid var(--hf-red);
+  border-radius: var(--hf-radius);
+  color: var(--hf-red-hi);
+  font-family: var(--hf-font-display);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.hopefinder-sheet .hf-console-blocked i { margin-right: 6px; }
+
+.hopefinder-sheet .hf-console-travel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.hopefinder-sheet .hf-travel-presets {
+  display: flex;
+  gap: 4px;
+}
+.hopefinder-sheet .hf-travel-presets button {
+  min-width: 42px;
+  padding: 5px 8px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.hopefinder-sheet .hf-travel-presets button:hover {
+  color: var(--hf-accent-hi);
+  border-color: var(--hf-accent);
+  background: var(--hf-accent-dim);
+}
+.hopefinder-sheet .hf-console-travel input[data-ref="travel-km"] {
+  width: 80px;
+  text-align: center;
+  font-size: 14px;
+}
+.hopefinder-sheet .hf-travel-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 16px;
+  font-size: 13px;
+}
+
+/* ── Fuel gauge ───────────────────────────────────────────────── */
+.hopefinder-sheet .hf-fuel-gauge {
+  position: relative;
+  height: 30px;
+  background: var(--hf-inset);
+  border: 1px solid var(--hf-line);
+  border-radius: var(--hf-radius);
+  overflow: hidden;
+}
+.hopefinder-sheet .hf-fuel-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--hf-olive) 0%, var(--hf-olive-hi) 100%);
+  box-shadow: 0 0 12px var(--hf-olive-dim);
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hopefinder-sheet .hf-fuel-gauge.low .hf-fuel-fill {
+  background: linear-gradient(90deg, var(--hf-red) 0%, var(--hf-red-hi) 100%);
+  animation: hf-lamp-blink 1.4s steps(2) infinite;
+}
+.hopefinder-sheet .hf-fuel-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: var(--hf-font-mono);
+  font-size: 13px;
+  color: var(--hf-text-hi);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+.hopefinder-sheet .hf-fuel-input {
+  width: 58px;
+  background: rgba(0, 0, 0, 0.5);
+}
+.hopefinder-sheet .hf-fuel-controls {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  justify-content: center;
+}
+.hopefinder-sheet .hf-fuel-controls button {
+  flex: 0 0 auto;
+  min-width: 48px;
+  padding: 5px 0;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-family: var(--hf-font-mono);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.hopefinder-sheet .hf-fuel-controls button:hover {
+  color: var(--hf-accent-hi);
+  border-color: var(--hf-accent);
+}
+.hopefinder-sheet .hf-fuel-note {
+  margin: 8px 0 0;
+  font-family: var(--hf-font-mono);
+  font-size: 10.5px;
+  color: var(--hf-text-faint);
+  letter-spacing: 0.04em;
+}
+.hopefinder-sheet .hf-fuel-note .hf-text-danger { color: var(--hf-red-hi); }
+
+/* ── Wheels ───────────────────────────────────────────────────── */
+.hopefinder-sheet .hf-spares {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: auto;
+  font-family: var(--hf-font-mono);
+  font-size: 11.5px;
+  color: var(--hf-amber);
+  text-transform: none;
+  letter-spacing: 0.06em;
+}
+.hopefinder-sheet .hf-wheel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 8px;
+}
+.hopefinder-sheet .hf-wheel.flat {
+  border-color: var(--hf-red);
+  background: var(--hf-red-dim);
+}
+.hopefinder-sheet .hf-wheel.flat .hf-vital-label { color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-wheel-swap {
+  padding: 3px 6px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.hopefinder-sheet .hf-wheel-swap:hover {
+  color: var(--hf-amber-hi);
+  border-color: var(--hf-amber);
+  background: var(--hf-amber-dim);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NPC
+   ═══════════════════════════════════════════════════════════════ */
+
+.hopefinder-sheet .hf-npc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--hf-gap);
+  align-items: start;
+}
+.hopefinder-sheet .hf-npc-grid .hf-npc-skills { grid-column: 1 / -1; }
+
+@container hf (max-width: 820px) {
+  .hopefinder-sheet .hf-npc-grid { grid-template-columns: 1fr; }
+  .hopefinder-sheet .hf-npc-grid .hf-npc-skills { grid-column: 1; }
+}
+
+.hopefinder-sheet .hf-role-pill--uncommon { border-color: #cd7f32; color: #d99a5b; }
+.hopefinder-sheet .hf-role-pill--rare { border-color: var(--hf-cyan); color: var(--hf-cyan); }
+.hopefinder-sheet .hf-role-pill--unique { border-color: var(--hf-amber); color: var(--hf-amber-hi); }
+
+.hopefinder-sheet .hf-npc-notes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-gap);
+}
+.hopefinder-sheet .hf-notes-editor {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  font-family: var(--hf-font-body);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   VEHICLE CHAT REPORT (travel / refuel / wheel change cards)
+   ═══════════════════════════════════════════════════════════════ */
+
+.chat-message .hf-vehicle-report {
+  border: 1px solid #2a3138;
+  border-radius: 3px;
+  overflow: hidden;
+  font-family: "Barlow", "Segoe UI", sans-serif;
+}
+.chat-message .hf-vehicle-report header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, #171c20 0%, #0e1114 100%);
+  border-bottom: 1px solid rgba(214, 222, 214, 0.2);
+  color: #e6e3d8;
+  font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.chat-message .hf-vehicle-report header i { color: #a4b884; }
+.chat-message .hf-vr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+  padding: 8px 10px;
+  background: #14181b;
+  color: #b9bfb6;
+  font-family: "Share Tech Mono", "Consolas", monospace;
+  font-size: 11.5px;
+}
+.chat-message .hf-vr-cell i {
+  width: 16px;
+  text-align: center;
+  margin-right: 5px;
+  color: #7d8f63;
+}
+.chat-message .hf-vr-events {
+  margin: 0;
+  padding: 6px 10px 8px;
+  background: #101418;
+  border-top: 1px dashed rgba(214, 222, 214, 0.15);
+  list-style: none;
+  color: #b9bfb6;
+  font-size: 12px;
+}
+.chat-message .hf-vr-events li { padding: 2px 0; }
+.chat-message .hf-vr-events li i {
+  width: 16px;
+  text-align: center;
+  margin-right: 6px;
+  color: #d9a441;
+}
+.chat-message .hf-vr-events li.hf-vr-bad { color: #e85e4d; }
+.chat-message .hf-vr-events li.hf-vr-bad i { color: #e85e4d; }
+
+/* ── Inline-editable status bar values (vehicle sheet) ────────── */
+.hopefinder-sheet .hf-status-input {
+  width: 48px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--hf-line);
+  border-radius: 0;
+  text-align: center;
+  font-family: var(--hf-font-mono);
+  font-size: 17px;
+  color: var(--hf-text-hi);
+  padding: 0;
+}
+.hopefinder-sheet .hf-status-input:focus {
+  border-bottom-color: var(--hf-accent);
+  box-shadow: none;
+}
+.hopefinder-sheet .hf-hp-max-input {
+  width: 46px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed var(--hf-line);
+  border-radius: 0;
+  text-align: center;
+  font-family: var(--hf-font-mono);
+  font-size: 15px;
+  color: var(--hf-text-dim);
+  padding: 0;
+}
+.hopefinder-sheet .hf-hp-max-input:focus {
+  border-bottom-color: var(--hf-accent);
+  color: var(--hf-text-hi);
+  box-shadow: none;
+}
+
+/* ── Vehicle crew tab: seats & mounts ─────────────────────────── */
+.hopefinder-sheet .hf-crew-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--hf-gap);
+  align-items: start;
+}
+@container hf (max-width: 820px) {
+  .hopefinder-sheet .hf-crew-grid { grid-template-columns: 1fr; }
+}
+
+.hopefinder-sheet .hf-seat-list,
+.hopefinder-sheet .hf-mount-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.hopefinder-sheet .hf-seat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  background: var(--hf-inset);
+  border: 1px dashed var(--hf-line);
+  border-radius: var(--hf-radius);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.hopefinder-sheet .hf-seat.occupied {
+  border-style: solid;
+  border-left: 2px solid var(--hf-accent);
+}
+.hopefinder-sheet .hf-seat--driver.occupied { border-left-color: var(--hf-amber); }
+.hopefinder-sheet .hf-seat--gunner.occupied { border-left-color: var(--hf-red); }
+.hopefinder-sheet .hf-seat-portrait {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  background: var(--hf-void);
+  border: 1px solid var(--hf-edge);
+  border-radius: var(--hf-radius);
+  color: var(--hf-text-faint);
+  font-size: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.hopefinder-sheet .hf-seat-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+.hopefinder-sheet .hf-seat-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+.hopefinder-sheet .hf-seat-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-seat-role select {
+  width: auto;
+  padding: 1px 4px;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.hopefinder-sheet .hf-seat-name {
+  font-family: var(--hf-font-display);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  color: var(--hf-text-hi);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hopefinder-sheet .hf-seat-name em { color: var(--hf-text-faint); font-style: italic; font-size: 12px; }
+.hopefinder-sheet .hf-seat-actions {
+  display: flex;
+  gap: 4px;
+}
+.hopefinder-sheet .hf-seat-actions button,
+.hopefinder-sheet .hf-mount-actions button {
+  width: auto;
+  flex: 0 0 auto;
+  padding: 4px 7px;
+  background: var(--hf-steel);
+  border: 1px solid var(--hf-line);
+  border-radius: 2px;
+  color: var(--hf-text-dim);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  line-height: 1.2;
+}
+.hopefinder-sheet .hf-seat-actions button:hover,
+.hopefinder-sheet .hf-mount-actions button:hover {
+  color: var(--hf-accent-hi);
+  border-color: var(--hf-accent);
+}
+.hopefinder-sheet .hf-seat-actions .hf-danger:hover,
+.hopefinder-sheet .hf-mount-actions .hf-danger:hover {
+  color: var(--hf-red-hi);
+  border-color: var(--hf-red);
+  background: var(--hf-red-dim);
+}
+
+.hopefinder-sheet .hf-mount {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 9px;
+  background: var(--hf-inset);
+  border: 1px solid var(--hf-line);
+  border-left: 2px solid var(--hf-cyan);
+  border-radius: var(--hf-radius);
+}
+.hopefinder-sheet .hf-mount--weapon { border-left-color: var(--hf-red); }
+.hopefinder-sheet .hf-mount--armor { border-left-color: var(--hf-olive); }
+.hopefinder-sheet .hf-mount-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--hf-text-dim);
+}
+.hopefinder-sheet .hf-mount--weapon .hf-mount-icon { color: var(--hf-red-hi); }
+.hopefinder-sheet .hf-mount--armor .hf-mount-icon { color: var(--hf-olive-hi); }
+.hopefinder-sheet .hf-mount-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+  flex: 1;
+}
+.hopefinder-sheet .hf-mount-name {
+  font-family: var(--hf-font-display);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--hf-text-hi);
+}
+.hopefinder-sheet .hf-mount-meta {
+  font-family: var(--hf-font-mono);
+  font-size: 10.5px;
+  color: var(--hf-text-dim);
+  letter-spacing: 0.03em;
+}
+.hopefinder-sheet .hf-mount-meta i { font-size: 9px; opacity: 0.8; }
+.hopefinder-sheet .hf-mount-notes {
+  font-size: 11px;
+  color: var(--hf-text-faint);
+  font-style: italic;
+}
+.hopefinder-sheet .hf-mount-actions {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.hopefinder-sheet .hf-mount-actions .hf-btn {
+  width: auto;
+  flex: 0 0 auto;
+  padding: 4px 9px;
+  font-size: 11.5px;
+}
+
+/* AC bonus badge from armor mounts */
+.hopefinder-sheet .hf-ac-bonus {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  font-family: var(--hf-font-mono);
+  font-size: 10px;
+  color: var(--hf-olive-hi);
+  text-shadow: 0 0 5px var(--hf-olive-dim);
+}
+
+/* Cargo load bar above the vehicle inventory */
+.hopefinder-sheet .hf-cargo-bulk { margin-bottom: 10px; }
+.hopefinder-sheet .hf-status-block { position: relative; }

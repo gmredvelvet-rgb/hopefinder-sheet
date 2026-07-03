@@ -38,12 +38,15 @@ async function confirmDialog(title, content) {
   }
   return Dialog.confirm({ title, content });
 }
-async function enrich(html, actor) {
+export async function enrich(html, actor) {
   const TE = foundry.applications?.ux?.TextEditor?.implementation ?? TextEditor;
   return TE.enrichHTML(html ?? "", { async: true, secrets: actor.isOwner, relativeTo: actor });
 }
 
 export class HopefinderSheet extends ActorSheetV1 {
+
+  /** Tab registry for this sheet class — subclasses (NPC, vehicle) override. */
+  static SHEET_TABS = TABS;
 
   /** Client-side view state (survives re-renders, not reloads). */
   _activeTab = "survivor";
@@ -82,7 +85,7 @@ export class HopefinderSheet extends ActorSheetV1 {
     context.actorId = actor.id;
 
     context.state = deriveSheetState(actor);
-    context.tabs = TABS.map(t => ({
+    context.tabs = this.constructor.SHEET_TABS.map(t => ({
       id: t.id,
       icon: t.icon,
       label: loc(`Tabs.${t.id}`),
@@ -738,7 +741,7 @@ export class HopefinderSheet extends ActorSheetV1 {
       case "tab": {
         const tab = el.dataset.tab;
         if (!tab || tab === this._activeTab) return;
-        const order = TABS.map(t => t.id);
+        const order = this.constructor.SHEET_TABS.map(t => t.id);
         const dir = order.indexOf(tab) > order.indexOf(this._activeTab) ? 1 : -1;
         this._activeTab = tab;
         const content = el.closest(".hf-root");
@@ -833,7 +836,7 @@ export class HopefinderSheet extends ActorSheetV1 {
         const cur = actor.system.attributes?.dying?.value ?? 0;
         const n = Number(el.dataset.index);
         const value = alt ? Math.max(0, cur - 1) : (n === cur ? n - 1 : n);
-        return actor.update({ "system.attributes.dying.value": Math.max(0, value) });
+        return this._setConditionValue("dying", value);
       }
       case "pip-wounded": {
         if (!this.isEditable) return;
@@ -841,7 +844,7 @@ export class HopefinderSheet extends ActorSheetV1 {
         const cur = actor.system.attributes?.wounded?.value ?? 0;
         const n = Number(el.dataset.index);
         const value = alt ? Math.max(0, cur - 1) : (n === cur ? n - 1 : n);
-        return actor.update({ "system.attributes.wounded.value": Math.max(0, value) });
+        return this._setConditionValue("wounded", value);
       }
       case "pip-threat": {
         if (!this.isEditable) return;
@@ -1142,6 +1145,26 @@ export class HopefinderSheet extends ActorSheetV1 {
   /* ============================================= */
   /*  PF2e INTEGRATION HELPERS                     */
   /* ============================================= */
+
+  /**
+   * Set a valued condition (dying, wounded, …) to an absolute value.
+   * PF2e derives system.attributes.dying/wounded from condition items during
+   * data prep, so writing those paths with actor.update() has no effect —
+   * the condition itself must be created, updated, or removed.
+   */
+  async _setConditionValue(slug, target) {
+    const actor = this.actor;
+    target = Math.max(0, target);
+    if (typeof actor.increaseCondition !== "function") {
+      return actor.update({ [`system.attributes.${slug}.value`]: target });
+    }
+    const existing = actor.getCondition?.(slug);
+    const current = existing?.value ?? 0;
+    if (target === current) return;
+    if (target === 0) return actor.decreaseCondition(slug, { forceRemove: true });
+    if (existing) return game.pf2e.ConditionManager.updateConditionValue(existing.id, actor, target);
+    return actor.increaseCondition(slug, { value: target });
+  }
 
   /** Cycle an item's carry state through the PF2e API. */
   async _cycleCarryType(item) {

@@ -18,6 +18,161 @@
       "factions": "Factions",
       "timeline": "Timeline"
     },
+    "NpcTabs": {
+      "profile": "Profile",
+      "arsenal": "Arsenal",
+      "loot": "Loot",
+      "notes": "Notes"
+    },
+    "VehicleTabs": {
+      "status": "Status",
+      "crew": "Crew",
+      "cargo": "Cargo",
+      "log": "Log"
+    },
+    "Npc": {
+      "Blurb": "one-line descriptor",
+      "PublicNotes": "Public Notes",
+      "PrivateNotes": "GM Notes",
+      "NotesPlaceholder": "Write notes here…",
+      "LootEmpty": "Nothing to loot"
+    },
+    "Vehicle": {
+      "Crew": "Crew",
+      "Passengers": "Passengers",
+      "Odometer": "Odometer",
+      "OdometerHint": "Total distance this vehicle has traveled",
+      "Refuel": "Refuel",
+      "Configure": "Vehicle setup (tank, consumption, speed, wheels)",
+      "Hardness": "Hardness",
+      "HpMaxHint": "Maximum structure points",
+      "Fuel": "Fuel",
+      "FuelHint": "Fuel remaining in the tank",
+      "Speed": "Cruise",
+      "SpeedHint": "Effective travel speed given the vehicle's current condition",
+      "Console": "Travel Console",
+      "OfBase": "of base",
+      "Range": "Range",
+      "RangeHint": "Distance the remaining fuel covers at the current burn rate",
+      "Rate": "Burn",
+      "RateHint": "Effective fuel burn — a worn engine drinks more",
+      "BaseRate": "Base consumption",
+      "EngineStrain": "Engine strain — burning extra fuel",
+      "Immobile": "VEHICLE IMMOBILIZED",
+      "Travel": "Travel",
+      "Wheels": "Wheels",
+      "Wheel": "Wheel {n}",
+      "SparesHint": "Spare wheels carried",
+      "ChangeWheel": "Fit a spare wheel",
+      "Systems": "Systems",
+      "CargoEmpty": "The cargo hold is empty",
+      "Load": "Load",
+      "LoadHint": "Total Bulk on board (items + mounts) vs cargo capacity — weight slows the vehicle and burns extra fuel",
+      "Overloaded": "OVERLOADED",
+      "AcBonusHint": "Bonus from installed armor attachments",
+      "Seats": "Seats",
+      "AddSeat": "Add a seat",
+      "RemoveSeat": "Remove seat",
+      "EjectSeat": "Vacate seat",
+      "SeatEmpty": "Empty — drag an actor here",
+      "Role": {
+        "driver": "Driver",
+        "gunner": "Gunner",
+        "passenger": "Passenger"
+      },
+      "Mounts": "Attachments",
+      "AddMount": "Add an attachment",
+      "MountsEmpty": "No attachments installed. Add machine guns, armor plating, ram bars…",
+      "Mount": {
+        "Unnamed": "Attachment",
+        "Attack": "Attack roll",
+        "Damage": "Damage"
+      },
+      "MountKind": {
+        "weapon": "Weapon",
+        "armor": "Armor",
+        "utility": "Utility"
+      },
+      "State": {
+        "operational": "Operational",
+        "damaged": "Damaged",
+        "critical": "Critical",
+        "immobile": "Immobilized"
+      },
+      "System": {
+        "engine": "Engine",
+        "battery": "Battery",
+        "chassis": "Chassis"
+      },
+      "SystemHint": {
+        "engine": "A worn engine burns more fuel and lowers speed; at 0 the vehicle won't run",
+        "battery": "At 0 the vehicle won't start",
+        "chassis": "Frame damage — lowers travel speed"
+      },
+      "WheelState": {
+        "good": "Good",
+        "worn": "Worn",
+        "risky": "Blowout risk",
+        "critical": "Critical",
+        "flat": "FLAT"
+      },
+      "Blocker": {
+        "engine": "engine dead",
+        "battery": "battery dead",
+        "flats": "too many flat wheels",
+        "overload": "extreme overload"
+      },
+      "Warn": {
+        "Immobile": "The vehicle cannot move: {reason}.",
+        "NoFuel": "The tank is empty.",
+        "TankFull": "The tank is already full.",
+        "NoSpares": "No spare wheels left.",
+        "InvalidDamage": "\"{formula}\" is not a valid damage formula."
+      },
+      "Chat": {
+        "TravelTitle": "{name} — Travel Report",
+        "FuelUsed": "−{used} L ({left} L left)",
+        "Duration": "≈ {hours} h",
+        "Blowout": "BLOWOUT! Wheel {n} bursts (flat check {roll} vs DC {dc})",
+        "EngineWear": "The engine strains — condition {value}/{max}",
+        "RanDry": "Ran out of fuel after {km} km",
+        "Immobilized": "The vehicle is now immobilized",
+        "RefuelTitle": "{name} — Refuel",
+        "Refueled": "+{added} L ({value}/{max} L)",
+        "WheelChangedTitle": "{name} — Wheel Change",
+        "WheelChanged": "Wheel {n} replaced with a spare ({spares} spare(s) left)"
+      },
+      "Log": {
+        "Travel": "Traveled {km} km ({fuel} L burned)",
+        "Blowout": "Wheel {n} blew out",
+        "EngineDead": "The engine gave out",
+        "Refueled": "Refueled +{added} L",
+        "WheelChanged": "Wheel {n} replaced"
+      },
+      "Dialog": {
+        "RefuelTitle": "Refuel",
+        "Refuel": "Refuel",
+        "RefuelAmount": "Liters to add (tank is missing {missing} L)",
+        "ConfigTitle": "Vehicle Setup",
+        "Level": "Level",
+        "FuelMax": "Tank capacity (L)",
+        "Consumption": "Base consumption (L/100 km)",
+        "BaseSpeed": "Base cruise speed (km/h)",
+        "WheelCount": "Number of wheels",
+        "Spares": "Spare wheels",
+        "CargoMax": "Cargo capacity (Bulk)",
+        "MountTitle": "Attachment",
+        "MountName": "Name",
+        "MountNamePh": "Machine gun, armor plating, ram bar…",
+        "MountKind": "Type",
+        "MountAC": "AC bonus",
+        "MountSpeed": "Speed modifier (%)",
+        "MountWeight": "Weight (Bulk)",
+        "MountAttack": "Attack bonus (weapons)",
+        "MountDamage": "Damage formula (weapons, e.g. 3d6)",
+        "MountNotes": "Notes"
+      }
+    },
     "Header": {
       "ChangePortrait": "Change portrait",
       "Callsign": "callsign / alias",

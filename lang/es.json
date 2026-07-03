@@ -18,6 +18,161 @@
       "factions": "Facciones",
       "timeline": "Cronología"
     },
+    "NpcTabs": {
+      "profile": "Perfil",
+      "arsenal": "Arsenal",
+      "loot": "Botín",
+      "notes": "Notas"
+    },
+    "VehicleTabs": {
+      "status": "Estado",
+      "crew": "Tripulación",
+      "cargo": "Carga",
+      "log": "Registro"
+    },
+    "Npc": {
+      "Blurb": "descriptor de una línea",
+      "PublicNotes": "Notas públicas",
+      "PrivateNotes": "Notas del DJ",
+      "NotesPlaceholder": "Escribe notas aquí…",
+      "LootEmpty": "Nada que saquear"
+    },
+    "Vehicle": {
+      "Crew": "Tripulación",
+      "Passengers": "Pasajeros",
+      "Odometer": "Odómetro",
+      "OdometerHint": "Distancia total recorrida por este vehículo",
+      "Refuel": "Repostar",
+      "Configure": "Configurar vehículo (depósito, consumo, velocidad, llantas)",
+      "Hardness": "Dureza",
+      "HpMaxHint": "Puntos de estructura máximos",
+      "Fuel": "Gasolina",
+      "FuelHint": "Combustible restante en el depósito",
+      "Speed": "Crucero",
+      "SpeedHint": "Velocidad de viaje efectiva según el estado actual del vehículo",
+      "Console": "Consola de viaje",
+      "OfBase": "de la base",
+      "Range": "Autonomía",
+      "RangeHint": "Distancia que cubre el combustible restante al consumo actual",
+      "Rate": "Consumo",
+      "RateHint": "Consumo efectivo — un motor desgastado bebe más",
+      "BaseRate": "Consumo base",
+      "EngineStrain": "Motor forzado — consume combustible extra",
+      "Immobile": "VEHÍCULO INMOVILIZADO",
+      "Travel": "Viajar",
+      "Wheels": "Llantas",
+      "Wheel": "Llanta {n}",
+      "SparesHint": "Llantas de repuesto disponibles",
+      "ChangeWheel": "Montar una llanta de repuesto",
+      "Systems": "Sistemas",
+      "CargoEmpty": "La zona de carga está vacía",
+      "Load": "Carga",
+      "LoadHint": "Bulk total a bordo (objetos + aditamentos) frente a la capacidad — el peso reduce la velocidad y aumenta el consumo",
+      "Overloaded": "SOBRECARGADO",
+      "AcBonusHint": "Bonificación de los aditamentos de blindaje instalados",
+      "Seats": "Puestos",
+      "AddSeat": "Añadir un puesto",
+      "RemoveSeat": "Eliminar puesto",
+      "EjectSeat": "Desalojar puesto",
+      "SeatEmpty": "Vacío — arrastra un actor aquí",
+      "Role": {
+        "driver": "Chófer",
+        "gunner": "Artillero",
+        "passenger": "Pasajero"
+      },
+      "Mounts": "Aditamentos",
+      "AddMount": "Añadir un aditamento",
+      "MountsEmpty": "Sin aditamentos instalados. Añade metralletas, blindaje, barras de embestida…",
+      "Mount": {
+        "Unnamed": "Aditamento",
+        "Attack": "Tirada de ataque",
+        "Damage": "Daño"
+      },
+      "MountKind": {
+        "weapon": "Arma",
+        "armor": "Blindaje",
+        "utility": "Utilidad"
+      },
+      "State": {
+        "operational": "Operativo",
+        "damaged": "Averiado",
+        "critical": "Crítico",
+        "immobile": "Inmovilizado"
+      },
+      "System": {
+        "engine": "Motor",
+        "battery": "Batería",
+        "chassis": "Chasis"
+      },
+      "SystemHint": {
+        "engine": "Un motor desgastado consume más gasolina y reduce la velocidad; a 0 el vehículo no arranca",
+        "battery": "A 0 el vehículo no arranca",
+        "chassis": "Daños estructurales — reducen la velocidad de viaje"
+      },
+      "WheelState": {
+        "good": "Buena",
+        "worn": "Desgastada",
+        "risky": "Riesgo de reventón",
+        "critical": "Crítica",
+        "flat": "REVENTADA"
+      },
+      "Blocker": {
+        "engine": "motor fundido",
+        "battery": "batería muerta",
+        "flats": "demasiadas llantas reventadas",
+        "overload": "sobrecarga extrema"
+      },
+      "Warn": {
+        "Immobile": "El vehículo no puede moverse: {reason}.",
+        "NoFuel": "El depósito está vacío.",
+        "TankFull": "El depósito ya está lleno.",
+        "NoSpares": "No quedan llantas de repuesto.",
+        "InvalidDamage": "\"{formula}\" no es una fórmula de daño válida."
+      },
+      "Chat": {
+        "TravelTitle": "{name} — Parte de viaje",
+        "FuelUsed": "−{used} L (quedan {left} L)",
+        "Duration": "≈ {hours} h",
+        "Blowout": "¡REVENTÓN! La llanta {n} estalla (chequeo plano {roll} vs CD {dc})",
+        "EngineWear": "El motor se resiente — estado {value}/{max}",
+        "RanDry": "Sin combustible tras {km} km",
+        "Immobilized": "El vehículo queda inmovilizado",
+        "RefuelTitle": "{name} — Repostaje",
+        "Refueled": "+{added} L ({value}/{max} L)",
+        "WheelChangedTitle": "{name} — Cambio de llanta",
+        "WheelChanged": "Llanta {n} sustituida por un repuesto (quedan {spares})"
+      },
+      "Log": {
+        "Travel": "Viaje de {km} km ({fuel} L consumidos)",
+        "Blowout": "Reventó la llanta {n}",
+        "EngineDead": "El motor se fundió",
+        "Refueled": "Repostados +{added} L",
+        "WheelChanged": "Llanta {n} sustituida"
+      },
+      "Dialog": {
+        "RefuelTitle": "Repostar",
+        "Refuel": "Repostar",
+        "RefuelAmount": "Litros a añadir (faltan {missing} L para llenar)",
+        "ConfigTitle": "Configuración del vehículo",
+        "Level": "Nivel",
+        "FuelMax": "Capacidad del depósito (L)",
+        "Consumption": "Consumo base (L/100 km)",
+        "BaseSpeed": "Velocidad de crucero base (km/h)",
+        "WheelCount": "Número de llantas",
+        "Spares": "Llantas de repuesto",
+        "CargoMax": "Capacidad de carga (Bulk)",
+        "MountTitle": "Aditamento",
+        "MountName": "Nombre",
+        "MountNamePh": "Metralleta, blindaje, barra de embestida…",
+        "MountKind": "Tipo",
+        "MountAC": "Bonificación de Defensa",
+        "MountSpeed": "Modificador de velocidad (%)",
+        "MountWeight": "Peso (Bulk)",
+        "MountAttack": "Bonificación de ataque (armas)",
+        "MountDamage": "Fórmula de daño (armas, p. ej. 3d6)",
+        "MountNotes": "Notas"
+      }
+    },
     "Header": {
       "ChangePortrait": "Cambiar retrato",
       "Callsign": "apodo / alias",

@@ -6,6 +6,8 @@
 
 import { MODULE_ID, TABS } from "./config.mjs";
 import { HopefinderSheet } from "./sheet.mjs";
+import { HopefinderNpcSheet } from "./npc-sheet.mjs";
+import { HopefinderVehicleSheet } from "./vehicle-sheet.mjs";
 import { registerTimelineHooks } from "./timeline.mjs";
 import { GearIntegrityManager, registerGearIntegrityHooks } from "./gear-integrity.mjs";
 import { registerActionFxHooks } from "./action-fx.mjs";
@@ -61,6 +63,16 @@ Hooks.once("init", () => {
     types: ["character"],
     makeDefault: false,
     label: "Hopefinder Survivor Sheet"
+  });
+  registrar.registerSheet("pf2e", HopefinderNpcSheet, {
+    types: ["npc"],
+    makeDefault: false,
+    label: "Hopefinder NPC Sheet"
+  });
+  registrar.registerSheet("pf2e", HopefinderVehicleSheet, {
+    types: ["vehicle"],
+    makeDefault: false,
+    label: "Hopefinder Vehicle Sheet"
   });
 
   /* ── Handlebars helpers (namespaced to avoid collisions) ── */

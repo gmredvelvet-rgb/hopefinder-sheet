@@ -18,7 +18,8 @@ export const FLAGS = {
   CALLSIGN: "callsign",
   BACKDROP: "backdrop",
   FAVORITES: "favorites",
-  BRUISES: "bruises"
+  BRUISES: "bruises",
+  VEHICLE: "vehicle"
 };
 
 /** Item-level flag keys stored under item.flags[MODULE_ID] (Dings & Broken Gear). */
@@ -74,6 +75,56 @@ export const TABS = [
   { id: "factions", icon: "fa-handshake" },
   { id: "timeline", icon: "fa-clock-rotate-left" }
 ];
+
+/** NPC sheet tab registry. */
+export const NPC_TABS = [
+  { id: "profile", icon: "fa-address-card" },
+  { id: "arsenal", icon: "fa-crosshairs" },
+  { id: "loot",    icon: "fa-boxes-stacked" },
+  { id: "notes",   icon: "fa-book-open" }
+];
+
+/** Vehicle sheet tab registry. */
+export const VEHICLE_TABS = [
+  { id: "status", icon: "fa-gauge-high" },
+  { id: "crew",   icon: "fa-users-gear" },
+  { id: "cargo",  icon: "fa-boxes-stacked" },
+  { id: "log",    icon: "fa-clock-rotate-left" }
+];
+
+/** Seat roles available on the vehicle crew tab. */
+export const VEHICLE_SEAT_ROLES = ["driver", "gunner", "passenger"];
+
+/** Mount (attachment) categories and their icons. */
+export const VEHICLE_MOUNT_KINDS = ["weapon", "armor", "utility"];
+export const VEHICLE_MOUNT_ICONS = {
+  weapon: "fa-gun",
+  armor: "fa-shield-halved",
+  utility: "fa-toolbox"
+};
+
+/**
+ * Vehicle sub-systems tracked as wear meters (0–max, higher = better).
+ * Wheels are tracked separately (one meter per wheel).
+ */
+export const VEHICLE_SYSTEMS = [
+  { key: "engine",  icon: "fa-gears" },
+  { key: "battery", icon: "fa-car-battery" },
+  { key: "chassis", icon: "fa-car-side" }
+];
+
+/** Condition scale for vehicle systems and wheels. */
+export const VEHICLE_COND_MAX = 10;
+
+/** Factory defaults for a new vehicle (litres, L/100 km, km/h, wheels, spares, Bulk). */
+export const VEHICLE_DEFAULTS = {
+  fuelMax: 60,
+  consumption: 12,
+  baseSpeed: 80,
+  wheelCount: 4,
+  spares: 1,
+  cargoMax: 20
+};
 
 /** Physical item types shown in the Gear grid. */
 export const PHYSICAL_TYPES = [
@@ -134,7 +185,11 @@ export const TIMELINE_ICONS = {
   broken: "fa-triangle-exclamation",
   destroyed: "fa-skull-crossbones",
   repair: "fa-screwdriver-wrench",
-  bruise: "fa-hand-fist"
+  bruise: "fa-hand-fist",
+  travel: "fa-route",
+  fuel: "fa-gas-pump",
+  blowout: "fa-car-burst",
+  breakdown: "fa-oil-can"
 };
 
 /** Localization helper — resolves `HOPEFINDER.<key>` */
