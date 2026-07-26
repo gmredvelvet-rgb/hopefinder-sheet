@@ -17,11 +17,43 @@ A cinematic, tactical survivor character sheet for **Hopefinder** on the **Pathf
 - **FX engine** — Web Animations API (no libraries), optional synthesized UI audio (no files), honors `prefers-reduced-motion`.
 - **Accessibility** — high-contrast mode, text scaling, keyboard-focusable controls, animation kill-switch.
 
+## Requirements
+
+| Requirement | Detail |
+|---|---|
+| Foundry VTT | **v12** minimum, **v13** verified. |
+| Game system | **Pathfinder 2e** (`pf2e`). |
+| Subscription | An **active, qualifying Patreon** subscription to [GM RedVelvet](https://www.patreon.com/gmredvelvet), for as long as you use the module — see [Licensing](#licensing). Only the **GM** authorises; players never see a prompt. |
+| Internet | Required while playing. The licence is verified periodically against a licence server. |
+
 ## Installation
 
 1. The folder **must be named `hopefinder-sheet`** (the module id). If it is `hopefinder sheet`, rename it.
 2. Enable *Hopefinder Survivor Sheet* in your world (requires the PF2e system).
 3. On a character: **Sheet Configuration → This Sheet → Hopefinder Survivor Sheet**.
+
+Or install from the manifest URL:
+
+```
+https://github.com/gmredvelvet-rgb/hopefinder-sheet/releases/latest/download/module.json
+```
+
+## Licensing
+
+Hopefinder Survivor Sheet requires an active, qualifying **Patreon** subscription to [GM RedVelvet](https://www.patreon.com/gmredvelvet).
+
+**Only the GM authorises.** On their first load the GM is prompted to connect their Patreon account, which unlocks the module for everyone in the world. Players never see a prompt and never need an account of their own. If popups are blocked — common on phones — use the **auth-code** flow instead: connect on any device, copy the code, and paste it in.
+
+### What happens if the subscription lapses
+
+**Please read this before subscribing.** This is a subscription, not a one-off purchase, and the module re-checks it periodically against a licence server. Plainly:
+
+- **If the subscription lapses, the sheet locks.** It is covered by an activation panel and cannot be used until the subscription is active again.
+- **Your characters are not locked.** The sheet is registered alongside the system's default one, never in place of it, so you can switch any actor back through *Sheet Configuration* and keep playing immediately.
+- **Nothing is altered or lost.** Foundry, your world, your actors and your items are untouched, and the survival stats stay where they live — in actor flags under `hopefinder-sheet`, with the PF2e data model never modified. No data is withheld and no content becomes unopenable. Resubscribing turns the sheet straight back on.
+- **An internet connection is required while playing.** Verification is periodic, so a client that cannot reach the licence server locks the sheet until it can. Fully offline or air-gapped games are not supported.
+
+If a perpetual licence is what you need, this is not that today. I would rather say so here than have anyone find out mid-campaign.
 
 ## Integration notes
 
